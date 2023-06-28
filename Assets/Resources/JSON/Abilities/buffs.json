@@ -1,0 +1,30 @@
+{
+  "!1000": {
+    "_name": "HealthRegeneration_Flat",
+    "effectName": "HealthRegeneration_Flat",
+    "iconPath": "Interface/Sprites/Rpg_icons/buffs/7"
+  },
+  "!1001": {
+    "_name": "ManaRegeneration_Flat",
+    "effectName": "ManaRegeneration_Flat",
+    "iconPath": "Interface/Sprites/Rpg_icons/buffs/17"
+  },
+  "!1002": {
+    "type": 101,
+    "_name": "Slow_20",
+    "effect": "movementSpeedMultiplier",
+    "iconPath": "Interface/Sprites/Rpg_icons/debuffs/8"
+  },
+  "!1003": {
+    "type": 101,
+    "_name": "Slow_50",
+    "effect": "movementSpeedMultiplier",
+    "iconPath": "Interface/Sprites/Rpg_icons/debuffs/13"
+  },
+  "!1004": {
+    "type": 101,
+    "_name": "Slow_80",
+    "effect": "movementSpeedMultiplier",
+    "iconPath": "Interface/Sprites/Rpg_icons/debuffs/19"
+  }
+}
