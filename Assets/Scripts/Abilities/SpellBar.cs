@@ -31,6 +31,11 @@ public class SpellBar : MonoBehaviour {
         spellWrappers[slot].Init(ability, spellTimers[slot]);
         spellBarImages[slot].GetComponent<Image>().sprite = ability.iconImage;
     }
+    public void EquipAbility(int slot, int Id) {
+        //create copy of spell
+        //set that spell's caster as player
+        //equip ability as above
+    }
     public void UnEquipAbility(int slot) {
         Destroy(spellWrappers[slot]);
         spellWrappers[slot] = null;

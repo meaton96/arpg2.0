@@ -8,20 +8,22 @@ using UnityEngine.UIElements;
 
 public class ProjectileBehaviour : MonoBehaviour {
     public const int WALL_LAYER = 6;
-    float speed;
-    GameCharacter caster;
+    protected float speed;
+    protected GameCharacter caster;
     [Range(0f, 1.0f)]
     public float animationSpeed = .14f;
-    bool flagAnimated = false;
-    Animator animator;
-    int pierce = 0;
-    int chain;
-    float chainingRange = 4f;
-    const int NUM_RAYCASTS = 8;
-    GameObject prefab;
-    ProjectileAbility ability;
-    Rigidbody2D rb;
+    protected bool flagAnimated = false;
+    protected Animator animator;
+    protected int pierce = 0;
+    protected int chain;
+    protected float chainingRange = 4f;
+    protected const int NUM_RAYCASTS = 8;
+    protected GameObject prefab;
+    protected ProjectileAbility ability;
+    protected Rigidbody2D rb;
+    protected int enemiesHit = 0;
 
+    #region Initialize
     // Start is called before the first frame update
     void Awake() {
 
@@ -37,7 +39,9 @@ public class ProjectileBehaviour : MonoBehaviour {
     }
    
 
-    public void Init(GameCharacter caster, ProjectileAbility ability, GameObject prefab, Vector3 direction, float speed, int pierce, int chain) {
+    public virtual void Init(GameCharacter caster, ProjectileAbility ability, GameObject prefab, Vector3 direction, 
+                        float speed, int pierce, int chain, int enemiesHit = 0) {
+
         this.prefab = prefab;
         //this.direction = direction;
         this.speed = speed;
@@ -46,13 +50,14 @@ public class ProjectileBehaviour : MonoBehaviour {
         this.pierce = pierce;
         this.chain = chain;
         this.ability = ability;
-
+        this.enemiesHit = enemiesHit;
 
     }
-    private void OnTriggerEnter2D(Collider2D other) {
+    #endregion
+    #region Collision
+    protected void OnTriggerEnter2D(Collider2D other) {
 
         if (other.gameObject.layer == WALL_LAYER) {
-            Debug.Log("projectile hit wall");
             Destroy(gameObject);
         }
         else {
@@ -66,16 +71,18 @@ public class ProjectileBehaviour : MonoBehaviour {
                 Destroy(gameObject);
             }
             else {
+                enemiesHit++;
                 pierce--;
             }
 
         }
     }
-
+    #endregion
+    #region Chaining
     //performs a projectile chain
     //performs a number of raycasts in a circle around the target hit by this projectile
     //attempts to create a projectile towards an enemy hit
-    void TryChain(Collider2D collider) {
+    protected void TryChain(Collider2D collider) {
         var angle = Mathf.PI * 2 / NUM_RAYCASTS;
         int random = Random.Range(0, 2);
         var initialPosition = collider.transform.position;
@@ -99,7 +106,7 @@ public class ProjectileBehaviour : MonoBehaviour {
     //performs a raycast from the position of collider in the angle of i_angle
     //if the raycast hits an enemy a new projectile will be created and shot at that enemy
     //the projectile created is the same as this one
-    bool CalculateChain(Collider2D collider, float i_angle, Vector3 initialPosition) {
+    protected bool CalculateChain(Collider2D collider, float i_angle, Vector3 initialPosition) {
 
         var dir = new Vector2(Mathf.Cos(i_angle), Mathf.Sin(i_angle)).normalized;   //grab the direction vector towards i_angle
         var colliderInRange = Physics2D.RaycastAll(
@@ -121,22 +128,16 @@ public class ProjectileBehaviour : MonoBehaviour {
 
             //create the new projectile
             var newProj = Instantiate(gameObject, 
-                initialPosition, 
+                initialPosition + GameCharacter._CHARACTER_HALF_HEIGHT_, 
                 Quaternion.Euler(
                     new Vector3(
                         0, 
                         0,
-                        Mathf.Atan(vecToChainTarget.y / vecToChainTarget.x))));
+                        Mathf.Atan(vecToChainTarget.y / vecToChainTarget.x) * Mathf.Rad2Deg)));
             //initiate the projectile with the vars from this object, except reduce the number of chains
-            newProj.GetComponent<ProjectileBehaviour>().
-                Init(
-                    ability: ability,
-                    prefab: prefab,
-                    direction: vecToChainTarget,
-                    speed: speed,
-                    caster: caster,
-                    pierce: pierce,
-                    chain: chain - 1);
+            
+
+            CreateProjectile(newProj, collider, caster, ability, prefab, vecToChainTarget, speed, pierce, chain, enemiesHit);
             //ignore the collision with the target this projectile orginially hit
             Physics2D.IgnoreCollision(collider, newProj.GetComponent<Collider2D>());
             return true; //flag successful chain
@@ -144,7 +145,25 @@ public class ProjectileBehaviour : MonoBehaviour {
         return false;
     }
 
-    public float CalculateDmage() {
+    protected virtual void CreateProjectile(GameObject newProj, Collider2D collider, GameCharacter caster, ProjectileAbility ability, GameObject prefab, Vector3 direction,
+                        float speed, int pierce, int chain, int enemiesHit) {
+        newProj.GetComponent<ProjectileBehaviour>().
+                Init(
+                    ability: ability,
+                    prefab: prefab,
+                    direction: direction,
+                    speed: speed,
+                    caster: caster,
+                    pierce: pierce,
+                    chain: chain - 1,
+                    enemiesHit: enemiesHit + 1
+                    );
+        //ignore the collision with the target this projectile orginially hit
+        Physics2D.IgnoreCollision(collider, newProj.GetComponent<Collider2D>());
+    }
+    #endregion
+    public virtual float CalculateDmage() {
+        
         return ability.CalculateDamage();
     }
 

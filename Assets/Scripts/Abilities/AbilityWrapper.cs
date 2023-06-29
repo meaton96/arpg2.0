@@ -17,8 +17,7 @@ public class AbilityWrapper : MonoBehaviour {
     float cooldownTimer;
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         if (abilityState == AbilityState.cooldown) {
             if (cooldownTimer > 0) {
 
@@ -35,22 +34,23 @@ public class AbilityWrapper : MonoBehaviour {
     }
     public bool Cast(Player player) {
         if (abilityState == AbilityState.ready) {
+            if (player.resourceManager.TrySpendResource(ability.healthCost, ability.manaCost)) {
 
-            var mousePos = GameController.CameraToWorldPointMousePos();
-            var pos = player.transform.position;
-            var vMouseToPlayer = (mousePos - pos).normalized * GameCharacter._PROJECTILE_SPAWN_RADIUS_;
+                var mousePos = GameController.CameraToWorldPointMousePos();
+                var pos = player.transform.position;
+                var vMouseToPlayer = (mousePos - pos).normalized * GameCharacter._PROJECTILE_SPAWN_RADIUS_;
 
-            player.FaceDirection(mousePos);
+                player.FaceDirection(mousePos);
 
-            vMouseToPlayer += GameCharacter._CHARACTER_HALF_HEIGHT_;
+                vMouseToPlayer += GameCharacter._CHARACTER_HALF_HEIGHT_;
 
-            ability.Cast(pos, mousePos, vMouseToPlayer, player.GetComponent<Collider2D>());
+                ability.Cast(pos, mousePos, vMouseToPlayer, player.GetComponent<Collider2D>());
 
-            cooldownDuration = ability.cooldown * (1 - player.cooldownReduction);
-            cooldownTimer = cooldownDuration;
-            abilityState = AbilityState.cooldown;
-            player.resourceManager.SpendResourcesOnSpellCast(ability.healthCost, ability.manaCost);
-            return true;
+                cooldownDuration = ability.cooldown * (1 - player.cooldownReduction);
+                cooldownTimer = cooldownDuration;
+                abilityState = AbilityState.cooldown;
+                return true;
+            }
 
         }
         return false;

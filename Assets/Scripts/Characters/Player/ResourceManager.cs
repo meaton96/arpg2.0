@@ -52,14 +52,15 @@ public class ResourceManager : MonoBehaviour
     }
 
     
-    public void SpendResourcesOnSpellCast(int healthCost, int manaCost) {
+    public bool TrySpendResource(int healthCost, int manaCost) {
         if (healthCost > currentHealth)
-            return;
+            return false;
         if (manaCost > currentMana)
-            return;
+            return false;
         
         currentMana -= manaCost;
         currentHealth -= healthCost;
+        return true;
     }
     //regenerate health called once per frame regens health at a rate or healthRegenIncrease + BASE_HEALTH_REGEN per second
     protected void RegenerateHealth() {
@@ -85,6 +86,9 @@ public class ResourceManager : MonoBehaviour
     public float GetPercentHealth() {
         return currentHealth / maxHealth;
     }
+    public float GetPercentMana() {
+        return currentMana / maxMana;
+    }
 
     public float GetTotalManaRegen() {
         return (BASE_MANA_REGEN + manaRegenIncrease_flat) * manaRegenIncrease_multi;
@@ -99,5 +103,6 @@ public class ResourceManager : MonoBehaviour
     public void IncreaseManaRegenPercent(float amt) { manaRegenIncrease_multi += amt; }
     public void DecreaseManaRegenPercent(float amt) { manaRegenIncrease_multi -= amt; }
 
+    
 
 }

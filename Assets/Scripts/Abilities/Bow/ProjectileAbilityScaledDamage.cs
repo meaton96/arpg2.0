@@ -4,10 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileAttack : ProjectileAbility {
+public class ProjectileAttackScaledDamage : ProjectileAttack {
 
-    public float damageEffectiveness;
+    public float damageScaling;
+    
     public override float CalculateDamage() {
-        return  caster.GetAttackDamage() * damageEffectiveness;
+        return base.CalculateDamage() * damageEffectiveness;
     }
 }

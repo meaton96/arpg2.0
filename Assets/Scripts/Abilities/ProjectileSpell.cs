@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ProjectileAbility : BasicAbility {
+    public GameCharacter caster;
     public int baseProjectiles;
     public float baseProjectileSpeed;
     public int chainNumber;
@@ -110,6 +111,7 @@ public class ProjectileAbility : BasicAbility {
     }
 
     public virtual float CalculateDamage() {
+        
         return baseDamage;
     }
 

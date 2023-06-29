@@ -123,33 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &58579028 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2959554295789042252, guid: 593cf9a97ef42e244aa36d3080fb5277, type: 3}
+--- !u!114 &58579040 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 525492266439372803, guid: 593cf9a97ef42e244aa36d3080fb5277, type: 3}
   m_PrefabInstance: {fileID: 1178634297}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &58579039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 58579028}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16d0fe2873e33194dafce9b5387c8638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 0
-  maxHealth: 0
-  BASE_HEALTH_REGEN: 5
-  healthRegenIncrease_flat: 0
-  healthRegenIncrease_multi: 1
-  BASE_MANA_REGEN: 0
-  currentMana: 0
-  maxMana: 0
-  manaRegenIncrease_flat: 0
-  manaRegenIncrease_multi: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,11 +288,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2954900309606390898, guid: 593cf9a97ef42e244aa36d3080fb5277, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.917023
+      value: 9.15
       objectReference: {fileID: 0}
     - target: {fileID: 2954900309606390898, guid: 593cf9a97ef42e244aa36d3080fb5277, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.5134935
+      value: -4.08
       objectReference: {fileID: 0}
     - target: {fileID: 2954900309606390898, guid: 593cf9a97ef42e244aa36d3080fb5277, type: 3}
       propertyPath: m_LocalPosition.z
@@ -350,35 +334,23 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 7576454493069788310, guid: 593cf9a97ef42e244aa36d3080fb5277, type: 3}
+      propertyPath: resourceManager
+      value: 
+      objectReference: {fileID: 58579040}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 593cf9a97ef42e244aa36d3080fb5277, type: 3}
---- !u!1 &1210617376 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2959554295789042252, guid: 6db6e383eaa83a6498f3e1eea5c6863d, type: 3}
+--- !u!114 &1210617388 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5820402308954821554, guid: 6db6e383eaa83a6498f3e1eea5c6863d, type: 3}
   m_PrefabInstance: {fileID: 1302680956}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1210617387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1210617376}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16d0fe2873e33194dafce9b5387c8638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 0
-  maxHealth: 0
-  BASE_HEALTH_REGEN: 5
-  healthRegenIncrease_flat: 0
-  healthRegenIncrease_multi: 1
-  BASE_MANA_REGEN: 0
-  currentMana: 0
-  maxMana: 0
-  manaRegenIncrease_flat: 0
-  manaRegenIncrease_multi: 1
 --- !u!1001 &1302680956
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -386,17 +358,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 781090599903851583, guid: 6db6e383eaa83a6498f3e1eea5c6863d, type: 3}
+      propertyPath: resourceManager
+      value: 
+      objectReference: {fileID: 1210617388}
     - target: {fileID: 2954900309606390898, guid: 6db6e383eaa83a6498f3e1eea5c6863d, type: 3}
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2954900309606390898, guid: 6db6e383eaa83a6498f3e1eea5c6863d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.2310486
+      value: 6.16
       objectReference: {fileID: 0}
     - target: {fileID: 2954900309606390898, guid: 6db6e383eaa83a6498f3e1eea5c6863d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.9897449
+      value: -2.97
       objectReference: {fileID: 0}
     - target: {fileID: 2954900309606390898, guid: 6db6e383eaa83a6498f3e1eea5c6863d, type: 3}
       propertyPath: m_LocalPosition.z
