@@ -31,6 +31,6 @@ public abstract class GameCharacter : MonoBehaviour {
 
     //replace with calculation from weapon damage
     public virtual float GetAttackDamage() {
-        return 1;
+        return 5;
     }
 }

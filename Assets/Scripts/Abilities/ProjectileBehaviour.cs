@@ -43,7 +43,6 @@ public class ProjectileBehaviour : MonoBehaviour {
                         float speed, int pierce, int chain, int enemiesHit = 0) {
 
         this.prefab = prefab;
-        //this.direction = direction;
         this.speed = speed;
         rb.velocity = direction * speed;
         this.caster = caster;
@@ -165,6 +164,10 @@ public class ProjectileBehaviour : MonoBehaviour {
     public virtual float CalculateDmage() {
         
         return ability.CalculateDamage();
+    }
+    public virtual float CalculateDmage(bool _) {
+
+        return ability.CalculateDamage(caster);
     }
 
 

@@ -6,7 +6,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Ability : ScriptableObject {
+public abstract class Ability : ScriptableObject {
 
 
     public const int BASIC_ABILITY_ID = 0;
@@ -31,13 +31,11 @@ public class Ability : ScriptableObject {
     public int onHitDebuffID;
 
     public virtual void Cast(Vector3 instantiatePosition, Vector3 mousePos, Vector3 offset, Collider2D playerCollider) {
-        
+
 
         Instantiate(abilityPreFab, instantiatePosition, Quaternion.identity);
     }
-    public virtual void Init() {
-
-    }
+   // public abstract void Init();
     public override string ToString() {
         return
             "name: " + _name + "\n" +
@@ -57,5 +55,6 @@ public class Ability : ScriptableObject {
         }
         //do damage or whatever
     }
+    public abstract Ability CopyInstance();
 }
 

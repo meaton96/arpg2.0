@@ -25,16 +25,18 @@ public class SpellBar : MonoBehaviour {
     }
 
     #region Abilties Bar
-    public void EquipAbility(int slot, Ability ability) {
+    //public void EquipAbility(int slot, Ability ability) {
+    //    UpdateIcons();
+    //    spellWrappers[slot] = Instantiate(abilityWrapperPrefab, transform);
+    //    spellWrappers[slot].Init(ability, spellTimers[slot]);
+    //    spellBarImages[slot].GetComponent<Image>().sprite = ability.iconImage;
+    //}
+    public void EquipAbility(int slot, int Id) {
+        var ability = GameController.Instance.allSpells[Id].CopyInstance();
         UpdateIcons();
         spellWrappers[slot] = Instantiate(abilityWrapperPrefab, transform);
         spellWrappers[slot].Init(ability, spellTimers[slot]);
         spellBarImages[slot].GetComponent<Image>().sprite = ability.iconImage;
-    }
-    public void EquipAbility(int slot, int Id) {
-        //create copy of spell
-        //set that spell's caster as player
-        //equip ability as above
     }
     public void UnEquipAbility(int slot) {
         Destroy(spellWrappers[slot]);
@@ -73,6 +75,8 @@ public class SpellBar : MonoBehaviour {
         
         auraWrappers[slot].EquipAura(player);
     }
+
+    
     public void UnEquipAura(int slot) {
         if (slot < 0 || slot >= auraWrappers.Length) { return; }
         auraWrappers[slot].UnEquipAura(player);

@@ -13,7 +13,7 @@ public class Aura : Ability {
     public Buff buff;
 
 
-    public override void Init() {
+    public void Init() {
         if (effectName == "HealthRegeneration_Flat") {  buff = CreateInstance<HealthRegeneration_Flat>(); }
         else if (effectName == "HealthRegeneration_Percent") { buff = CreateInstance<HealthRegeneration_Percent>(); }
         else if (effectName == "ManaRegeneration_Flat") { buff = CreateInstance<ManaRegeneration_Flat>(); }
@@ -39,6 +39,30 @@ public class Aura : Ability {
             "description: " + description + "\n" +
             "buff: \n" + buff.name;
     }
+    public override Ability CopyInstance() {
+        Ability ability = CreateInstance<Aura>();
+
+
+        ability._name = _name;
+        ability.description = description;
+        ability.id = id;
+        ability.tags = new(tags);
+        ability.iconImage = iconImage;
+        ability.manaCost = manaCost;
+        ability.healthCost = healthCost;
+        ability.cooldown = cooldown;
+        ability.abilityPreFab = abilityPreFab;
+        ability.onHitDebuffID = onHitDebuffID;
+
+        (ability as Aura).effectName = effectName;
+        (ability as Aura).effectAmount = effectAmount;
+        (ability as Aura).buff = buff;
+        
+
+
+        return ability;
+    }
+
 
 
 }

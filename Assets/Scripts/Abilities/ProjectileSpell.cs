@@ -2,10 +2,12 @@ using JetBrains.Annotations;
 using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class ProjectileAbility : BasicAbility {
-    public GameCharacter caster;
+   // public GameCharacter caster;
     public int baseProjectiles;
     public float baseProjectileSpeed;
     public int chainNumber;
@@ -110,14 +112,42 @@ public class ProjectileAbility : BasicAbility {
         }
     }
 
-    public virtual float CalculateDamage() {
-        
-        return baseDamage;
-    }
+    
+    public virtual float CalculateDamage(GameCharacter caster) {
 
+        return CalculateDamage();
+    }
     public override string ToString() {
         return base.ToString() + "\n" +
             "projectiles " + baseProjectiles + "\n" +
             "projectileSpeed " + baseProjectileSpeed;
+    }
+
+    public override Ability CopyInstance() {
+        Ability ability = CreateInstance<ProjectileAbility>();
+
+
+        ability._name = _name;
+        ability.description = description;
+        ability.id = id;
+        ability.tags = new(tags);
+        ability.iconImage = iconImage;
+        ability.manaCost = manaCost;
+        ability.healthCost = healthCost;
+        ability.cooldown = cooldown;
+        ability.abilityPreFab = abilityPreFab;
+        ability.onHitDebuffID = onHitDebuffID;
+
+      //  (ability as ProjectileAbility).caster = caster;
+        (ability as ProjectileAbility).baseProjectiles = baseProjectiles;
+        (ability as ProjectileAbility).baseProjectileSpeed = baseProjectileSpeed;
+        (ability as ProjectileAbility).chainNumber = chainNumber;
+        (ability as ProjectileAbility).pierceNumber = pierceNumber;
+
+        (ability as ProjectileAbility).speedMulti = speedMulti;
+        (ability as ProjectileAbility).projIncrease = projIncrease;
+
+
+        return ability;
     }
 }

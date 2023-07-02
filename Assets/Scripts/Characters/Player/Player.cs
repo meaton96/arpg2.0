@@ -98,14 +98,11 @@ public class Player : GameCharacter {
         //animationManager.SetWeaponType(WeaponType.Melee2H);
 
 
-        spellBar.EquipAbility(4, GameController.Instance.allSpells[400]);   //arrow shot
-        spellBar.EquipAbility(5, GameController.Instance.allSpells[1]);   //ice lance
-        spellBar.EquipAbility(0, GameController.Instance.allSpells[800]); //teleport
+        spellBar.EquipAbility(4, 400);   //arrow shot
+        spellBar.EquipAbility(5, 1);   //ice lance
+        spellBar.EquipAbility(0, 800); //teleport
         spellBar.EquipAura(0, GameController.Instance.allSpells[900] as Aura);
         spellBar.EquipAura(1, GameController.Instance.allSpells[901] as Aura);
-
-              
-
 
     }
    

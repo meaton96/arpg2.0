@@ -16,4 +16,24 @@ public class Teleport : Ability
         playerCollider.transform.position = tpPath + instantiatePosition;
         playerCollider.gameObject.GetComponent<Player>().StopMove();
     }
+    public override Ability CopyInstance() {
+
+        Ability ability = CreateInstance<Teleport>();
+
+        ability._name = _name;
+        ability.description = description;
+        ability.id = id;
+        ability.tags = new(tags);
+        ability.iconImage = iconImage;
+        ability.manaCost = manaCost;
+        ability.healthCost = healthCost;
+        ability.cooldown = cooldown;
+        ability.abilityPreFab = abilityPreFab;
+        ability.onHitDebuffID = onHitDebuffID;
+
+        (ability as Teleport).maxRange = maxRange;
+
+
+        return ability;
+    }
 }

@@ -18,7 +18,12 @@ public class Enemy : GameCharacter {
     
     
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.layer == GameController.PROJECTILE_LAYER)
-            DamageHealth(other.GetComponent<ProjectileBehaviour>().CalculateDmage());
+        if (other.gameObject.layer == GameController.PROJECTILE_LAYER) {
+
+            var projB = other.GetComponent<ProjectileBehaviour>();
+            DamageHealth(projB.CalculateDmage(true));
+
+        }
+            
     }
 }
