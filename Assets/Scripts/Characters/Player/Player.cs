@@ -44,6 +44,7 @@ public class Player : GameCharacter {
 
     //reference to interface script
     [HideInInspector] public UIBehaviour HUD;
+    
 
     //public PlayerResourceManager resourceManager;
 
@@ -293,38 +294,15 @@ public class Player : GameCharacter {
 
     #endregion
     #region Add/Removing Buffs/Auras
-    //temporary hard coded aura values
+    
     public void ApplyBuff(Buff buff) {
 
-        currentBuffsDebuffs.Add(buff);
-        currentBuffsDebuffsTimers.Add(buff.duration);
-
-        buff.ApplyEffect(this);
-        //todo
-        //start timer counting down
-        //show timer on ui
-        //test 
-
-
+        HUD.DisplayNewBuff(buff);
     }
     public void RemoveBuff(Buff buff) {
         currentBuffsDebuffs.Remove(buff);
-        buff.RemoveEffect(this);
+        HUD.ForceRemoveBuff(buff);
     }
-    //public void ApplyAura(Aura aura) {
-    //    if (auraIndex < equippedAuras.Length - 1) {
-    //        equippedAuras[auraIndex++] = aura;
-    //        ApplyBuff(aura.buff);
-    //    }
-    //}
-    //public void RemoveAura(Aura aura) {
-    //    for (int x = 0; x < equippedAuras.Length; x++) {
-    //        if (equippedAuras[x] == aura) {
-    //            equippedAuras[x] = null;
-    //            RemoveBuff(aura.buff);
-    //        }
-    //    }
-    //}
     #endregion
     #region Getters/Setters/ToString
     

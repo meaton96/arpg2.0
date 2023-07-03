@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,7 @@ public class UIBehaviour : MonoBehaviour
     [SerializeField] private TextMeshProUGUI manaText;
     [SerializeField] private TextMeshProUGUI characterDataText;
     [SerializeField] private GameObject charPanel;
+    [SerializeField] private ExpandingIconBar BuffBar;
     private bool charPanelDisplayed = false;
     ResourceManager playerResourceManager;
 
@@ -54,5 +56,18 @@ public class UIBehaviour : MonoBehaviour
         }
 
     }
-    
+    public void DisplayNewBuff(Buff buff) {
+        Debug.Log("displaying buff");
+        BuffBar.AddBuff(buff);
+    }
+    public void ForceRemoveBuff(Buff buff) {
+        BuffBar.RemoveBuff(buff);
+    }
+    public void DisplayNewBuff(int buffId) {
+        BuffBar.AddBuff(GameController.Instance.allBuffsDebuffs[buffId]);
+    }
+    public void DisplayNewBuff(string buffName) {
+        BuffBar.AddBuff( GameController.Instance.allBuffsDebuffs.Values.ToList().Single(buff => buff._name == buffName));
+
+    }
 }

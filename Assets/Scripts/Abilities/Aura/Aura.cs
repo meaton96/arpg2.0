@@ -56,7 +56,7 @@ public class Aura : Ability {
 
         (ability as Aura).effectName = effectName;
         (ability as Aura).effectAmount = effectAmount;
-        (ability as Aura).buff = buff;
+        (ability as Aura).buff = buff;  
         
 
 

@@ -7,8 +7,10 @@ public class ManaRegeneration_Percent : Buff
     new public const string iconPath = "Interface/Sprites/Rpg_icons/buffs/18";
     public override void ApplyEffect(Player player) {
         player.resourceManager.IncreaseManaRegenPercent(amount);
+        base.ApplyEffect(player);
     }
     public override void RemoveEffect(Player player) {
         player.resourceManager.DecreaseManaRegenPercent(amount);
+        base.RemoveEffect(player);
     }
 }

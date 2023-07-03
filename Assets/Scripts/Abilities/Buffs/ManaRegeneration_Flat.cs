@@ -6,8 +6,10 @@ public class ManaRegeneration_Flat : Buff {
     new public const string iconPath = "Interface/Sprites/Rpg_icons/buffs/17";
     public override void ApplyEffect(Player player) {
         player.resourceManager.IncreaseManaRegenFlat(amount);
+        base.ApplyEffect(player);
     }
     public override void RemoveEffect(Player player) {
         player.resourceManager.DecreaseManaRegenFlat(amount);
+        base.RemoveEffect(player);
     }
 }

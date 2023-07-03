@@ -24,38 +24,9 @@ public abstract class Buff : ScriptableObject
     }
     public EffectType etype;
 
-    
 
-    //adjust the variable named "effect" by the float "amount"
-    public virtual void ApplyEffect(Player player) {
-        // switch (type) {
-        //    case PLAYER_RESOURCE_TYPE: 
-        //        foreach (var field in player.resourceManager.GetType().GetFields()) {
-        //            if (field.Name == effect) {
-        //                field.SetValue(player.resourceManager, ((float)field.GetValue(player.resourceManager)) + amount);
-        //            }
-        //        }
-        //        break;
-        //    case PLAYER_FIELD_TYPE:  
-        //        foreach (var field in player.GetType().GetFields()) {
-        //            if (field.Name == effect) {
-        //                field.SetValue(player, ((float)field.GetValue(player)) + amount);
-        //            }
-        //        }
-        //        break;
-        //    default: 
-        //        throw new ArgumentOutOfRangeException("unknown buff id");
-        //}
-        
-    }
-    public virtual void RemoveEffect(Player player) {
-        //var playerFields = player.GetType().GetFields();
-        //foreach (var field in playerFields) {
-        //    if (field.Name == effect) {
-        //        field.SetValue(player, ((float)field.GetValue(player)) - amount);
-        //    }
-        //}
-    }
+    public virtual void ApplyEffect(Player player) { player.ApplyBuff(this); }
+    public virtual void RemoveEffect(Player player) {  player.RemoveBuff(this); }   
 
     public override string ToString() {
         return "name: " + _name + "\n" +
