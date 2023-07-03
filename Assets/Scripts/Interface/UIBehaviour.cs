@@ -57,7 +57,6 @@ public class UIBehaviour : MonoBehaviour
 
     }
     public void DisplayNewBuff(Buff buff) {
-        Debug.Log("displaying buff");
         BuffBar.AddBuff(buff);
     }
     public void ForceRemoveBuff(Buff buff) {

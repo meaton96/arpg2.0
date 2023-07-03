@@ -97,7 +97,7 @@ public class ProjectileBehaviourScaling : ProjectileBehaviour {
     }
 
     public override float CalculateDmage() {
-        var dam = ability.CalculateDamage();
+        var dam = ability.CalculateDamage(caster);
 
         for (int x = 0; x < enemiesHit; x++)
             dam *= (ability as ProjectileAttackScaledDamage).damageScaling;

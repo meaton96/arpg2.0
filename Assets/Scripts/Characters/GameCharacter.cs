@@ -24,13 +24,15 @@ public abstract class GameCharacter : MonoBehaviour {
     }
 
     public void DamageHealth(float amount) {
-       // Debug.Log(resourceManager.currentHealth + "/" + resourceManager.maxHealth);
+        //Debug.Log(amount);
+        //Debug.Log(resourceManager.currentHealth + "/" + resourceManager.maxHealth);
         resourceManager.DamageHealth(amount);
+
 
     }
 
     //replace with calculation from weapon damage
     public virtual float GetAttackDamage() {
-        return 5;
+        return 15;
     }
 }

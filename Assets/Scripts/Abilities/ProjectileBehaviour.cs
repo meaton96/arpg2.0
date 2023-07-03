@@ -28,18 +28,18 @@ public class ProjectileBehaviour : MonoBehaviour {
     void Awake() {
 
         if (TryGetComponent(out animator)) {
-            flagAnimated = true; 
+            flagAnimated = true;
         }
         rb = GetComponent<Rigidbody2D>();
 
         if (flagAnimated) {
             animator.speed = animationSpeed;
         }
-        
-    }
-   
 
-    public virtual void Init(GameCharacter caster, ProjectileAbility ability, GameObject prefab, Vector3 direction, 
+    }
+
+
+    public virtual void Init(GameCharacter caster, ProjectileAbility ability, GameObject prefab, Vector3 direction,
                         float speed, int pierce, int chain, int enemiesHit = 0) {
 
         this.prefab = prefab;
@@ -60,7 +60,7 @@ public class ProjectileBehaviour : MonoBehaviour {
             Destroy(gameObject);
         }
         else {
-            
+
 
             if (chain > 0) {
 
@@ -114,7 +114,7 @@ public class ProjectileBehaviour : MonoBehaviour {
                                 chainingRange,
                                 LayerMask.GetMask("Enemy"));    //perform the raycast and get all colliders in range
                                                                 //checks until chainingRange and only hits targets on enemy layer
-        //iterate all colliders in the raycast hit array
+                                                                //iterate all colliders in the raycast hit array
         foreach (var enemyCollider in colliderInRange) {
             if (enemyCollider.collider == collider) { continue; } //ignore hittings itself
             var vecToChainTarget = (enemyCollider.
@@ -126,15 +126,15 @@ public class ProjectileBehaviour : MonoBehaviour {
                                             normalized; //get the vector to the hit target, this is not the same as the racast direction 
 
             //create the new projectile
-            var newProj = Instantiate(gameObject, 
-                initialPosition + GameCharacter._CHARACTER_HALF_HEIGHT_, 
+            var newProj = Instantiate(gameObject,
+                initialPosition + GameCharacter._CHARACTER_HALF_HEIGHT_,
                 Quaternion.Euler(
                     new Vector3(
-                        0, 
+                        0,
                         0,
                         Mathf.Atan(vecToChainTarget.y / vecToChainTarget.x) * Mathf.Rad2Deg)));
             //initiate the projectile with the vars from this object, except reduce the number of chains
-            
+
 
             CreateProjectile(newProj, collider, caster, ability, prefab, vecToChainTarget, speed, pierce, chain, enemiesHit);
             //ignore the collision with the target this projectile orginially hit
@@ -162,12 +162,12 @@ public class ProjectileBehaviour : MonoBehaviour {
     }
     #endregion
     public virtual float CalculateDmage() {
-        
-        return ability.CalculateDamage();
-    }
-    public virtual float CalculateDmage(bool _) {
+        //Debug.Log(ability.CalculateDamage());
+        //Debug.Log(ability.CalculateDamage(caster));
 
         return ability.CalculateDamage(caster);
+
+
     }
 
 

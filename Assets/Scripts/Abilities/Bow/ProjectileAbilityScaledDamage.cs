@@ -8,7 +8,5 @@ public class ProjectileAttackScaledDamage : ProjectileAttack {
 
     public float damageScaling;
     
-    public override float CalculateDamage() {
-        return base.CalculateDamage() * damageEffectiveness;
-    }
+    
 }

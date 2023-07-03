@@ -465,7 +465,7 @@ MonoBehaviour:
   BASE_HEALTH_REGEN: 5
   healthRegenIncrease_flat: 0
   healthRegenIncrease_multi: 1
-  BASE_MANA_REGEN: 0
+  BASE_MANA_REGEN: 5
   currentMana: 0
   maxMana: 0
   manaRegenIncrease_flat: 0

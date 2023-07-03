@@ -11,16 +11,15 @@ public class BuffUIWrapper : MonoBehaviour {
     private Image displayImage;
     [SerializeField] private TextMeshProUGUI durationText;
     private ExpandingIconBar bar;
-    // Start is called before the first frame update
-    void Start() {
-        displayImage = GetComponent<Image>();
-
-    }
+    
     public void DisplayBuffIcon(Buff buff, ExpandingIconBar bar) {
+        displayImage = GetComponent<Image>();
         this.bar = bar;
-        this.Buff = buff;
-        Debug.Log("buff created");
+        Buff = buff;
         timer = Buff.duration;
+        Debug.Log("timer: " + timer);
+        Debug.Log("name: " + Buff._name);
+
         flagInfDuration = timer < 0;
         displayImage.sprite = Buff.iconImage;
         if (flagInfDuration)
@@ -39,6 +38,7 @@ public class BuffUIWrapper : MonoBehaviour {
                 durationText.text = timer.ToString("#.##");
             }
             else {
+                Debug.Log("removing buff at end of duration");
                 RemoveBuff();
             }
         }

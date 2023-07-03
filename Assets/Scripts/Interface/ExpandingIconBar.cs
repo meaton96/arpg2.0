@@ -18,12 +18,6 @@ public class ExpandingIconBar : MonoBehaviour
     {
         ActiveBuffs = new();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void AddBuff(Buff buff) {
         var buffWrapper = Instantiate(BuffUIWrapperPrefab,
             new Vector3((IconSize + IconSpacing) * numBuffs, 0, 0) + transform.position,
@@ -36,9 +30,16 @@ public class ExpandingIconBar : MonoBehaviour
         numBuffs--;
     }
     public void RemoveBuff(Buff buff) {
-        var buffWrapper = ActiveBuffs.Single(b => b.Buff._name == buff._name);
-        buffWrapper.RemoveBuff();
-        numBuffs--;
+        Debug.Log(ActiveBuffs.Count);
+        try {
+            var buffWrapper = ActiveBuffs.SingleOrDefault(b => b.Buff._name == buff._name);
+            buffWrapper.RemoveBuff();
+            numBuffs--;
+        }
+        catch (System.Exception) {
+            Debug.Log("no buff found to remove - shouldnt ever happen");
+        }
+        
     }
     
 }

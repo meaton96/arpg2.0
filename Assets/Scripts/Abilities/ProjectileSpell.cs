@@ -6,12 +6,13 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class ProjectileAbility : BasicAbility {
+public class ProjectileAbility : Ability {
    // public GameCharacter caster;
     public int baseProjectiles;
     public float baseProjectileSpeed;
     public int chainNumber;
     public int pierceNumber;
+    public float baseDamage;
 
     protected float speedMulti = 1f;
     protected int projIncrease = 0;
@@ -21,6 +22,8 @@ public class ProjectileAbility : BasicAbility {
 
     protected const float minDistance = .05f;
     protected const float maxDistance = 25f;
+
+    
 
 
 
@@ -111,14 +114,17 @@ public class ProjectileAbility : BasicAbility {
             }
         }
     }
+    
 
     
     public virtual float CalculateDamage(GameCharacter caster) {
-
-        return CalculateDamage();
+        return baseDamage;
     }
+
+
     public override string ToString() {
-        return base.ToString() + "\n" +
+        return base.ToString() +
+            "base damage: " + baseDamage + "\n" +
             "projectiles " + baseProjectiles + "\n" +
             "projectileSpeed " + baseProjectileSpeed;
     }
@@ -137,6 +143,7 @@ public class ProjectileAbility : BasicAbility {
         ability.cooldown = cooldown;
         ability.abilityPreFab = abilityPreFab;
         ability.onHitDebuffID = onHitDebuffID;
+        
 
       //  (ability as ProjectileAbility).caster = caster;
         (ability as ProjectileAbility).baseProjectiles = baseProjectiles;
@@ -146,6 +153,7 @@ public class ProjectileAbility : BasicAbility {
 
         (ability as ProjectileAbility).speedMulti = speedMulti;
         (ability as ProjectileAbility).projIncrease = projIncrease;
+        (ability as ProjectileAbility).baseDamage = baseDamage;
 
 
         return ability;

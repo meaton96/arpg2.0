@@ -2,23 +2,23 @@
   "!000": {
     "type": 1,
     "_name": "fireball",
-    "baseDamage": 1,
+    "baseDamage": 40,
     "description": "ball of fire",
     "tags": [ "Spell", "Fire", "Projectile" ],
     "cooldown": 0,
     "baseProjectileSpeed": 15,
     "baseProjectiles": 1,
-    "chainNumber": 1,
+    "chainNumber": 0,
     "pierceNumber": 0,
     "manaCost": 5,
     "healthCost": 0,
     "iconPath": "Interface/Sprites/Rpg_icons/pyromancer/21",
-    "prefabPath": "Prefabs/Fireball"
+    "prefabPath": "Fireball"
   },
   "!001": {
     "type": 1,
     "_name": "icelance",
-    "baseDamage": 1,
+    "baseDamage": 30,
     "description": "lance of ice",
     "tags": [ "Spell", "Ice", "Projectile" ],
     "cooldown": 0,
@@ -30,7 +30,7 @@
     "healthCost": 0,
     "onHitDebuffID": 1002,
     "iconPath": "Interface/Sprites/Rpg_icons/cryomancer/14",
-    "prefabPath": "Prefabs/Icelance"
+    "prefabPath": "Icelance"
   },
   "!800": {
     "type": 800,
@@ -42,7 +42,7 @@
     "healthCost": 0,
     "maxRange": 20,
     "iconPath": "Interface/Sprites/Rpg_icons/aero/30",
-    "prefabPath": "Prefabs/Icelance"
+    "prefabPath": "Icelance"
   },
   "!400": {
     "type": 5,
@@ -59,17 +59,17 @@
     "healthCost": 0,
     "onHitDebuffID": -1,
     "iconPath": "Interface/Sprites/Rpg_icons/archer/11",
-    "prefabPath": "Prefabs/Arrow"
+    "prefabPath": "Arrow"
   },
   "!401": {
     "type": 5,
     "_name": "Piercing Shot",
-    "damageEffectiveness": 1.5,
+    "damageEffectiveness": 2,
 	"damageScalingPerEnemy": 1.5,
-    "description": "A basic bow shot",
+    "description": "A bow shot that pierces extra enemies",
     "tags": [ "Attack", "Bow", "Projectile" ],
     "cooldown": 6,
-    "baseProjectileSpeed": 10,
+    "baseProjectileSpeed": 15,
     "baseProjectiles": 1,
     "chainNumber": 0,
     "pierceNumber": 3,
@@ -77,7 +77,7 @@
     "healthCost": 0,
     "onHitDebuffID": -1,
     "iconPath": "Interface/Sprites/Rpg_icons/archer/14",
-    "prefabPath": "Prefabs/Arrow"
+    "prefabPath": "PiercingArrow"
   },
   "!900": {
     "type": 3,
@@ -90,7 +90,7 @@
     "effectName": "HealthRegeneration_Flat",
     "effectAmount": 5,
     "iconPath": "Interface/Sprites/Rpg_icons/alchemist/49",
-    "prefabPath": "Prefabs/Icelance"
+    "prefabPath": "Icelance"
   },
   "!901": {
     "type": 3,
@@ -103,6 +103,6 @@
     "effectName": "ManaRegeneration_Flat",
     "effectAmount": 5,
     "iconPath": "Interface/Sprites/Rpg_icons/alchemist/28",
-    "prefabPath": "Prefabs/Icelance"
+    "prefabPath": "Icelance"
   }
 }

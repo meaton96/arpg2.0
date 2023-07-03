@@ -39,6 +39,7 @@ public class ResourceManager : MonoBehaviour
 
     //regenerate mana called once per frame regens mana at a rate or manaRegenIncrease + BASE_MANA_REGEN per second
     protected void RegenerateMana() {
+        
         if (manaTimer >= (1 / MANA_TICKS_PER_SECOND)) {
             currentMana += GetTotalManaRegen() / MANA_TICKS_PER_SECOND;
             manaTimer = 0;

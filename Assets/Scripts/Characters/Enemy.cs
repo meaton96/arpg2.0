@@ -21,7 +21,7 @@ public class Enemy : GameCharacter {
         if (other.gameObject.layer == GameController.PROJECTILE_LAYER) {
 
             var projB = other.GetComponent<ProjectileBehaviour>();
-            DamageHealth(projB.CalculateDmage(true));
+            DamageHealth(projB.CalculateDmage());
 
         }
             

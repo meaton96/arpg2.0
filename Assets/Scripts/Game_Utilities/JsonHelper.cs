@@ -11,7 +11,7 @@ using UnityEngine;
 public class JsonHelper {
 
     public const int TYPE_LINE_NUMBER = 1;
-
+    public const string _PREFAB_PATH_ = "Prefabs/Spells/";
 
     //iterates the json file at the location path
     public static Dictionary<int, Ability> ParseAllAbilities(string path) {
@@ -48,7 +48,7 @@ public class JsonHelper {
                         Ability ability = null;
                         switch (type) {
                             case Ability.BASIC_ABILITY_ID:      //0
-                                ability = ScriptableObject.CreateInstance<BasicAbility>();
+                                Debug.LogError("Basic Ability Usage is Depricated");
                                 break;
                             case Ability.PROJECTILE_ABILITY_ID:     //1
                                 ability = ScriptableObject.CreateInstance<ProjectileAbility>();
@@ -74,12 +74,11 @@ public class JsonHelper {
                                 //}
                                 break;
                         }
-                        
-                            
 
-                        
+
+                        var ab = ParseAbility(ability, spellID, lines[x]);
                         //add it to the abilities dictionary - but parse the ability first
-                        abilities.Add(spellID, ParseAbility(ability, spellID, lines[x]));
+                        abilities.Add(spellID, ab);
                         
 
                     }
@@ -132,7 +131,8 @@ public class JsonHelper {
             }
             //load the prefab
             if (lines[x].Contains("prefab")) {
-                ability.abilityPreFab = Resources.Load<GameObject>(GetFieldFromJsonLine(lines[x]));
+                var s = _PREFAB_PATH_ + GetFieldFromJsonLine(lines[x]);
+                ability.abilityPreFab = Resources.Load<GameObject>(s);
                 continue;
             }
 

@@ -9,7 +9,6 @@ public class ProjectileAttack : ProjectileAbility {
 
     public float damageEffectiveness;
     public override float CalculateDamage(GameCharacter caster) {
-        Debug.Log(caster == null);
         return  caster.GetAttackDamage() * damageEffectiveness;
     }
     public override Ability CopyInstance() {
