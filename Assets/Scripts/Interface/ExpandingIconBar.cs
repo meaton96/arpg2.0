@@ -20,16 +20,17 @@ public class ExpandingIconBar : MonoBehaviour
     }
     public void AddBuff(Buff buff) {
         var buffWrapper = Instantiate(BuffUIWrapperPrefab, transform).GetComponent<BuffUIWrapper>();
-        //buffs not displaying on UI 
+        var distance = numBuffs * (IconSize + IconSpacing);
+        buffWrapper.transform.localPosition = new Vector3(distance, 0, 0);
+        buffWrapper.DisplayBuffIcon(buff, this);
         numBuffs++;
         ActiveBuffs.Add(buffWrapper);   
-        buffWrapper.DisplayBuffIcon(buff, this);
+        
     }
     public void RemoveBuff() {
         numBuffs--;
     }
     public void RemoveBuff(Buff buff) {
-        Debug.Log(ActiveBuffs.Count);
         try {
             var buffWrapper = ActiveBuffs.SingleOrDefault(b => b.Buff._name == buff._name);
             buffWrapper.RemoveBuff();

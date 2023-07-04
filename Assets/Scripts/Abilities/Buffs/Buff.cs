@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using UnityEngine;
 
 public abstract class Buff : ScriptableObject
 {
+    private const string _ICON_PREFIX_ = "Interface/Sprites/Rpg_icons/buffs/";
     public string iconPath;
     const int PLAYER_RESOURCE_TYPE = 100;
     const int PLAYER_FIELD_TYPE = 101;
@@ -24,15 +26,21 @@ public abstract class Buff : ScriptableObject
     }
     public EffectType etype;
 
-    protected virtual Buff CreateBuff(EffectType eType, string _name, int id,  string description, float duration, string effect, float amount) {
+    protected virtual Buff CreateBuff(EffectType eType, string _name, string iconPath, int id,  
+                string description, float duration, string effect, float amount) {
         this._name = _name;
         this.id = id;
         this.description = description; 
         this.duration = duration;
         this.effect = effect;
         this.amount = amount;
-        this.etype = eType;
-        Resources.Load<Sprite>(iconPath);
+        etype = eType;
+        
+        iconImage = Resources.Load<Sprite>(_ICON_PREFIX_ + iconPath);
+        if (iconImage == null) {
+            throw new FileNotFoundException($"Missing Icon Sprite for Buff {id} at path " +
+                $"{Application.dataPath}/Resources{_ICON_PREFIX_+ iconPath}");
+        }
 
         return this;
     } 

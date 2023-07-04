@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthRegeneration_Flat : Buff {
-    new public const string iconPath = "Interface/Sprites/Rpg_icons/buffs/7";
+    
     public const int _ID_ = 0;
 
     public void CreateBuffWrapper(float duration, float amount) {
@@ -12,6 +12,7 @@ public class HealthRegeneration_Flat : Buff {
             _name: "Flat Health Regnereration Increase",
             id: _ID_,
             description: "provides a flat increase to health regeneration",
+            iconPath: "7",
             duration: duration,
             effect: "HealthRegeneration_Flat",
             amount: amount);

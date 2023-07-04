@@ -104,7 +104,7 @@ public class Player : GameCharacter {
         spellBar.EquipAbility(0, 800); //teleport
         spellBar.EquipAbility(1, 401); //piercing shot
         spellBar.EquipAura(0, GameController.Instance.allSpells[900] as Aura);
-       // spellBar.EquipAura(1, GameController.Instance.allSpells[901] as Aura);
+        spellBar.EquipAura(1, GameController.Instance.allSpells[901] as Aura);
 
     }
    
