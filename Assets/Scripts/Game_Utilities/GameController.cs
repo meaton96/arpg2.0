@@ -123,6 +123,7 @@ public class GameController : MonoBehaviour {
 
 
         allSpells = JsonHelper.ParseAllAbilities(JSON_PATH_ABILITIES);
+
     }
 
 

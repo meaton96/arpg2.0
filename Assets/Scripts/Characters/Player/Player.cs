@@ -104,7 +104,7 @@ public class Player : GameCharacter {
         spellBar.EquipAbility(0, 800); //teleport
         spellBar.EquipAbility(1, 401); //piercing shot
         spellBar.EquipAura(0, GameController.Instance.allSpells[900] as Aura);
-        spellBar.EquipAura(1, GameController.Instance.allSpells[901] as Aura);
+       // spellBar.EquipAura(1, GameController.Instance.allSpells[901] as Aura);
 
     }
    
@@ -131,7 +131,7 @@ public class Player : GameCharacter {
         }
 
     }
-    private void FixedUpdate() {
+    private void FixedUpdate() {    
         animationManager.animationSpeed = actionSpeed;
     }
     #endregion
@@ -297,7 +297,7 @@ public class Player : GameCharacter {
     #region Add/Removing Buffs/Auras
     
     public void ApplyBuff(Buff buff) {
-
+        //Debug.Log("Applying Buff: " +  buff.ToString());
         HUD.DisplayNewBuff(buff);
     }
     public void RemoveBuff(Buff buff) {

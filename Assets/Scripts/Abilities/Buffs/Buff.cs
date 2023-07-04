@@ -24,6 +24,19 @@ public abstract class Buff : ScriptableObject
     }
     public EffectType etype;
 
+    protected virtual Buff CreateBuff(EffectType eType, string _name, int id,  string description, float duration, string effect, float amount) {
+        this._name = _name;
+        this.id = id;
+        this.description = description; 
+        this.duration = duration;
+        this.effect = effect;
+        this.amount = amount;
+        this.etype = eType;
+        Resources.Load<Sprite>(iconPath);
+
+        return this;
+    } 
+
 
     public virtual void ApplyEffect(Player player) { player.ApplyBuff(this); }
     public virtual void RemoveEffect(Player player) {  player.RemoveBuff(this); }   

@@ -19,9 +19,8 @@ public class ExpandingIconBar : MonoBehaviour
         ActiveBuffs = new();
     }
     public void AddBuff(Buff buff) {
-        var buffWrapper = Instantiate(BuffUIWrapperPrefab,
-            new Vector3((IconSize + IconSpacing) * numBuffs, 0, 0) + transform.position,
-            Quaternion.identity).GetComponent<BuffUIWrapper>();
+        var buffWrapper = Instantiate(BuffUIWrapperPrefab, transform).GetComponent<BuffUIWrapper>();
+        //buffs not displaying on UI 
         numBuffs++;
         ActiveBuffs.Add(buffWrapper);   
         buffWrapper.DisplayBuffIcon(buff, this);

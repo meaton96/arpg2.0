@@ -57,16 +57,17 @@ public class UIBehaviour : MonoBehaviour
 
     }
     public void DisplayNewBuff(Buff buff) {
+        Debug.Log(buff.ToString());
         BuffBar.AddBuff(buff);
     }
     public void ForceRemoveBuff(Buff buff) {
         BuffBar.RemoveBuff(buff);
     }
-    public void DisplayNewBuff(int buffId) {
-        BuffBar.AddBuff(GameController.Instance.allBuffsDebuffs[buffId]);
-    }
-    public void DisplayNewBuff(string buffName) {
-        BuffBar.AddBuff( GameController.Instance.allBuffsDebuffs.Values.ToList().Single(buff => buff._name == buffName));
+    //public void DisplayNewBuff(int buffId) {
+    //    BuffBar.AddBuff(GameController.Instance.allBuffsDebuffs[buffId]);
+    //}
+    //public void DisplayNewBuff(string buffName) {
+    //    BuffBar.AddBuff( GameController.Instance.allBuffsDebuffs.Values.ToList().Single(buff => buff._name == buffName));
 
-    }
+    //}
 }

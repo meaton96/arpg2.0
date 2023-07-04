@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class HealthRegeneration_Flat : Buff {
     new public const string iconPath = "Interface/Sprites/Rpg_icons/buffs/7";
+    public const int _ID_ = 0;
+
+    public void CreateBuffWrapper(float duration, float amount) {
+        CreateBuff(
+            eType: EffectType.Buff,
+            _name: "Flat Health Regnereration Increase",
+            id: _ID_,
+            description: "provides a flat increase to health regeneration",
+            duration: duration,
+            effect: "HealthRegeneration_Flat",
+            amount: amount);
+    }
     public override void ApplyEffect(Player player) {
         player.resourceManager.IncreaseHealthRegenFlat(amount);
         base.ApplyEffect(player);

@@ -17,8 +17,7 @@ public class BuffUIWrapper : MonoBehaviour {
         this.bar = bar;
         Buff = buff;
         timer = Buff.duration;
-        Debug.Log("timer: " + timer);
-        Debug.Log("name: " + Buff._name);
+       
 
         flagInfDuration = timer < 0;
         displayImage.sprite = Buff.iconImage;
