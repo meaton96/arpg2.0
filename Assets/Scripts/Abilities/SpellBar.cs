@@ -6,17 +6,18 @@ using UnityEngine.UI;
 
 public class SpellBar : MonoBehaviour {
 
+    //ability bar
     [SerializeField] private AbilityWrapper abilityWrapperPrefab;
     public AbilityWrapper[] spellWrappers = new AbilityWrapper[6];
     [SerializeField] private GameObject[] spellBarImages = new GameObject[6];
     [SerializeField] private TextMeshProUGUI[] spellTimers = new TextMeshProUGUI[6];
 
-
+    //aura bar
     [SerializeField] private AuraWrapper auraWrapperPrefab;
     public AuraWrapper[] auraWrappers = new AuraWrapper[3];
     [SerializeField] private GameObject[] auraBarImages = new GameObject[3];
 
-
+    
     [SerializeField] private Sprite noAbilityEquippedImage;
     [SerializeField] private Player player;
 
@@ -25,12 +26,8 @@ public class SpellBar : MonoBehaviour {
     }
 
     #region Abilties Bar
-    //public void EquipAbility(int slot, Ability ability) {
-    //    UpdateIcons();
-    //    spellWrappers[slot] = Instantiate(abilityWrapperPrefab, transform);
-    //    spellWrappers[slot].Init(ability, spellTimers[slot]);
-    //    spellBarImages[slot].GetComponent<Image>().sprite = ability.iconImage;
-    //}
+    //equip the ability in the slot slot
+    //ability is equipped via ID number and pulled fromthe game controller singleton
     public void EquipAbility(int slot, int Id) {
         var ability = GameController.Instance.allSpells[Id].CopyInstance();
         UpdateIcons();
@@ -38,19 +35,23 @@ public class SpellBar : MonoBehaviour {
         spellWrappers[slot].Init(ability, spellTimers[slot]);
         spellBarImages[slot].GetComponent<Image>().sprite = ability.iconImage;
     }
+    //unequip the ability in the slot slot
     public void UnEquipAbility(int slot) {
         Destroy(spellWrappers[slot]);
         spellWrappers[slot] = null;
         spellBarImages[slot].GetComponent<Image>().sprite = noAbilityEquippedImage;
     }
+    //cast the ability in the current slot
     public void Cast(int slot) {
-        // Debug.Log("casting slot " + slot + " : " + spellWrappers[slot]);
+        //if the cast was successful play the cast animation
         if (spellWrappers[slot].Cast(player)) {
 
-            player.StopMove();
-            player.PlayAttackAnimation();
+            player.PlayCastAnimation();
         }
     }
+    //update the icons on the ability and aura bars
+    //checks if there is an ability or aura equipped in the slot and sets the sprite
+    //to the default image if there isnt one equipped
     public void UpdateIcons() {
         for (int x = 0; x < spellWrappers.Length; x++ ){
             if (spellWrappers[x] == null)

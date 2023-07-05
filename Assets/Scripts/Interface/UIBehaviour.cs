@@ -5,12 +5,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIBehaviour : MonoBehaviour
-{
+public class UIBehaviour : MonoBehaviour {
 
     //[SerializeField] private GameObject[] spellBarImages;
-    [SerializeField] private GameObject[] auraBarImages;
-    [SerializeField] private Sprite noAbilityEquippedImage;
+    //[SerializeField] private GameObject[] auraBarImages;
+    //[SerializeField] private Sprite noAbilityEquippedImage;
     [SerializeField] private Player player;
     [SerializeField] private GameObject healthBar;
     [SerializeField] private GameObject manaBar;
@@ -31,14 +30,15 @@ public class UIBehaviour : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
+        //scale health and mana bars
         float healthPercent = playerResourceManager.currentHealth / playerResourceManager.maxHealth;
         float manaPercent = playerResourceManager.currentMana / playerResourceManager.maxMana;
 
         healthBar.transform.localScale = new Vector3(1, healthPercent, 1);
         manaBar.transform.localScale = new Vector3(1, manaPercent, 1);
 
+        //update health and mana text
         healthText.text = playerResourceManager.currentHealth.ToString("0.#") + "/" + playerResourceManager.maxHealth;
         manaText.text = playerResourceManager.currentMana.ToString("0.#") + "/" + playerResourceManager.maxMana;
 
@@ -48,6 +48,8 @@ public class UIBehaviour : MonoBehaviour
             ToggleCharacterPanel();
         }
     }
+
+    //enable or disable the character panel on key press
     public void ToggleCharacterPanel() {
         charPanelDisplayed = !charPanelDisplayed;
         charPanel.SetActive(charPanelDisplayed);
@@ -56,9 +58,11 @@ public class UIBehaviour : MonoBehaviour
         }
 
     }
+    //pass a new buff to the buff bar to display
     public void DisplayNewBuff(Buff buff) {
         BuffBar.AddBuff(buff);
     }
+    //remove the buff from the buff bar
     public void ForceRemoveBuff(Buff buff) {
         BuffBar.RemoveBuff(buff);
     }

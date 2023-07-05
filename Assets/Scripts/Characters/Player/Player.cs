@@ -199,6 +199,10 @@ public class Player : GameCharacter {
                 break;
         }
     }
+    public void PlayCastAnimation() {
+        StopMove();
+        PlayAttackAnimation();
+    }
 
     public void FaceDirection(Vector3 direction) {
         movementDirection = (direction - transform.position).normalized;
@@ -334,7 +338,7 @@ public class Player : GameCharacter {
     bool ReachedDestination() {
         return GetDistanceSquared2D(transform.position, moveToPosition) < MOVEMENT_TOLERANCE;
     }
-
+    
     public void EquipItem(Item item) {
         character4DScript.Equip(item);
     }
