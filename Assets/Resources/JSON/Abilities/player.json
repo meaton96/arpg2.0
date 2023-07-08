@@ -1,6 +1,6 @@
 {
   "!000": {
-    "type": 1,
+    "type": "projectile",
     "_name": "fireball",
     "baseDamage": 40,
     "description": "ball of fire",
@@ -16,7 +16,7 @@
     "prefabPath": "Fireball"
   },
   "!001": {
-    "type": 1,
+    "type": "projectile",
     "_name": "icelance",
     "baseDamage": 30,
     "description": "lance of ice",
@@ -32,20 +32,8 @@
     "iconPath": "Interface/Sprites/Rpg_icons/cryomancer/14",
     "prefabPath": "Icelance"
   },
-  "!800": {
-    "type": 800,
-    "_name": "Teleport",
-    "description": "Teleport forward some distance",
-    "tags": [ "Movement" ],
-    "cooldown": 8,
-    "manaCost": 10,
-    "healthCost": 0,
-    "maxRange": 20,
-    "iconPath": "Interface/Sprites/Rpg_icons/aero/30",
-    "prefabPath": "Icelance"
-  },
   "!400": {
-    "type": 5,
+    "type": "attack_projectile",
     "_name": "Shoot",
     "damageEffectiveness": 1,
     "description": "A basic bow shot",
@@ -62,7 +50,7 @@
     "prefabPath": "Arrow"
   },
   "!401": {
-    "type": 5,
+    "type": "attack_projectile",
     "_name": "Piercing Shot",
     "damageEffectiveness": 2,
 	"damageScalingPerEnemy": 1.5,
@@ -79,8 +67,20 @@
     "iconPath": "Interface/Sprites/Rpg_icons/archer/14",
     "prefabPath": "PiercingArrow"
   },
+  "!800": {
+    "type": "ground_targeted_teleport",
+    "_name": "Teleport",
+    "description": "Teleport forward some distance",
+    "tags": [ "Movement" ],
+    "cooldown": 8,
+    "manaCost": 10,
+    "healthCost": 0,
+    "maxRange": 20,
+    "iconPath": "Interface/Sprites/Rpg_icons/aero/30",
+    "prefabPath": "Icelance"
+  },
   "!900": {
-    "type": 3,
+    "type": "aura",
     "_name": "Regenerate",
     "description": "Aura that regens hp",
     "tags": [ "Aura" ],
@@ -93,7 +93,7 @@
     "prefabPath": "Icelance"
   },
   "!901": {
-    "type": 3,
+    "type": "aura",
     "_name": "Evocation",
     "description": "Aura that regens mana",
     "tags": [ "Aura" ],

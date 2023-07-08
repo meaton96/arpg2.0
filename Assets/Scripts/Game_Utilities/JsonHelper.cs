@@ -41,48 +41,40 @@ public class JsonHelper {
                     string typeString = GetFieldFromJsonLine(t[TYPE_LINE_NUMBER]);
 
                     //if the type string parse correctly:
-                    if (int.TryParse(typeString, out int type)) {
-                        Ability ability = null;
-                        switch (type) {
-                            case Ability.BASIC_ABILITY_ID:      //0
-                                Debug.LogError("Basic Ability Usage is Depricated");
-                                break;
-                            case Ability.PROJECTILE_ABILITY_ID:     //1
-                                ability = ScriptableObject.CreateInstance<ProjectileAbility>();
 
-                                break;
-                            case Ability.SUMMON_ABILITY_ID:         //2
-                                break;
-                            case Ability.AURA_ABILITY_ID:           //3
-                                ability = ScriptableObject.CreateInstance<Aura>();
-                                break;
-                            case Ability.ATTACK_PROJECTILE_ABILITY_ID: //5
-                                ability = ScriptableObject.CreateInstance<ProjectileAttack>();
-                                break;
-                            case 800:
-                                ability = ScriptableObject.CreateInstance<Teleport>();
-                                break;
-                            default:
-                                //if (type >= Ability.BUFF_TYPE_ID_START && type <= Ability.BUFF_TYPE_ID_END) {//100-200
-                                //    ability = ScriptableObject.CreateInstance<Buff>();
+                    Ability ability = null;
+                    switch (typeString) {
+                        case Ability._ID_PROJECTILE:  
+                            ability = ScriptableObject.CreateInstance<ProjectileAbility>();
 
-                                //    ((Buff)ability).type = type;
-
-                                //}
-                                break;
-                        }
-
-
-                        var ab = ParseAbility(ability, spellID, lines[x]);
-                        //add it to the abilities dictionary - but parse the ability first
-                        abilities.Add(spellID, ab);
-                        
-
+                            break;
+                        case Ability._ID_SUMMON:        
+                            break;
+                        case Ability._ID_AURA:       
+                            ability = ScriptableObject.CreateInstance<Aura>();
+                            break;
+                        case Ability._ID_ATTACK_PROJECTILE: 
+                            ability = ScriptableObject.CreateInstance<ProjectileAttack>();
+                            break;
+                        case Ability._ID_GROUND_TARGETED: 
+                            ability = ScriptableObject.CreateInstance<GroundTargetedAbility>();
+                            break;
+                        case Ability._ID_GROUND_TARGETED_AOE:
+                            ability = ScriptableObject.CreateInstance<GroundTargetedAOEAbility>();
+                            break;
+                        case Ability._ID_TELEPORT:
+                            ability = ScriptableObject.CreateInstance<Teleport>();
+                            break;
+                        default:
+                            break;
                     }
-                    else {
 
-                        throw new Exception("Error parsing Type");
-                    }
+
+                    var ab = ParseAbility(ability, spellID, lines[x]);
+                    //add it to the abilities dictionary - but parse the ability first
+                    abilities.Add(spellID, ab);
+
+
 
                 }
                 else {

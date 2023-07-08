@@ -19,28 +19,25 @@ public class Aura : Ability {
 
         if (effectName == "HealthRegeneration_Flat") {
             buff = CreateInstance<HealthRegeneration_Flat>();
-            (buff as HealthRegeneration_Flat).CreateBuffWrapper(-1, 5);
+            (buff as HealthRegeneration_Flat).CreateBuffWrapper(-1, effectAmount);
             
         }
 
         else if (effectName == "HealthRegeneration_Percent") { 
             buff = CreateInstance<HealthRegeneration_Percent>();
-            (buff as HealthRegeneration_Percent).CreateBuffWrapper(-1, 1.2f);
+            (buff as HealthRegeneration_Percent).CreateBuffWrapper(-1, effectAmount);
         }
         else if (effectName == "ManaRegeneration_Flat") { 
             buff = CreateInstance<ManaRegeneration_Flat>();
-            (buff as ManaRegeneration_Flat).CreateBuffWrapper(-1, 5);
+            (buff as ManaRegeneration_Flat).CreateBuffWrapper(-1, effectAmount);
         }
         else if (effectName == "ManaRegeneration_Percent") { 
             buff = CreateInstance<ManaRegeneration_Percent>();
-            (buff as ManaRegeneration_Percent).CreateBuffWrapper(-1, 1.2f);
+            (buff as ManaRegeneration_Percent).CreateBuffWrapper(-1, effectAmount);
         }
         else {
             throw new FileNotFoundException("buff file was not found");
         }
-        buff._name = effectName;
-        buff.amount = effectAmount;
-        buff.duration = -1;
      //  buff.iconImage = Resources.Load<Sprite>(buff.iconPath);
     }
     public void ActivateAura(Player player) {

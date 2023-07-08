@@ -9,14 +9,17 @@ using UnityEngine.UI;
 public abstract class Ability : ScriptableObject {
 
 
-    public const int BASIC_ABILITY_ID = 0;
-    public const int PROJECTILE_ABILITY_ID = 1;
-    public const int SUMMON_ABILITY_ID = 2;
-    public const int AURA_ABILITY_ID = 3;
-    public const int ATTACK_PROJECTILE_ABILITY_ID = 5;
 
-    public const int BUFF_TYPE_ID_START = 100;
-    public const int BUFF_TYPE_ID_END = 199;
+    public const string _ID_PROJECTILE = "projectile";
+    public const string _ID_SUMMON = "summon";
+    public const string _ID_AURA = "aura";
+    public const string _ID_ATTACK_PROJECTILE = "attack_projectile";
+    public const string _ID_GROUND_TARGETED = "ground_targeted";
+    public const string _ID_TELEPORT = "ground_targeted_teleport";
+    public const string _ID_GROUND_TARGETED_AOE = "ground_targeted_aoe";
+
+    //public const int BUFF_TYPE_ID_START = 100;
+    //public const int BUFF_TYPE_ID_END = 199;
 
 
     public string _name;
