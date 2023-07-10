@@ -35,4 +35,25 @@ public abstract class GameCharacter : MonoBehaviour {
     public virtual float GetAttackDamage() {
         return 15;
     }
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.gameObject.layer == GameController.PROJECTILE_LAYER) {
+            var projB = other.GetComponent<ProjectileBehaviour>();
+            HandleSpellHit(
+                projB.GetAbility(),
+                projB.GetCaster());
+        }
+        else if (other.gameObject.layer == GameController.SPELL_EFFECT_LAYER) {
+            var ssa = other.GetComponent<SpawnedSpellAnimation>();
+            HandleSpellHit(
+                ssa.GetAbility(),
+                ssa.GetCaster());
+        }
+        else {
+            //assume hit another actor?
+        }
+    }
+
+    public void HandleSpellHit(DamagingAbility ability, GameCharacter caster) {
+        DamageHealth(ability.CalculateDamage(caster));
+    }
 }

@@ -32,6 +32,34 @@
     "iconPath": "Interface/Sprites/Rpg_icons/cryomancer/14",
     "prefabPath": "Icelance"
   },
+  "!100": {
+    "type": "ground_targeted_aoe",
+    "_name": "flamestrike",
+    "baseDamage": 10,
+    "description": "Area of Effect Fire Attack",
+    "tags": [ "Spell", "Fire", "AoE" ],
+    "cooldown": 1,
+    "manaCost": 20,
+    "healthCost": 0,
+	"maxRange": 500,
+	"radius": 0.8,
+    "onHitDebuffID": -1,
+    "iconPath": "Interface/Sprites/Rpg_icons/pyromancer/8",
+    "prefabPath": "flamestrike"
+  },
+  "!200": {
+    "type": "buff_ability",
+    "_name": "Haste",
+    "description": "Increases action speed for a time",
+    "tags": [ "Duration" ],
+    "cooldown": 30,
+    "manaCost": 30,
+    "healthCost": 0,
+    "effectName": "Action_Speed_Increase",
+    "effectAmount": 0.3,
+	"duration": 10,
+    "iconPath": "Interface/Sprites/Rpg_icons/buffs/24"
+  },
   "!400": {
     "type": "attack_projectile",
     "_name": "Shoot",
@@ -76,8 +104,7 @@
     "manaCost": 10,
     "healthCost": 0,
     "maxRange": 20,
-    "iconPath": "Interface/Sprites/Rpg_icons/aero/30",
-    "prefabPath": "Icelance"
+    "iconPath": "Interface/Sprites/Rpg_icons/aero/30"
   },
   "!900": {
     "type": "aura",
@@ -89,8 +116,7 @@
     "healthCost": 0,
     "effectName": "HealthRegeneration_Flat",
     "effectAmount": 5,
-    "iconPath": "Interface/Sprites/Rpg_icons/alchemist/49",
-    "prefabPath": "Icelance"
+    "iconPath": "Interface/Sprites/Rpg_icons/alchemist/49"
   },
   "!901": {
     "type": "aura",
@@ -102,7 +128,6 @@
     "healthCost": 0,
     "effectName": "ManaRegeneration_Flat",
     "effectAmount": 5,
-    "iconPath": "Interface/Sprites/Rpg_icons/alchemist/28",
-    "prefabPath": "Icelance"
+    "iconPath": "Interface/Sprites/Rpg_icons/alchemist/28"
   }
 }

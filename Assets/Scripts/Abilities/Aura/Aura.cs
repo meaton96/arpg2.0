@@ -14,15 +14,11 @@ public class Aura : Ability {
 
 
     public void Init() {
-
-
-
         if (effectName == "HealthRegeneration_Flat") {
             buff = CreateInstance<HealthRegeneration_Flat>();
             (buff as HealthRegeneration_Flat).CreateBuffWrapper(-1, effectAmount);
             
         }
-
         else if (effectName == "HealthRegeneration_Percent") { 
             buff = CreateInstance<HealthRegeneration_Percent>();
             (buff as HealthRegeneration_Percent).CreateBuffWrapper(-1, effectAmount);
@@ -35,6 +31,7 @@ public class Aura : Ability {
             buff = CreateInstance<ManaRegeneration_Percent>();
             (buff as ManaRegeneration_Percent).CreateBuffWrapper(-1, effectAmount);
         }
+        
         else {
             throw new FileNotFoundException("buff file was not found");
         }
@@ -71,9 +68,9 @@ public class Aura : Ability {
 
         (ability as Aura).effectName = effectName;
         (ability as Aura).effectAmount = effectAmount;
-        (ability as Aura).buff = buff;  
-        
+        (ability as Aura).buff = buff;
 
+        //(ability as Aura).Init();
 
         return ability;
     }

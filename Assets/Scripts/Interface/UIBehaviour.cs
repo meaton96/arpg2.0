@@ -47,15 +47,17 @@ public class UIBehaviour : MonoBehaviour {
         if (Input.GetKeyDown(Player.KEY_CODE_CHAR_PANEL)) {
             ToggleCharacterPanel();
         }
+        UpdateCharacterPanelInfo();
     }
 
+    void UpdateCharacterPanelInfo() {
+        characterDataText.text = player.ToString();
+    }
     //enable or disable the character panel on key press
     public void ToggleCharacterPanel() {
         charPanelDisplayed = !charPanelDisplayed;
         charPanel.SetActive(charPanelDisplayed);
-        if (charPanelDisplayed) {
-            characterDataText.text = player.ToString();
-        }
+        
 
     }
     //pass a new buff to the buff bar to display

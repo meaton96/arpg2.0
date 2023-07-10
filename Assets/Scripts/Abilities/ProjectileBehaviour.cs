@@ -169,6 +169,8 @@ public class ProjectileBehaviour : MonoBehaviour {
 
 
     }
+    public DamagingAbility GetAbility() { return ability; }
+    public GameCharacter GetCaster() { return caster; }
 
 
 

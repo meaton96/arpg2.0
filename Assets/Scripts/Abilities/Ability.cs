@@ -14,9 +14,9 @@ public abstract class Ability : ScriptableObject {
     public const string _ID_SUMMON = "summon";
     public const string _ID_AURA = "aura";
     public const string _ID_ATTACK_PROJECTILE = "attack_projectile";
-    public const string _ID_GROUND_TARGETED = "ground_targeted";
     public const string _ID_TELEPORT = "ground_targeted_teleport";
     public const string _ID_GROUND_TARGETED_AOE = "ground_targeted_aoe";
+    public const string _ID_BUFF = "buff_ability";
 
     //public const int BUFF_TYPE_ID_START = 100;
     //public const int BUFF_TYPE_ID_END = 199;
@@ -33,13 +33,22 @@ public abstract class Ability : ScriptableObject {
     public GameObject abilityPreFab;
     public int onHitDebuffID;
 
-    public virtual void Cast(Vector3 instantiatePosition, Vector3 mousePos, Vector3 offset, Collider2D playerCollider) {
+    public virtual void Cast(Vector3 instantiatePosition, Vector3 mousePos, Vector3 offset, Collider2D casterCollider) {
 
 
         Instantiate(abilityPreFab, instantiatePosition, Quaternion.identity);
     }
    // public abstract void Init();
     public override string ToString() {
+
+        string s = "[ ";
+        tags.ForEach(tag => {
+            s += tag + ", ";
+        });
+        s = s[..(s.Length - 2)];
+        s += " ]";
+
+
         return
             "name: " + _name + "\n" +
             "id: " + id + "\n" +
@@ -49,7 +58,7 @@ public abstract class Ability : ScriptableObject {
             "health cost: " + healthCost + "\n" +
             "icon_path: " + iconImage.name + "\n" +
            "prefab name: " + abilityPreFab.name + "\n" +
-            "tags: " + tags.ToString() + "\n";
+            "tags: " + s + "\n";
 
     }
     public void ProcessCollision(params Collider2D[] colliders) {
@@ -59,5 +68,6 @@ public abstract class Ability : ScriptableObject {
         //do damage or whatever
     }
     public abstract Ability CopyInstance();
+    public virtual float CalculateDamage(GameCharacter caster) { return 0; }
 }
 

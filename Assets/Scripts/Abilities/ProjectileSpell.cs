@@ -6,13 +6,13 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class ProjectileAbility : Ability {
+public class ProjectileAbility : DamagingAbility {
    // public GameCharacter caster;
     public int baseProjectiles;
     public float baseProjectileSpeed;
     public int chainNumber;
     public int pierceNumber;
-    public float baseDamage;
+    
 
     protected float speedMulti = 1f;
     protected int projIncrease = 0;
@@ -117,9 +117,7 @@ public class ProjectileAbility : Ability {
     
 
     
-    public virtual float CalculateDamage(GameCharacter caster) {
-        return baseDamage;
-    }
+   
 
 
     public override string ToString() {

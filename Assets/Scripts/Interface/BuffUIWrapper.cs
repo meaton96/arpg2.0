@@ -43,7 +43,9 @@ public class BuffUIWrapper : MonoBehaviour {
             }
             else {
                 //remove the buff at the end of the duration
-                RemoveBuff();
+                bar.RemoveBuffFromList(this);
+
+                Destroy(gameObject);
             }
         }
 

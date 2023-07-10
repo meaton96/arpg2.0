@@ -28,7 +28,7 @@ public abstract class Buff : ScriptableObject
 
     protected virtual Buff CreateBuff(EffectType eType, string _name, string iconPath, int id,  
                 string description, float duration, string effect, float amount) {
-        this._name = _name;
+        this._name = _name; 
         this.id = id;
         this.description = description; 
         this.duration = duration;
@@ -54,6 +54,7 @@ public abstract class Buff : ScriptableObject
             "id: " + id + "\n" +
             "description: " + description + "\n" +
             "effect: " + effect + "\n" +
-            "duration: " + duration;
+            "duration: " + duration + "\n" +
+            "amount: " + amount;
     }
 }

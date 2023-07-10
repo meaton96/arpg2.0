@@ -10,21 +10,13 @@
     "iconPath": "Interface/Sprites/Rpg_icons/buffs/17"
   },
   "!1002": {
-    "type": 101,
-    "_name": "Slow_20",
+    "_name": "Slow",
     "effect": "movementSpeedMultiplier",
     "iconPath": "Interface/Sprites/Rpg_icons/debuffs/8"
   },
-  "!1003": {
-    "type": 101,
-    "_name": "Slow_50",
-    "effect": "movementSpeedMultiplier",
-    "iconPath": "Interface/Sprites/Rpg_icons/debuffs/13"
-  },
   "!1004": {
-    "type": 101,
-    "_name": "Slow_80",
-    "effect": "movementSpeedMultiplier",
-    "iconPath": "Interface/Sprites/Rpg_icons/debuffs/19"
+    "_name": "ActionSpeedIncrease",
+    "effect": "actionSpeed",
+    "iconPath": "Interface/Sprites/Rpg_icons/buffs/24"
   }
 }

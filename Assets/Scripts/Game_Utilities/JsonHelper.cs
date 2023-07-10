@@ -56,14 +56,14 @@ public class JsonHelper {
                         case Ability._ID_ATTACK_PROJECTILE: 
                             ability = ScriptableObject.CreateInstance<ProjectileAttack>();
                             break;
-                        case Ability._ID_GROUND_TARGETED: 
-                            ability = ScriptableObject.CreateInstance<GroundTargetedAbility>();
-                            break;
                         case Ability._ID_GROUND_TARGETED_AOE:
                             ability = ScriptableObject.CreateInstance<GroundTargetedAOEAbility>();
                             break;
                         case Ability._ID_TELEPORT:
                             ability = ScriptableObject.CreateInstance<Teleport>();
+                            break;
+                        case Ability._ID_BUFF:
+                            ability = ScriptableObject.CreateInstance<BuffAbility>();
                             break;
                         default:
                             break;
@@ -149,6 +149,9 @@ public class JsonHelper {
         //not great but should work
         if (ability is Aura) {
             (ability as Aura).Init();
+        }
+        if (ability is BuffAbility) {
+            (ability as BuffAbility).Init();
         }
 
         return ability;

@@ -11,6 +11,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
     public const int PROJECTILE_LAYER = 8;
+    public const int SPELL_EFFECT_LAYER = 9;
     public const int EFFECT_SPELL_ID_START_NUMBER = 1000;
     public const string JSON_PATH_BUFFS = "/JSON/abilities/buffs.json";
     public const string JSON_PATH_ABILITIES = "/JSON/Abilities/player.json";
