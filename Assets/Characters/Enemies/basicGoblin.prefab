@@ -6920,8 +6920,10 @@ GameObject:
   - component: {fileID: 2901246426814356932}
   - component: {fileID: 3169851816954602598}
   - component: {fileID: 2720891818920806827}
-  - component: {fileID: -464618144865582726}
   - component: {fileID: 5820402308954821554}
+  - component: {fileID: 9104495425243833598}
+  - component: {fileID: 5757264661440035119}
+  - component: {fileID: 7820619174743643024}
   m_Layer: 7
   m_Name: basicGoblin
   m_TagString: Enemy
@@ -7228,20 +7230,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 1}
   m_Size: {x: 1.4, y: 1.9}
   m_Direction: 0
---- !u!114 &-464618144865582726
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2959554295789042252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f45f2cfa69e22e94091c23728dde944f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resourceManager: {fileID: 0}
-  character4DScript: {fileID: 0}
 --- !u!114 &5820402308954821554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7264,6 +7252,60 @@ MonoBehaviour:
   maxMana: 0
   manaRegenIncrease_flat: 0
   manaRegenIncrease_multi: 1
+--- !u!114 &9104495425243833598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2959554295789042252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b00c235c7c49f64bbb7a0d2958cc980, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resourceManager: {fileID: 0}
+  character4DScript: {fileID: 0}
+  movementSpeed: 0
+  attackRange: 0
+  attackCooldown: 0
+--- !u!50 &5757264661440035119
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2959554295789042252}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!58 &7820619174743643024
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2959554295789042252}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.35
 --- !u!1 &2960262307237861550
 GameObject:
   m_ObjectHideFlags: 0
@@ -18816,7 +18858,7 @@ PrefabInstance:
     - target: {fileID: 3531716823367114234, guid: c40ebc4df0add2b49b70d066de8ab1af, type: 3}
       propertyPath: character
       value: 
-      objectReference: {fileID: -464618144865582726}
+      objectReference: {fileID: 0}
     - target: {fileID: 3531716823367114234, guid: c40ebc4df0add2b49b70d066de8ab1af, type: 3}
       propertyPath: resourceManager
       value: 

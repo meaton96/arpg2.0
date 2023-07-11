@@ -9,6 +9,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class GameController : MonoBehaviour {
     public const int PROJECTILE_LAYER = 8;
     public const int SPELL_EFFECT_LAYER = 9;
@@ -26,6 +28,11 @@ public class GameController : MonoBehaviour {
     public SpriteCollection itemSpriteCollection;
     public IconCollection iconCollection;
 
+    public List<Enemy> enemyList;
+    public List<Enemy> enemyPrefabList;
+    public float enemySpawnTimer, enemySpawnTime = 1.5f;
+    public float minRad = 20, maxRad = 50;
+
     // Start is called before the first frame update
     void Start() {
         if (Instance != null && Instance != this) {
@@ -34,13 +41,14 @@ public class GameController : MonoBehaviour {
         else {
             Instance = this;
         }
+        enemyList = new();
 
         Physics2D.IgnoreLayerCollision(PROJECTILE_LAYER, PROJECTILE_LAYER);
-        InitializeDictionaries();   
-            
+        InitializeDictionaries();
+
         ItemCollection.Active = ScriptableObject.CreateInstance<ItemCollection>();
         ItemCollection.Active.SpriteCollections = new() { itemSpriteCollection };
-        ItemCollection.Active.IconCollections = new() { iconCollection };  
+        ItemCollection.Active.IconCollections = new() { iconCollection };
         ItemCollection.Active.Items = new();
         CreateItem();
 
@@ -81,12 +89,12 @@ public class GameController : MonoBehaviour {
 
         ItemCollection.Active.Items.Add(iParam);
 
-        
-      //  var iconSprite = Resources.Load<Sprite>("Placeholder/Icon/Armor/Basic/AcornArmor");
-     //   var sprites = Resources.LoadAll<Sprite>("Placeholder/Equipment/Armor/Basic/AcornArmor");
-       // Debug.Log(sprites.Length);
-      //  var spriteCol = ItemCollection.Active.SpriteCollections[0];
-        
+
+        //  var iconSprite = Resources.Load<Sprite>("Placeholder/Icon/Armor/Basic/AcornArmor");
+        //   var sprites = Resources.LoadAll<Sprite>("Placeholder/Equipment/Armor/Basic/AcornArmor");
+        // Debug.Log(sprites.Length);
+        //  var spriteCol = ItemCollection.Active.SpriteCollections[0];
+
 
         //spriteCol.Armor.Add(itemSprite);
 
@@ -96,7 +104,7 @@ public class GameController : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (Input.GetKeyDown(KeyCode.F1)) {
-            Instantiate(playerPrefab, new Vector3(2, 0, 0), Quaternion.identity);
+            player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity).GetComponent<Player>();
 
         }
         if (Input.GetKeyDown(KeyCode.F2)) {
@@ -108,6 +116,11 @@ public class GameController : MonoBehaviour {
 
 
         }
+
+        if (player != null) {
+            SpawnEnemies();
+        }
+
     }
 
     public static Vector3 CameraToWorldPointMousePos() {
@@ -115,15 +128,43 @@ public class GameController : MonoBehaviour {
     }
 
     private void InitializeDictionaries() {
-        //var temp = JsonHelper.ParseAllAbilities(JSON_PATH_BUFFS);
-        //temp.Values.Cast<Buff>();
-
-        //foreach (KeyValuePair<int, Ability> kvp in temp) {
-        //    allBuffsDebuffs.Add(kvp.Key, kvp.Value as Buff);
-        //}
-
-
+        
         allSpells = JsonHelper.ParseAllAbilities(JSON_PATH_ABILITIES);
+
+    }
+
+    private void SpawnEnemies() {
+        if (enemySpawnTimer <= 0) {
+            SpawnEnemy();
+            enemySpawnTimer = enemySpawnTime;
+        }
+        else {
+            enemySpawnTimer -= Time.deltaTime;
+        }
+    }
+    //spawns a single enemy within minRad and maxRad radius of player randomly 
+    private void SpawnEnemy() {
+        var index = UnityEngine.Random.Range(0, enemyPrefabList.Count);
+        var distanceAwayFromPlayer = UnityEngine.Random.Range(minRad, maxRad);
+        var angle = UnityEngine.Random.Range(0f, 2 * Mathf.PI);
+
+        var x = distanceAwayFromPlayer * Mathf.Cos(angle);
+        var y = distanceAwayFromPlayer * Mathf.Sin(angle);
+
+        
+
+        var pos = new Vector3(x, y, 0) + player.transform.position;
+
+        var enemy = Instantiate(enemyPrefabList[index], pos, Quaternion.identity);
+
+        enemy.Init(
+            movementSpeed: 2,
+            attackCooldown: 2,
+            health: 50,
+            player: player,
+            enemyPrefabList[index].name
+            );
+
 
     }
 

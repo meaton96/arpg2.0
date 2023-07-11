@@ -17,7 +17,7 @@ public class Player : GameCharacter {
 
     #region Vars - movement
     private const float MOVEMENT_TOLERANCE = 0.01f;
-    [SerializeField] private float movementSpeed;
+    
     //movement speed multiplier for buffing
     [HideInInspector] public float movementSpeedMultiplier = 1;
     //position for the player to move to when user clicks
@@ -87,10 +87,13 @@ public class Player : GameCharacter {
     // Start is called before the first frame update
     protected override void Start() {
         base.Start();
+
+        movementSpeed = 3f;
+
         InitControls();
         currentBuffsDebuffs = new();
         currentBuffsDebuffsTimers = new();
-        GameController.Instance.player = this;
+        
         Camera.main.transform.SetParent(transform, false);
         HUD = GameObject.FindWithTag("HUD").GetComponent<UIBehaviour>();
         
@@ -107,6 +110,7 @@ public class Player : GameCharacter {
         spellBar.EquipAbility(3, 200); //flamestrike
         spellBar.EquipAura(0, GameController.Instance.allSpells[900] as Aura);
         spellBar.EquipAura(1, GameController.Instance.allSpells[901] as Aura);
+
 
     }
    
@@ -332,9 +336,7 @@ public class Player : GameCharacter {
     public float GetCooldownReduction() {
         return cooldownReduction;
     }
-    float GetDistanceSquared2D(Vector3 v1, Vector3 v2) {
-        return Mathf.Pow(v2.x - v1.x, 2) + Mathf.Pow(v2.y - v1.y, 2);
-    }
+    
     //returns true if the distance squared to the given position is less than the movement tolerance constant
     //used to end player movement and avoid floating point errors
     bool ReachedDestination() {

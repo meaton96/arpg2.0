@@ -16,6 +16,8 @@ public abstract class GameCharacter : MonoBehaviour {
     //reference to the character script to change character direction
     public Character4D character4DScript;
 
+    [SerializeField] protected float movementSpeed;
+
     protected virtual void Start() {
         character4DScript = GetComponent<Character4D>();
         character4DScript.SetDirection(Vector2.right);
@@ -55,5 +57,9 @@ public abstract class GameCharacter : MonoBehaviour {
 
     public void HandleSpellHit(DamagingAbility ability, GameCharacter caster) {
         DamageHealth(ability.CalculateDamage(caster));
+    }
+
+    protected float GetDistanceSquared2D(Vector3 v1, Vector3 v2) {
+        return Mathf.Pow(v2.x - v1.x, 2) + Mathf.Pow(v2.y - v1.y, 2);
     }
 }
