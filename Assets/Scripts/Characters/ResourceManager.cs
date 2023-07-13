@@ -104,6 +104,8 @@ public class ResourceManager : MonoBehaviour
     public void IncreaseManaRegenPercent(float amt) { manaRegenIncrease_multi += amt; }
     public void DecreaseManaRegenPercent(float amt) { manaRegenIncrease_multi -= amt; }
 
-    
+    public bool IsAlive() {
+        return currentHealth > 0;
+    }
 
 }

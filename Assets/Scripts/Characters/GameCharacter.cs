@@ -62,4 +62,7 @@ public abstract class GameCharacter : MonoBehaviour {
     protected float GetDistanceSquared2D(Vector3 v1, Vector3 v2) {
         return Mathf.Pow(v2.x - v1.x, 2) + Mathf.Pow(v2.y - v1.y, 2);
     }
+    protected float GetDistanceSquared2D(Vector3 v1) {
+        return Mathf.Pow(v1.x, 2) + Mathf.Pow(v1.y, 2);
+    }
 }

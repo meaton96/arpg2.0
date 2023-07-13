@@ -12,6 +12,7 @@ using UnityEngine;
 
 
 public class GameController : MonoBehaviour {
+    public const int ENEMY_LAYER = 7;
     public const int PROJECTILE_LAYER = 8;
     public const int SPELL_EFFECT_LAYER = 9;
     public const int EFFECT_SPELL_ID_START_NUMBER = 1000;
@@ -30,8 +31,12 @@ public class GameController : MonoBehaviour {
 
     public List<Enemy> enemyList;
     public List<Enemy> enemyPrefabList;
-    public float enemySpawnTimer, enemySpawnTime = 1.5f;
-    public float minRad = 20, maxRad = 50;
+    public float enemySpawnTimer, enemySpawnTime = 0.5f;
+    float minRad = 3, maxRad = 10;
+
+
+    private int maxEnemies = 1;
+    private bool spawnEnemies = true;
 
     // Start is called before the first frame update
     void Start() {
@@ -44,6 +49,8 @@ public class GameController : MonoBehaviour {
         enemyList = new();
 
         Physics2D.IgnoreLayerCollision(PROJECTILE_LAYER, PROJECTILE_LAYER);
+        Physics2D.IgnoreLayerCollision(ENEMY_LAYER, ENEMY_LAYER);
+        Physics2D.IgnoreLayerCollision(ENEMY_LAYER, 3);
         InitializeDictionaries();
 
         ItemCollection.Active = ScriptableObject.CreateInstance<ItemCollection>();
@@ -113,11 +120,11 @@ public class GameController : MonoBehaviour {
 
         }
         if (Input.GetKeyDown(KeyCode.F3)) {
-
+            spawnEnemies = !spawnEnemies;
 
         }
 
-        if (player != null) {
+        if (player != null && enemyList.Count < maxEnemies && spawnEnemies) {
             SpawnEnemies();
         }
 
@@ -145,8 +152,13 @@ public class GameController : MonoBehaviour {
     //spawns a single enemy within minRad and maxRad radius of player randomly 
     private void SpawnEnemy() {
         var index = UnityEngine.Random.Range(0, enemyPrefabList.Count);
+
+        Debug.Log(minRad + " " + maxRad);
         var distanceAwayFromPlayer = UnityEngine.Random.Range(minRad, maxRad);
         var angle = UnityEngine.Random.Range(0f, 2 * Mathf.PI);
+
+        Debug.Log(distanceAwayFromPlayer);
+        Debug.Log(angle * Mathf.Rad2Deg);
 
         var x = distanceAwayFromPlayer * Mathf.Cos(angle);
         var y = distanceAwayFromPlayer * Mathf.Sin(angle);
@@ -154,6 +166,8 @@ public class GameController : MonoBehaviour {
         
 
         var pos = new Vector3(x, y, 0) + player.transform.position;
+
+        Debug.Log("spawning enemy at: " + pos);
 
         var enemy = Instantiate(enemyPrefabList[index], pos, Quaternion.identity);
 
@@ -165,7 +179,7 @@ public class GameController : MonoBehaviour {
             enemyPrefabList[index].name
             );
 
-
+        enemyList.Add(enemy);
     }
 
 
