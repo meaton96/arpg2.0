@@ -1,4 +1,5 @@
 using Assets.HeroEditor4D.Common.Scripts.CharacterScripts;
+using Assets.HeroEditor4D.Common.Scripts.Enums;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,8 @@ public abstract class GameCharacter : MonoBehaviour {
     [HideInInspector] public ResourceManager resourceManager;
 
     protected AnimationManager animationManager;
-
+    //direction the character is currently moving
+    protected Vector3 movementDirection;
     //reference to the character script to change character direction
     public Character4D character4DScript;
 
@@ -32,7 +34,31 @@ public abstract class GameCharacter : MonoBehaviour {
 
 
     }
-
+    protected virtual void Update() {
+        UpdateAnimation();
+    }
+    public void PlayCastAnimation() {
+        StopMove();
+        PlayAttackAnimation();
+    }
+    protected virtual void PlayAttackAnimation() {
+        switch (character4DScript.WeaponType) {
+            case WeaponType.Melee1H:
+                animationManager.Slash(twoHanded: false);
+                break;
+            case WeaponType.Melee2H:
+            case WeaponType.Paired:
+                animationManager.Slash(twoHanded: true);
+                break;
+            case WeaponType.Bow:
+                animationManager.ShotBow();
+                break;
+            case WeaponType.Crossbow:
+                animationManager.CrossbowShot();
+                break;
+        }
+    }
+    protected virtual void StopMove() {}
     //replace with calculation from weapon damage
     public virtual float GetAttackDamage() {
         return 15;
@@ -53,6 +79,17 @@ public abstract class GameCharacter : MonoBehaviour {
         else {
             //assume hit another actor?
         }
+    }
+
+    protected virtual void UpdateAnimation() {
+        
+        //change character direction
+        if (Mathf.Abs(movementDirection.x) > Mathf.Abs(movementDirection.y)) {
+            character4DScript.SetDirection(movementDirection.x < 0 ? Vector2.left : Vector2.right);
+        }
+        else
+            character4DScript.SetDirection(movementDirection.y > 0 ? Vector2.up : Vector2.down);
+
     }
 
     public void HandleSpellHit(DamagingAbility ability, GameCharacter caster) {

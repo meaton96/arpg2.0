@@ -14,9 +14,11 @@ public abstract class Enemy : GameCharacter {
     protected Player player;
     protected Rigidbody2D rb;
 
-    protected const float FORCE_MULTIPLIER = 1.5f;
+    protected const float FORCE_MULTIPLIER = 3f;
     protected const float SEPERATE_MULTIPLIER = 1;
+    protected const float SEEK_MULTIPLIER = 1;
     protected const float MIN_SEP_RANGE = 0.1f, MAX_SEP_RANGE = 5;
+    protected const float MAXIMUM_SPEED = 2f;
 
 
     public void Init(float movementSpeed, float attackCooldown, float health, Player player, string type) {
@@ -36,7 +38,8 @@ public abstract class Enemy : GameCharacter {
         }
 
     }
-    protected void Update() {
+    protected override void Update() {
+        Debug.Log(GetDistanceSquared2D(transform.position, player.transform.position));
         if (!resourceManager.IsAlive()) {
             Destroy(gameObject);
         }
@@ -52,19 +55,27 @@ public abstract class Enemy : GameCharacter {
 
         }
         else {
-            rb.AddForce(Seek() * FORCE_MULTIPLIER);
-
-
-            rb.AddForce(Seperate() * FORCE_MULTIPLIER);
+            Vector2 forces = new();
+            forces += Seek() * SEEK_MULTIPLIER;
+            Debug.Log(forces);
+            //forces += Seperate() * SEPERATE_MULTIPLIER; 
+            rb.AddForce(forces * FORCE_MULTIPLIER);
         }
         if (rb.velocity.magnitude > 0) {
             animationManager.SetState(CharacterState.Walk);
         }
+        movementDirection = rb.velocity.normalized;
+        if (rb.velocity.magnitude > MAXIMUM_SPEED)
+            rb.velocity = movementDirection * MAXIMUM_SPEED;
+        base.Update();
 
     }
     protected virtual void AttackPlayer() {
         attackTimer = attackCooldown;
-        animationManager.Attack();
+        PlayCastAnimation();
+    }
+    protected override void StopMove() {
+        rb.velocity = Vector2.zero;
     }
     protected Vector2 Seek() {
         var desiredVelocity = (player.transform.position - transform.position).normalized * movementSpeed;
@@ -87,7 +98,7 @@ public abstract class Enemy : GameCharacter {
                 var distance = GetDistanceSquared2D(vToEnemy);
                 //var ratio = (distance) / (MAX_SEP_RANGE - MIN_SEP_RANGE);
 
-                vToEnemy = vToEnemy / distance * SEPERATE_MULTIPLIER;
+                vToEnemy /= distance;
                 force += new Vector2(vToEnemy.x, vToEnemy.y);
             }
         });
@@ -97,8 +108,8 @@ public abstract class Enemy : GameCharacter {
 
     }
     private void OnDrawGizmos() {
-        Gizmos.DrawLine(transform.position + new Vector3(rb.velocity.x, rb.velocity.y), Seek());
-        Gizmos.DrawLine(transform.position, rb.velocity);
+        Gizmos.DrawLine(transform.position, Seek());
+        //Gizmos.DrawLine(transform.position, rb.velocity);
 
     }
 

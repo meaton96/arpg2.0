@@ -153,12 +153,9 @@ public class GameController : MonoBehaviour {
     private void SpawnEnemy() {
         var index = UnityEngine.Random.Range(0, enemyPrefabList.Count);
 
-        Debug.Log(minRad + " " + maxRad);
         var distanceAwayFromPlayer = UnityEngine.Random.Range(minRad, maxRad);
         var angle = UnityEngine.Random.Range(0f, 2 * Mathf.PI);
 
-        Debug.Log(distanceAwayFromPlayer);
-        Debug.Log(angle * Mathf.Rad2Deg);
 
         var x = distanceAwayFromPlayer * Mathf.Cos(angle);
         var y = distanceAwayFromPlayer * Mathf.Sin(angle);
@@ -167,7 +164,6 @@ public class GameController : MonoBehaviour {
 
         var pos = new Vector3(x, y, 0) + player.transform.position;
 
-        Debug.Log("spawning enemy at: " + pos);
 
         var enemy = Instantiate(enemyPrefabList[index], pos, Quaternion.identity);
 

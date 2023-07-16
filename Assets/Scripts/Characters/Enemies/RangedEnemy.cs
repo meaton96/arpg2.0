@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class RangedEnemy : Enemy {
     protected override void AttackPlayer() {
-        throw new System.NotImplementedException();
+        PlayAttackAnimation();
     }
 }

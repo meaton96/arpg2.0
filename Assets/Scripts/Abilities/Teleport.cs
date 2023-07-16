@@ -13,7 +13,7 @@ public class Teleport : GroundTargetedAbility
             tpPath = tpPath.normalized * maxRange;
         }
         playerCollider.transform.position = tpPath + instantiatePosition;
-        playerCollider.gameObject.GetComponent<Player>().StopMove();
+       // playerCollider.gameObject.GetComponent<Player>().StopMove();
     }
     public override Ability CopyInstance() {
 

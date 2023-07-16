@@ -22,8 +22,7 @@ public class Player : GameCharacter {
     [HideInInspector] public float movementSpeedMultiplier = 1;
     //position for the player to move to when user clicks
     private Vector3 moveToPosition;
-    //direction the character is currently moving
-    private Vector3 movementDirection;
+    
     #endregion
     #region Vars - controls
     //control settings - placeholder before moving to a more robust settings far in the future
@@ -116,7 +115,7 @@ public class Player : GameCharacter {
    
 
     // Update is called once per frame
-    void Update() {
+    protected override void Update() {
 
         if (isActive) {
 
@@ -169,7 +168,7 @@ public class Player : GameCharacter {
     }
     #endregion
     #region Animation
-    void UpdateAnimation() {
+    protected override void UpdateAnimation() {
         //change character animation state
         if (state == State.walking) {
             animationManager.SetState(CharacterState.Walk);
@@ -180,35 +179,10 @@ public class Player : GameCharacter {
         else if (state == State.idle) {
             animationManager.SetState(CharacterState.Idle);
         }
-        //change character direction
-        if (Mathf.Abs(movementDirection.x) > Mathf.Abs(movementDirection.y)) {
-            character4DScript.SetDirection(movementDirection.x < 0 ? Vector2.left : Vector2.right);
-        }
-        else
-            character4DScript.SetDirection(movementDirection.y > 0 ? Vector2.up : Vector2.down);
-
+        base.UpdateAnimation();
     }
-    public void PlayAttackAnimation() {
-        switch (character4DScript.WeaponType) {
-            case WeaponType.Melee1H:
-                animationManager.Slash(twoHanded: false);
-                break;
-            case WeaponType.Melee2H:
-            case WeaponType.Paired:
-                animationManager.Slash(twoHanded: true);
-                break;
-            case WeaponType.Bow:
-                animationManager.ShotBow();
-                break;
-            case WeaponType.Crossbow:
-                animationManager.CrossbowShot();
-                break;
-        }
-    }
-    public void PlayCastAnimation() {
-        StopMove();
-        PlayAttackAnimation();
-    }
+    
+    
 
     public void FaceDirection(Vector3 direction) {
         movementDirection = (direction - transform.position).normalized;
@@ -326,7 +300,7 @@ public class Player : GameCharacter {
             "Cooldown Reduction: " + (cooldownReduction * 100) + "%" + "\n" +
             "Action Speed: " + actionSpeed * 100 + "%";
     }
-    public void StopMove() {
+    protected override void StopMove() {
         moveToPosition = transform.position;
     }
 
