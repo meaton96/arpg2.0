@@ -8,6 +8,8 @@ using UnityEngine;
 public abstract class Enemy : GameCharacter {
     // Character4D character4DScript;
 
+    
+
     public float attackRange;
     public float attackCooldown;
     protected float attackTimer;
@@ -22,6 +24,7 @@ public abstract class Enemy : GameCharacter {
 
 
     public void Init(float movementSpeed, float attackCooldown, float health, Player player, string type) {
+        _CHARACTER_HALF_HEIGHT_ = new(0, 0.35f, 0);
         base.Start();
         rb = GetComponent<Rigidbody2D>();
         resourceManager.Init(health, 0, 0, 0);
@@ -65,8 +68,8 @@ public abstract class Enemy : GameCharacter {
             animationManager.SetState(CharacterState.Walk);
         }
         movementDirection = rb.velocity.normalized;
-        if (rb.velocity.magnitude > MAXIMUM_SPEED)
-            rb.velocity = movementDirection * MAXIMUM_SPEED;
+       // if (rb.velocity.magnitude > MAXIMUM_SPEED)
+       //     rb.velocity = movementDirection * MAXIMUM_SPEED;
         base.Update();
 
     }

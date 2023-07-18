@@ -127,7 +127,7 @@ public class ProjectileBehaviour : MonoBehaviour {
 
             //create the new projectile
             var newProj = Instantiate(gameObject,
-                initialPosition + GameCharacter._CHARACTER_HALF_HEIGHT_,
+                initialPosition + collider.GetComponent<GameCharacter>()._CHARACTER_HALF_HEIGHT_,
                 Quaternion.Euler(
                     new Vector3(
                         0,

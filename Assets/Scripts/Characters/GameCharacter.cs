@@ -7,7 +7,7 @@ using UnityEngine;
 public abstract class GameCharacter : MonoBehaviour {
     #region Vars - Projectile Spawning
     [HideInInspector] public const float _PROJECTILE_SPAWN_RADIUS_ = 1f;
-    [HideInInspector] public static readonly Vector3 _CHARACTER_HALF_HEIGHT_ = new(0, 0.7f, 0);
+    [HideInInspector] public Vector3 _CHARACTER_HALF_HEIGHT_ = new(0, 0.7f, 0);
     #endregion
 
     [HideInInspector] public ResourceManager resourceManager;

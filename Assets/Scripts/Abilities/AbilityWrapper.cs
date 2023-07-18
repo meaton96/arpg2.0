@@ -41,7 +41,7 @@ public class AbilityWrapper : MonoBehaviour {
 
                 player.FaceDirection(mousePos);
 
-                vMouseToPlayer += GameCharacter._CHARACTER_HALF_HEIGHT_;
+                vMouseToPlayer += player._CHARACTER_HALF_HEIGHT_;
 
                 ability.Cast(pos, mousePos, vMouseToPlayer, player.GetComponent<Collider2D>());
 

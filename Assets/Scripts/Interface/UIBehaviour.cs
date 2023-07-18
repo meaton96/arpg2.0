@@ -21,12 +21,17 @@ public class UIBehaviour : MonoBehaviour {
     private bool charPanelDisplayed = false;
     ResourceManager playerResourceManager;
 
+    [Range(1f, 3f)]
+    public float uiScale = 1;
+
+    private float previousScale;
+
     public bool showHealthAndManaNumbers = true;
     // Start is called before the first frame update
     void Start() {
 
         playerResourceManager = player.resourceManager;
-
+        transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
     }
 
     // Update is called once per frame
@@ -48,6 +53,8 @@ public class UIBehaviour : MonoBehaviour {
             ToggleCharacterPanel();
         }
         UpdateCharacterPanelInfo();
+        ScaleInterface();
+        
     }
 
     void UpdateCharacterPanelInfo() {
@@ -68,4 +75,9 @@ public class UIBehaviour : MonoBehaviour {
     public void ForceRemoveBuff(Buff buff) {
         BuffBar.RemoveBuff(buff);
     }
+    private void ScaleInterface() {
+        transform.localScale = new Vector3(uiScale, uiScale, 1f);
+        previousScale = uiScale;
+    }
+
 }

@@ -437,6 +437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 034174c2eb756f94facdb1f4bc7c3981, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _CHARACTER_HALF_HEIGHT_: {x: 0, y: 0.7, z: 0}
   resourceManager: {fileID: 6767171416876917092}
   character4DScript: {fileID: 114216053546988558}
   movementSpeed: 3
@@ -19002,6 +19003,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 514144617778779753}
+    - target: {fileID: 5881127232997441644, guid: c08ea87286e9fdc4d992a5f9c40ec399, type: 3}
+      propertyPath: uiScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8753741094805737667, guid: c08ea87286e9fdc4d992a5f9c40ec399, type: 3}
       propertyPath: m_Pivot.x
       value: 0
