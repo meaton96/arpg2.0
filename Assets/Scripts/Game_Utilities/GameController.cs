@@ -13,6 +13,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
     public const int ENEMY_LAYER = 7;
+    public const int ENEMY_COLLISION_LAYER = 10;
     public const int PROJECTILE_LAYER = 8;
     public const int SPELL_EFFECT_LAYER = 9;
     public const int PLAYER_LAYER = 3;
@@ -24,6 +25,7 @@ public class GameController : MonoBehaviour {
 
     public static GameController Instance;
     [SerializeField] private GameObject playerPrefab;
+    
     //[SerializeField] private GameObject playerPrefabBow;
     public Player player;
     public Dictionary<int, Ability> allSpells = new();
@@ -54,7 +56,8 @@ public class GameController : MonoBehaviour {
         Physics2D.IgnoreLayerCollision(PROJECTILE_LAYER, PROJECTILE_LAYER);
         Physics2D.IgnoreLayerCollision(ENEMY_LAYER, ENEMY_LAYER);
         Physics2D.IgnoreLayerCollision(ENEMY_LAYER, PLAYER_LAYER);
-        
+        Physics2D.IgnoreLayerCollision(PROJECTILE_LAYER, ENEMY_COLLISION_LAYER);
+
         InitializeDictionaries();
 
         ItemCollection.Active = ScriptableObject.CreateInstance<ItemCollection>();
@@ -155,7 +158,8 @@ public class GameController : MonoBehaviour {
     }
     //spawns a single enemy within minRad and maxRad radius of player randomly 
     private void SpawnEnemy() {
-        var index = UnityEngine.Random.Range(0, enemyPrefabList.Count);
+        //var index = UnityEngine.Random.Range(0, enemyPrefabList.Count);
+        var index = 1;
 
         var distanceAwayFromPlayer = UnityEngine.Random.Range(minRad, maxRad);
         var angle = UnityEngine.Random.Range(0f, 2 * Mathf.PI);
@@ -172,8 +176,6 @@ public class GameController : MonoBehaviour {
         var enemy = Instantiate(enemyPrefabList[index], pos, Quaternion.identity);
 
         enemy.Init(
-            movementSpeed: 2,
-            attackCooldown: 2,
             health: 50,
             player: player,
             enemyPrefabList[index].name

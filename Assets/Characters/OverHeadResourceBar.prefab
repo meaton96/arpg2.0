@@ -300,4 +300,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 3292297614195616672}
-  character: {fileID: 0}
+  resourceManager: {fileID: 0}

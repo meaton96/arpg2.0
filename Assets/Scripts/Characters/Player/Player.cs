@@ -23,6 +23,7 @@ public class Player : GameCharacter {
     //position for the player to move to when user clicks
     private Vector3 moveToPosition;
     
+    
     #endregion
     #region Vars - controls
     //control settings - placeholder before moving to a more robust settings far in the future
@@ -43,15 +44,15 @@ public class Player : GameCharacter {
 
     //reference to interface script
     [HideInInspector] public UIBehaviour HUD;
-    
+    [HideInInspector] public Collider2D playerCollider;
 
     //public PlayerResourceManager resourceManager;
 
-    
-    //reference to animation manager script to control animations
-   // public AnimationManager animationManager;
 
-    
+    //reference to animation manager script to control animations
+    // public AnimationManager animationManager;
+
+
     #endregion
     #region Vars - combat stats
     //tracked as a float from 0 - 1 as a % cooldown reduction, .2 = 20% reduced cooldown
@@ -95,7 +96,7 @@ public class Player : GameCharacter {
         
         Camera.main.transform.SetParent(transform, false);
         HUD = GameObject.FindWithTag("HUD").GetComponent<UIBehaviour>();
-        
+        playerCollider = GetComponent<Collider2D>();
         resourceManager.Init(_MAX_HEALTH_, _MAX_MANA_);
         //placeholder
         //animationManager.SetWeaponType(WeaponType.Melee2H);

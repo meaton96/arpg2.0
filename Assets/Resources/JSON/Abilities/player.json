@@ -55,7 +55,7 @@
     "cooldown": 30,
     "manaCost": 30,
     "healthCost": 0,
-    "effectName": "Action_Speed_Increase",
+    "effectName": "Action_Speed_Increase",	
     "effectAmount": 0.3,
 	"duration": 10,
     "iconPath": "Interface/Sprites/Rpg_icons/buffs/24"
@@ -69,7 +69,7 @@
     "cooldown": 0,
     "baseProjectileSpeed": 10,
     "baseProjectiles": 1,
-    "chainNumber": 1,
+    "chainNumber": 0,
     "pierceNumber": 0,
     "manaCost": 0,
     "healthCost": 0,

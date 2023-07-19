@@ -27,6 +27,13 @@ public class ProjectileAbility : DamagingAbility {
 
 
 
+    /// <summary>
+    /// Cast this spell
+    /// </summary>
+    /// <param name="pos">Position to instantiate the spell object</param>
+    /// <param name="targetPos">target to aim towards</param>
+    /// <param name="offset">offset away from the instantiate position</param>
+    /// <param name="casterCollider">the collider of the caster to remove it from collision</param>
     public override void Cast(Vector3 pos, Vector3 targetPos, Vector3 offset, Collider2D casterCollider) {
         
         
@@ -36,17 +43,17 @@ public class ProjectileAbility : DamagingAbility {
         //check if collider is player or npc firing maybe
         if (true) {
             //grab the distance from player to the mouse
-            float distSquaredToMouse = Mathf.Pow(targetPos.x - pos.x, 2) + Mathf.Pow(targetPos.y - pos.y, 2);
+            float distSquaredToTarget = Mathf.Pow(targetPos.x - pos.x, 2) + Mathf.Pow(targetPos.y - pos.y, 2);
             float spreadAngle;                      //how far apart each projectile should be from eachother in degrees
             //cap the spread angle by max bounds
-            if (distSquaredToMouse > maxDistance) {
+            if (distSquaredToTarget > maxDistance) {
                 spreadAngle = minAngle;
             }
-            else if (distSquaredToMouse < minDistance) {
+            else if (distSquaredToTarget < minDistance) {
                 spreadAngle = maxAngle;
             }
             else {
-                var distanceRation = distSquaredToMouse / maxDistance;
+                var distanceRation = distSquaredToTarget / maxDistance;
                 spreadAngle = (1 - distanceRation) * maxAngle;
             }
 

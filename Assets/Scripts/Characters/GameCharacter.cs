@@ -11,7 +11,7 @@ public abstract class GameCharacter : MonoBehaviour {
     #endregion
 
     [HideInInspector] public ResourceManager resourceManager;
-
+    [SerializeField] private GameObject damageToastPrefab;
     protected AnimationManager animationManager;
     //direction the character is currently moving
     protected Vector3 movementDirection;
@@ -28,10 +28,10 @@ public abstract class GameCharacter : MonoBehaviour {
     }
 
     public void DamageHealth(float amount) {
-        //Debug.Log(amount);
+        //Debug.Log(name + " took " + amount + " damage");
         //Debug.Log(resourceManager.currentHealth + "/" + resourceManager.maxHealth);
         resourceManager.DamageHealth(amount);
-
+        
 
     }
     protected virtual void Update() {
@@ -93,6 +93,10 @@ public abstract class GameCharacter : MonoBehaviour {
     }
 
     public void HandleSpellHit(DamagingAbility ability, GameCharacter caster) {
+        
+        //temp - combat log?
+        Debug.Log(caster.name + "'s" + ability._name + 
+            " hit " + name + " for " + ability.CalculateDamage(caster));
         DamageHealth(ability.CalculateDamage(caster));
     }
 

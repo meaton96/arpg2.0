@@ -33,12 +33,25 @@ public abstract class Ability : ScriptableObject {
     public GameObject abilityPreFab;
     public int onHitDebuffID;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="instantiatePosition">The position to spawn the spell</param>
+    /// <param name="mousePos">The position of the mouse</param>
+    /// <param name="offset">An offset vector to spawn away from the instantiate position</param>
+    /// <param name="casterCollider">the collider of the caster to prevent collision</param>
     public virtual void Cast(Vector3 instantiatePosition, Vector3 mousePos, Vector3 offset, Collider2D casterCollider) {
-
-
         Instantiate(abilityPreFab, instantiatePosition, Quaternion.identity);
     }
-   // public abstract void Init();
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="instantiatePosition">The position to spawn the spell</param>
+    /// <param name="casterCollider">the collider of the caster to prevent collision</param>
+    public virtual void Cast(Vector3 instantiatePosition, Collider2D casterCollider) {
+        Instantiate(abilityPreFab, instantiatePosition, Quaternion.identity);
+    }
+    // public abstract void Init();
     public override string ToString() {
 
         string s = "[ ";

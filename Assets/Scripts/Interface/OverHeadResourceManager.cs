@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class OverHeadResourceManager : MonoBehaviour
 {
+   
     [SerializeField] GameObject healthBar;
     //[SerializeField] GameCharacter character;
     [SerializeField] private ResourceManager resourceManager;
@@ -19,6 +20,7 @@ public class OverHeadResourceManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         var scale = healthBar.transform.localScale; 
         scale.x = Mathf.Clamp01(resourceManager.GetPercentHealth());
         healthBar.transform.localScale = scale;

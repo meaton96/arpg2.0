@@ -43,7 +43,7 @@ public class AbilityWrapper : MonoBehaviour {
 
                 vMouseToPlayer += player._CHARACTER_HALF_HEIGHT_;
 
-                ability.Cast(pos, mousePos, vMouseToPlayer, player.GetComponent<Collider2D>());
+                ability.Cast(pos, mousePos, vMouseToPlayer, player.playerCollider);
 
                 cooldownDuration = ability.cooldown * (1 - player.cooldownReduction);
                 cooldownTimer = cooldownDuration;

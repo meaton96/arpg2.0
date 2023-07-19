@@ -64,7 +64,7 @@ public class ProjectileBehaviour : MonoBehaviour {
 
             if (chain > 0) {
 
-                TryChain(other);
+                TryChain(other, other.GetComponent<GameCharacter>()._CHARACTER_HALF_HEIGHT_);
             }
             if (pierce == 0) {
                 Destroy(gameObject);
@@ -81,7 +81,7 @@ public class ProjectileBehaviour : MonoBehaviour {
     //performs a projectile chain
     //performs a number of raycasts in a circle around the target hit by this projectile
     //attempts to create a projectile towards an enemy hit
-    protected void TryChain(Collider2D collider) {
+    protected void TryChain(Collider2D collider, Vector3 characterHalfHeight) {
         var angle = Mathf.PI * 2 / NUM_RAYCASTS;
         int random = Random.Range(0, 2);
         var initialPosition = collider.transform.position;
@@ -89,14 +89,14 @@ public class ProjectileBehaviour : MonoBehaviour {
         //either 0 or 1 to change chaining seek logic
         if (random > 0) {
             for (int x = 0; x < NUM_RAYCASTS; x++) {
-                if (CalculateChain(collider, x * angle, initialPosition)) {
+                if (CalculateChain(collider, characterHalfHeight, x * angle, initialPosition)) {
                     return;
                 }
             }
         }
         else {
             for (int x = NUM_RAYCASTS; x > 0; x--) {
-                if (CalculateChain(collider, x * angle, initialPosition)) {
+                if (CalculateChain(collider, characterHalfHeight, x * angle, initialPosition)) {
                     return;
                 }
             }
@@ -105,7 +105,7 @@ public class ProjectileBehaviour : MonoBehaviour {
     //performs a raycast from the position of collider in the angle of i_angle
     //if the raycast hits an enemy a new projectile will be created and shot at that enemy
     //the projectile created is the same as this one
-    protected bool CalculateChain(Collider2D collider, float i_angle, Vector3 initialPosition) {
+    protected bool CalculateChain(Collider2D collider, Vector3 characterHalfHeight, float i_angle, Vector3 initialPosition) {
 
         var dir = new Vector2(Mathf.Cos(i_angle), Mathf.Sin(i_angle)).normalized;   //grab the direction vector towards i_angle
         var colliderInRange = Physics2D.RaycastAll(
@@ -127,7 +127,7 @@ public class ProjectileBehaviour : MonoBehaviour {
 
             //create the new projectile
             var newProj = Instantiate(gameObject,
-                initialPosition + collider.GetComponent<GameCharacter>()._CHARACTER_HALF_HEIGHT_,
+                initialPosition + characterHalfHeight,
                 Quaternion.Euler(
                     new Vector3(
                         0,

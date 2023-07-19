@@ -15,6 +15,14 @@ public abstract class Enemy : GameCharacter {
     protected float attackTimer;
     protected Player player;
     protected Rigidbody2D rb;
+    protected Collider2D enemyCollider;
+
+    public Transform target;
+   // public Transform player;
+    public float flockRadius = 3f;
+    public float separationWeight = 1f;
+    public float alignmentWeight = 1f;
+    public float cohesionWeight = 1f;
 
     protected const float FORCE_MULTIPLIER = 3f;
     protected const float SEPERATE_MULTIPLIER = 1;
@@ -22,27 +30,21 @@ public abstract class Enemy : GameCharacter {
     protected const float MIN_SEP_RANGE = 0.1f, MAX_SEP_RANGE = 5;
     protected const float MAXIMUM_SPEED = 2f;
 
+    protected List<Ability> availableAbilities;
 
-    public void Init(float movementSpeed, float attackCooldown, float health, Player player, string type) {
-        _CHARACTER_HALF_HEIGHT_ = new(0, 0.35f, 0);
+    public virtual void Init(float health, Player player, string type) {
+        _CHARACTER_HALF_HEIGHT_ *= transform.localScale.x;  
         base.Start();
         rb = GetComponent<Rigidbody2D>();
         resourceManager.Init(health, 0, 0, 0);
         this.player = player;
-        this.movementSpeed = movementSpeed;
-        this.attackCooldown = attackCooldown;
-
-        //temporary
-        if (type == "basicGoblin") {
-            attackRange = 1;
-        }
-        else if (type == "shooterGoblin") {
-            attackRange = 5;
-        }
+        target = player.transform;
+        availableAbilities = new();
+        enemyCollider = GetComponent<Collider2D>();
 
     }
     protected override void Update() {
-        Debug.Log(GetDistanceSquared2D(transform.position, player.transform.position));
+        //Debug.Log(GetDistanceSquared2D(transform.position, player.transform.position));
         if (!resourceManager.IsAlive()) {
             Destroy(gameObject);
         }
@@ -59,8 +61,9 @@ public abstract class Enemy : GameCharacter {
         }
         else {
             Vector2 forces = new();
-            forces += Seek() * SEEK_MULTIPLIER;
-            Debug.Log(forces);
+            forces += Seek(target.position) * SEEK_MULTIPLIER;
+            forces += Flocking();
+            //Debug.Log(forces);
             //forces += Seperate() * SEPERATE_MULTIPLIER; 
             rb.AddForce(forces * FORCE_MULTIPLIER);
         }
@@ -75,18 +78,51 @@ public abstract class Enemy : GameCharacter {
     }
     protected virtual void AttackPlayer() {
         attackTimer = attackCooldown;
+        ProjectileAbility ability = availableAbilities[Random.Range(0, availableAbilities.Count)] as ProjectileAbility;
+        ability.Cast(transform.position, target.position, Vector3.zero, GetComponent<Collider2D>());
         PlayCastAnimation();
     }
     protected override void StopMove() {
         rb.velocity = Vector2.zero;
     }
-    protected Vector2 Seek() {
-        var desiredVelocity = (player.transform.position - transform.position).normalized * movementSpeed;
+    private Vector2 Flocking() {
+        List<Enemy> enemies = GameController.Instance.enemyList;
+        Vector2 separationForce = Vector2.zero;
+        Vector2 alignmentForce = Vector2.zero;
+        Vector2 cohesionForce = Vector2.zero;
 
-        var velocity_2d = new Vector2(desiredVelocity.x, desiredVelocity.y);
+        int neighborCount = 0;
 
-        return velocity_2d - rb.velocity;
+        foreach (var enemy in enemies) {
+            if (enemy == this)
+                continue;
 
+            float distance = Vector2.Distance(transform.position, enemy.transform.position);
+
+            if (distance < flockRadius) {
+                separationForce += (Vector2)transform.position - (Vector2)enemy.transform.position;
+                alignmentForce += enemy.rb.velocity;
+                cohesionForce += (Vector2)enemy.transform.position;
+                neighborCount++;
+            }
+        }
+
+        if (neighborCount > 0) {
+            separationForce /= neighborCount;
+            alignmentForce /= neighborCount;
+            cohesionForce /= neighborCount;
+
+            separationForce = separationForce.normalized * separationWeight;
+            alignmentForce = alignmentForce.normalized * alignmentWeight;
+            cohesionForce = (cohesionForce - (Vector2)transform.position).normalized * cohesionWeight;
+        }
+
+        return separationForce + alignmentForce + cohesionForce;
+    }
+
+    private Vector2 Seek(Vector2 targetPosition) {
+        Vector2 desiredVelocity = (targetPosition - (Vector2)transform.position).normalized * movementSpeed;
+        return desiredVelocity - rb.velocity;
     }
     protected Vector2 Seperate() {
         var enemies = GameController.Instance.enemyList.FindAll(enemy => {
@@ -110,8 +146,10 @@ public abstract class Enemy : GameCharacter {
 
 
     }
+        
+
     private void OnDrawGizmos() {
-        Gizmos.DrawLine(transform.position, Seek());
+        //Gizmos.DrawLine(transform.position, Seek(player.transform.position));
         //Gizmos.DrawLine(transform.position, rb.velocity);
 
     }
