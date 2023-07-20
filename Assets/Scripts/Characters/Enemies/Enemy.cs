@@ -20,9 +20,9 @@ public abstract class Enemy : GameCharacter {
     public Transform target;
     // public Transform player;
 
-    public float separationWeight = 1f;
-    public float alignmentWeight = 1f;
-    public float cohesionWeight = 1f;
+    [HideInInspector] public float separationWeight = 1f;
+    [HideInInspector] public float alignmentWeight = 1f;
+    [HideInInspector] public float cohesionWeight = 1f;
 
     protected const float FORCE_MULTIPLIER = 3f;
     protected const float SEPERATE_MULTIPLIER = 1;
@@ -46,6 +46,18 @@ public abstract class Enemy : GameCharacter {
         enemyCollider = GetComponent<Collider2D>();
 
     }
+    public virtual void Init(float health, float mana, Player player, string type) {
+        _CHARACTER_HALF_HEIGHT_ *= transform.localScale.x;
+        base.Start();
+        rb = GetComponent<Rigidbody2D>();
+        resourceManager.Init(health, mana, 0, 5);
+        this.player = player;
+        target = player.transform;
+        availableAbilities = new();
+        enemyCollider = GetComponent<Collider2D>();
+
+    }
+
     protected override void Update() {
         //Debug.Log(GetDistanceSquared2D(transform.position, player.transform.position));
         if (!resourceManager.IsAlive()) {
@@ -112,10 +124,6 @@ public abstract class Enemy : GameCharacter {
         Destroy(gameObject);
     }
     protected virtual void AttackPlayer() {
-        Debug.Log("Attacking");
-        
-       
-
         PlayCastAnimation();
     }
     protected override void StopMove() {

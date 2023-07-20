@@ -8,6 +8,8 @@ using UnityEngine.UIElements;
 
 public class ProjectileBehaviour : MonoBehaviour {
     public const int WALL_LAYER = 6;
+    private const int DURATION = 10;
+    private float timer;
     protected float speed;
     protected GameCharacter caster;
     [Range(0f, 1.0f)]
@@ -161,6 +163,12 @@ public class ProjectileBehaviour : MonoBehaviour {
         Physics2D.IgnoreCollision(collider, newProj.GetComponent<Collider2D>());
     }
     #endregion
+
+
+    private void Update() {
+        if (timer > DURATION) Destroy(gameObject);
+        else timer += Time.deltaTime;
+    }
     public virtual float CalculateDmage() {
         //Debug.Log(ability.CalculateDamage());
         //Debug.Log(ability.CalculateDamage(caster));
@@ -171,7 +179,7 @@ public class ProjectileBehaviour : MonoBehaviour {
     }
     public DamagingAbility GetAbility() { return ability; }
     public GameCharacter GetCaster() { return caster; }
-
+    public float GetProjectileSpeed() { return speed; }
 
 
 }

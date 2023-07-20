@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour {
     #region Enemy Spawning
     //spawning vars for testing
     public const bool SPAWN_ONLY_ONE_ENEMY_TYPE = true;
-    public const int ENEMY_INDEX = 0;
+    public const int ENEMY_INDEX = 2;
     //end test vars
     public float enemySpawnTimer, enemySpawnTime = 0.5f;
     float minRad = 3, maxRad = 10;

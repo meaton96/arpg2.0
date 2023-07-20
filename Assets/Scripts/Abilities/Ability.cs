@@ -40,8 +40,8 @@ public abstract class Ability : ScriptableObject {
     /// <param name="mousePos">The position of the mouse</param>
     /// <param name="offset">An offset vector to spawn away from the instantiate position</param>
     /// <param name="casterCollider">the collider of the caster to prevent collision</param>
-    public virtual GameObject Cast(Vector3 instantiatePosition, Vector3 mousePos, Vector3 offset, Collider2D casterCollider) {
-        return Instantiate(abilityPreFab, instantiatePosition, Quaternion.identity);
+    public virtual List<GameObject> Cast(Vector3 instantiatePosition, Vector3 mousePos, Vector3 offset, Collider2D casterCollider) {
+        return new List<GameObject>() { Instantiate(abilityPreFab, instantiatePosition, Quaternion.identity) };
     }
     /// <summary>
     /// 

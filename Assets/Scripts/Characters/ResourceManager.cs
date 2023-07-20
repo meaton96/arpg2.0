@@ -9,19 +9,19 @@ public class ResourceManager : MonoBehaviour
     protected const float HEALTH_TICKS_PER_SECOND = 4f;
     protected float healthTimer = 0;
     protected float manaTimer = 0;
-    public float currentHealth;
-    public float maxHealth;
+    [HideInInspector]public float currentHealth;
+    [HideInInspector] public float maxHealth;
 
-    public float BASE_HEALTH_REGEN = 5;
-    public float healthRegenIncrease_flat;
-    public float healthRegenIncrease_multi = 1;
+    [HideInInspector] public float BASE_HEALTH_REGEN = 5;
+    [HideInInspector] public float healthRegenIncrease_flat;
+    [HideInInspector] public float healthRegenIncrease_multi = 1;
 
-    public float BASE_MANA_REGEN;
-    public float currentMana;
+    [HideInInspector] public float BASE_MANA_REGEN;
+    [HideInInspector] public float currentMana;
     
-    public float maxMana;
-    public float manaRegenIncrease_flat;
-    public float manaRegenIncrease_multi = 1;
+    [HideInInspector] public float maxMana;
+    [HideInInspector] public float manaRegenIncrease_flat;
+    [HideInInspector] public float manaRegenIncrease_multi = 1;
 
     
 

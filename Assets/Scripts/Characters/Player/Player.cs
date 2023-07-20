@@ -103,11 +103,11 @@ public class Player : GameCharacter {
 
 
         spellBar.EquipAbility(4, 400);   //arrow shot
-        spellBar.EquipAbility(5, 1);   //ice lance
+        spellBar.EquipAbility(5, 1);   //fireball x3
         spellBar.EquipAbility(0, 800); //teleport
         spellBar.EquipAbility(1, 401); //piercing shot
         spellBar.EquipAbility(2, 100); //flamestrike
-        spellBar.EquipAbility(3, 200); //flamestrike
+        spellBar.EquipAbility(3, 200); //haste
         spellBar.EquipAura(0, GameController.Instance.allSpells[900] as Aura);
         spellBar.EquipAura(1, GameController.Instance.allSpells[901] as Aura);
 

@@ -11,14 +11,14 @@ public class GroundTargetedAOEAbility : GroundTargetedAbility {
 
         return null;
     }
-    public override GameObject Cast(Vector3 instantiatePosition, Vector3 mousePos, Vector3 offset, Collider2D casterCollider) {
+    public override List<GameObject> Cast(Vector3 instantiatePosition, Vector3 mousePos, Vector3 offset, Collider2D casterCollider) {
 
         var go = Instantiate(abilityPreFab, mousePos, Quaternion.identity);
         go.GetComponent<SpawnedSpellAnimation>().Init(
             caster: casterCollider.GetComponent<GameCharacter>(),
             ability: this,
             radius * abilityPreFab.transform.localScale.x);
-        return go;
+        return new List<GameObject>(){ go };
     }
 
     public override Ability CopyInstance() {

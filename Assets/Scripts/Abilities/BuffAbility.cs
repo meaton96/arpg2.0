@@ -14,7 +14,7 @@ public class BuffAbility : Ability {
             "Duration: " + duration + "\n" +
             "Buff: " + buff.ToString();
     }
-    public override GameObject Cast(Vector3 instantiatePosition, Vector3 mousePos, Vector3 offset, Collider2D casterCollider) {
+    public override List<GameObject> Cast(Vector3 instantiatePosition, Vector3 mousePos, Vector3 offset, Collider2D casterCollider) {
         var player = casterCollider.GetComponent<Player>();
         buff.ApplyEffect(player);
         return null;
