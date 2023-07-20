@@ -34,7 +34,7 @@ public class ProjectileAbility : DamagingAbility {
     /// <param name="targetPos">target to aim towards</param>
     /// <param name="offset">offset away from the instantiate position</param>
     /// <param name="casterCollider">the collider of the caster to remove it from collision</param>
-    public override void Cast(Vector3 pos, Vector3 targetPos, Vector3 offset, Collider2D casterCollider) {
+    public override GameObject Cast(Vector3 pos, Vector3 targetPos, Vector3 offset, Collider2D casterCollider) {
         
         
         Vector3 dir = (targetPos - pos).normalized;
@@ -105,6 +105,7 @@ public class ProjectileAbility : DamagingAbility {
 
                 //ignore collision with the caster
                 Physics2D.IgnoreCollision(casterCollider, projectile.GetComponent<Collider2D>());
+                
                 //make a new direction vector to pass into the velocity
                 Vector3 newDir = new(Mathf.Cos(angle * Mathf.Deg2Rad), -Mathf.Sin(angle * Mathf.Deg2Rad), 0f);
 
@@ -117,9 +118,12 @@ public class ProjectileAbility : DamagingAbility {
                           caster: casterCollider.GetComponent<GameCharacter>(),
                           pierce: pierceNumber,
                           chain: chainNumber);
+                return projectile;
 
             }
         }
+        return null;
+        
     }
     
 

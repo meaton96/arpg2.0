@@ -7253,7 +7253,6 @@ MonoBehaviour:
   attackRange: 7
   attackCooldown: 2
   target: {fileID: 0}
-  flockRadius: 3
   separationWeight: 1
   alignmentWeight: 1
   cohesionWeight: 1

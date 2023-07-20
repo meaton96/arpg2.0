@@ -8,7 +8,7 @@ using UnityEngine;
 public abstract class Enemy : GameCharacter {
     // Character4D character4DScript;
 
-    
+
 
     public float attackRange;
     public float attackCooldown;
@@ -18,8 +18,8 @@ public abstract class Enemy : GameCharacter {
     protected Collider2D enemyCollider;
 
     public Transform target;
-   // public Transform player;
-    public float flockRadius = 3f;
+    // public Transform player;
+
     public float separationWeight = 1f;
     public float alignmentWeight = 1f;
     public float cohesionWeight = 1f;
@@ -29,11 +29,14 @@ public abstract class Enemy : GameCharacter {
     protected const float SEEK_MULTIPLIER = 1;
     protected const float MIN_SEP_RANGE = 0.1f, MAX_SEP_RANGE = 5;
     protected const float MAXIMUM_SPEED = 2f;
+    protected const float FLOCKING_RANGE = 16f; //distance squared
 
     protected List<Ability> availableAbilities;
 
+   
+
     public virtual void Init(float health, Player player, string type) {
-        _CHARACTER_HALF_HEIGHT_ *= transform.localScale.x;  
+        _CHARACTER_HALF_HEIGHT_ *= transform.localScale.x;
         base.Start();
         rb = GetComponent<Rigidbody2D>();
         resourceManager.Init(health, 0, 0, 0);
@@ -46,40 +49,77 @@ public abstract class Enemy : GameCharacter {
     protected override void Update() {
         //Debug.Log(GetDistanceSquared2D(transform.position, player.transform.position));
         if (!resourceManager.IsAlive()) {
-            Destroy(gameObject);
-        }
-
-        if (InAttackRange()) {
-            if (/*!InAttackCooldown() && */!animationManager.IsAction) {
-                AttackPlayer();
-            }
-            else {
-                //shuffle around or something a bit 
-
-            }
-
+            animationManager.Die();
         }
         else {
-            Vector2 forces = new();
-            forces += Seek(target.position) * SEEK_MULTIPLIER;
-            forces += Flocking();
-            //Debug.Log(forces);
-            //forces += Seperate() * SEPERATE_MULTIPLIER; 
-            rb.AddForce(forces * FORCE_MULTIPLIER);
+            if (InAttackRange()) {
+                
+                if (attackTimer >= attackCooldown) {
+
+                    AttackPlayer();
+                }
+                else {
+                    attackTimer += Time.deltaTime;
+                }
+            }
+            else {
+                Vector2 forces = new();
+                forces += Seek(target.position) * SEEK_MULTIPLIER;
+                forces += Flocking();
+                //Debug.Log(forces);
+                //forces += Seperate() * SEPERATE_MULTIPLIER; 
+                rb.AddForce(forces * FORCE_MULTIPLIER);
+            }
+           
+
+            /*if (InAttackRange()) {
+                Debug.Log("In Range");
+                state = State.Attacking;
+                if (!InAttackCooldown() && !animationManager.IsAction) {
+                    AttackPlayer();
+                }
+                else {
+                    //shuffle around or something a bit 
+
+                }
+
+            }
+            else {
+                Vector2 forces = new();
+                forces += Seek(target.position) * SEEK_MULTIPLIER;
+                forces += Flocking();
+                //Debug.Log(forces);
+                //forces += Seperate() * SEPERATE_MULTIPLIER; 
+                rb.AddForce(forces * FORCE_MULTIPLIER);
+            }*/
+
+            if (rb.velocity.magnitude > 0) {
+                animationManager.SetState(CharacterState.Walk);
+            }
+            movementDirection = rb.velocity.normalized;
+            // if (rb.velocity.magnitude > MAXIMUM_SPEED)
+            //     rb.velocity = movementDirection * MAXIMUM_SPEED;
+            base.Update();
         }
-        if (rb.velocity.magnitude > 0) {
-            animationManager.SetState(CharacterState.Walk);
-        }
-        movementDirection = rb.velocity.normalized;
-       // if (rb.velocity.magnitude > MAXIMUM_SPEED)
-       //     rb.velocity = movementDirection * MAXIMUM_SPEED;
-        base.Update();
 
     }
+    public void RemoveOnDeath() {
+        StartCoroutine(DestroyAfterSeconds(1));
+    }
+    private IEnumerator DestroyAfterSeconds(float seconds) {
+        yield return new WaitForSeconds(seconds);
+        Destroy(gameObject);
+    }
     protected virtual void AttackPlayer() {
-        attackTimer = attackCooldown;
+        //Debug.Log("Attacking");
+        attackTimer = 0;
         ProjectileAbility ability = availableAbilities[Random.Range(0, availableAbilities.Count)] as ProjectileAbility;
-        ability.Cast(transform.position, target.position, Vector3.zero, GetComponent<Collider2D>());
+        var proj = ability.Cast(transform.position, target.position, Vector3.zero, enemyCollider);
+
+        //workaround
+        //passing collider into spell wasnt working like it does for player for some reason
+        proj.layer = LayerMask.NameToLayer("EnemyProjectiles");
+
         PlayCastAnimation();
     }
     protected override void StopMove() {
@@ -97,9 +137,9 @@ public abstract class Enemy : GameCharacter {
             if (enemy == this)
                 continue;
 
-            float distance = Vector2.Distance(transform.position, enemy.transform.position);
+            float distance = GetDistanceSquared2D(transform.position, enemy.transform.position);
 
-            if (distance < flockRadius) {
+            if (distance < FLOCKING_RANGE) {
                 separationForce += (Vector2)transform.position - (Vector2)enemy.transform.position;
                 alignmentForce += enemy.rb.velocity;
                 cohesionForce += (Vector2)enemy.transform.position;
@@ -146,7 +186,7 @@ public abstract class Enemy : GameCharacter {
 
 
     }
-        
+
 
     private void OnDrawGizmos() {
         //Gizmos.DrawLine(transform.position, Seek(player.transform.position));
@@ -156,11 +196,12 @@ public abstract class Enemy : GameCharacter {
 
 
     protected bool InAttackRange() {
+
         return GetDistanceSquared2D(player.transform.position, transform.position) <= Mathf.Pow(attackRange, 2);
     }
     protected bool InAttackCooldown() {
-        if (attackTimer <= 0) return true;
-        attackTimer -= Time.deltaTime;
+        if (attackTimer >= attackCooldown) return true;
+        attackTimer += Time.deltaTime;
         return false;
     }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Teleport : GroundTargetedAbility
 {
     
-    public override void Cast(Vector3 instantiatePosition, Vector3 mousePos, Vector3 offset, Collider2D playerCollider) {
+    public override GameObject Cast(Vector3 instantiatePosition, Vector3 mousePos, Vector3 offset, Collider2D playerCollider) {
 
 
         Vector3 tpPath = mousePos - instantiatePosition;
@@ -13,7 +13,8 @@ public class Teleport : GroundTargetedAbility
             tpPath = tpPath.normalized * maxRange;
         }
         playerCollider.transform.position = tpPath + instantiatePosition;
-       // playerCollider.gameObject.GetComponent<Player>().StopMove();
+        // playerCollider.gameObject.GetComponent<Player>().StopMove();
+        return null;
     }
     public override Ability CopyInstance() {
 

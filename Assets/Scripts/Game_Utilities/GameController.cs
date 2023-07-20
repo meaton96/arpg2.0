@@ -18,6 +18,7 @@ public class GameController : MonoBehaviour {
     public const int SPELL_EFFECT_LAYER = 9;
     public const int PLAYER_LAYER = 3;
     public const int BACKGROUND_LAYER = 11;
+    public const int ENEMY_PROJECTILE_LAYER = 12;
     public const int EFFECT_SPELL_ID_START_NUMBER = 1000;
     public const int CAMERA_Z = -15;
     public const string JSON_PATH_BUFFS = "/JSON/abilities/buffs.json";
@@ -55,8 +56,10 @@ public class GameController : MonoBehaviour {
 
         Physics2D.IgnoreLayerCollision(PROJECTILE_LAYER, PROJECTILE_LAYER);
         Physics2D.IgnoreLayerCollision(ENEMY_LAYER, ENEMY_LAYER);
+        Physics2D.IgnoreLayerCollision(ENEMY_LAYER, ENEMY_PROJECTILE_LAYER);
         Physics2D.IgnoreLayerCollision(ENEMY_LAYER, PLAYER_LAYER);
         Physics2D.IgnoreLayerCollision(PROJECTILE_LAYER, ENEMY_COLLISION_LAYER);
+        Physics2D.IgnoreLayerCollision(ENEMY_PROJECTILE_LAYER, ENEMY_COLLISION_LAYER);
 
         InitializeDictionaries();
 

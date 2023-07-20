@@ -64,7 +64,9 @@ public abstract class GameCharacter : MonoBehaviour {
         return 15;
     }
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.layer == GameController.PROJECTILE_LAYER) {
+        
+        if (other.gameObject.layer == GameController.PROJECTILE_LAYER ||
+            other.gameObject.layer == GameController.ENEMY_PROJECTILE_LAYER) {
             var projB = other.GetComponent<ProjectileBehaviour>();
             HandleSpellHit(
                 projB.GetAbility(),
@@ -95,7 +97,7 @@ public abstract class GameCharacter : MonoBehaviour {
     public void HandleSpellHit(DamagingAbility ability, GameCharacter caster) {
         
         //temp - combat log?
-        Debug.Log(caster.name + "'s" + ability._name + 
+        Debug.Log(caster.name + "'s " + ability._name + 
             " hit " + name + " for " + ability.CalculateDamage(caster));
         DamageHealth(ability.CalculateDamage(caster));
     }
