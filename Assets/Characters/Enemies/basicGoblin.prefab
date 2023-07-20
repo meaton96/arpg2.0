@@ -6996,7 +6996,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character: {fileID: 2919585124672248670}
   Animator: {fileID: 2901246426814356932}
-  animationSpeed: 0
+  animationSpeed: 1
 --- !u!114 &2920364444901122426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7270,12 +7270,13 @@ MonoBehaviour:
   character4DScript: {fileID: 0}
   movementSpeed: 1.5
   attackRange: 2
-  attackCooldown: 0
+  attackCooldown: 1
   target: {fileID: 0}
   separationWeight: 1
   alignmentWeight: 1
   cohesionWeight: 1
   basicAttackDamage: 0
+  attackTime: 0
 --- !u!50 &5757264661440035119
 Rigidbody2D:
   serializedVersion: 4

@@ -7,11 +7,25 @@ using Assets.HeroEditor4D.InventorySystem.Scripts.Enums;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 
 
 public class GameController : MonoBehaviour {
+
+    #region Enemy Spawning
+    //spawning vars for testing
+    public const bool SPAWN_ONLY_ONE_ENEMY_TYPE = true;
+    public const int ENEMY_INDEX = 0;
+    //end test vars
+    public float enemySpawnTimer, enemySpawnTime = 0.5f;
+    float minRad = 3, maxRad = 10;
+    private int maxEnemies = 1;
+    private bool spawnEnemies = true;
+    #endregion
+
+    #region Layer and JSON constants
     public const int ENEMY_LAYER = 7;
     public const int ENEMY_COLLISION_LAYER = 10;
     public const int PROJECTILE_LAYER = 8;
@@ -23,6 +37,8 @@ public class GameController : MonoBehaviour {
     public const int CAMERA_Z = -15;
     public const string JSON_PATH_BUFFS = "/JSON/abilities/buffs.json";
     public const string JSON_PATH_ABILITIES = "/JSON/Abilities/player.json";
+    #endregion
+
 
     public static GameController Instance;
     [SerializeField] private GameObject playerPrefab;
@@ -37,12 +53,10 @@ public class GameController : MonoBehaviour {
 
     public List<Enemy> enemyList;
     public List<Enemy> enemyPrefabList;
-    public float enemySpawnTimer, enemySpawnTime = 0.5f;
-    float minRad = 3, maxRad = 10;
+    
 
 
-    private int maxEnemies = 1;
-    private bool spawnEnemies = true;
+    
 
     // Start is called before the first frame update
     void Start() {
@@ -59,6 +73,8 @@ public class GameController : MonoBehaviour {
         Physics2D.IgnoreLayerCollision(ENEMY_LAYER, ENEMY_PROJECTILE_LAYER);
         Physics2D.IgnoreLayerCollision(ENEMY_LAYER, PLAYER_LAYER);
         Physics2D.IgnoreLayerCollision(PROJECTILE_LAYER, ENEMY_COLLISION_LAYER);
+        Physics2D.IgnoreLayerCollision(ENEMY_LAYER, ENEMY_COLLISION_LAYER);
+        Physics2D.IgnoreLayerCollision(PLAYER_LAYER, ENEMY_COLLISION_LAYER);
         Physics2D.IgnoreLayerCollision(ENEMY_PROJECTILE_LAYER, ENEMY_COLLISION_LAYER);
 
         InitializeDictionaries();
@@ -161,8 +177,10 @@ public class GameController : MonoBehaviour {
     }
     //spawns a single enemy within minRad and maxRad radius of player randomly 
     private void SpawnEnemy() {
-        //var index = UnityEngine.Random.Range(0, enemyPrefabList.Count);
-        var index = 1;
+        var index = UnityEngine.Random.Range(0, enemyPrefabList.Count);
+        if (SPAWN_ONLY_ONE_ENEMY_TYPE) {
+            index = ENEMY_INDEX;
+        }
 
         var distanceAwayFromPlayer = UnityEngine.Random.Range(minRad, maxRad);
         var angle = UnityEngine.Random.Range(0f, 2 * Mathf.PI);

@@ -244,7 +244,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -466,6 +466,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc8bdf60211a7f24da21c81fbcbe31af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemySpawnTimer: 0
+  enemySpawnTime: 1.5
   playerPrefab: {fileID: 1063387080856860, guid: c87adda723ff0d347b96797bbc579bf1, type: 3}
   player: {fileID: 0}
   itemSpriteCollection: {fileID: 11400000, guid: ed0b296bc13a33144a4e9ea08d0ad5d5, type: 2}
@@ -474,8 +476,6 @@ MonoBehaviour:
   enemyPrefabList:
   - {fileID: 9104495425243833598, guid: 6db6e383eaa83a6498f3e1eea5c6863d, type: 3}
   - {fileID: 2130617808242774149, guid: 593cf9a97ef42e244aa36d3080fb5277, type: 3}
-  enemySpawnTimer: 0
-  enemySpawnTime: 1.5
 --- !u!4 &1902854693
 Transform:
   m_ObjectHideFlags: 0

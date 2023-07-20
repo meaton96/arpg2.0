@@ -13,7 +13,7 @@ namespace Assets.HeroEditor4D.Common.Scripts.CharacterScripts
 	{
 		public Character4D Character;
 		public Animator Animator;
-		public float animationSpeed;
+		[HideInInspector] public float animationSpeed = 1;
         public bool IsAction
         {
             get => Animator.GetBool("Action");

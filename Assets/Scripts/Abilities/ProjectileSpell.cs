@@ -70,7 +70,7 @@ public class ProjectileAbility : DamagingAbility {
             //grab total number of projectiles
             var numProj = baseProjectiles + projIncrease;
             //create a spread of projectiles centered on 0 degrees
-            for (int x = 0; x < baseProjectiles + projIncrease; x++) {
+            for (int x = 0; x < numProj; x++) {
                 if (numProj % 2 != 0) {
                     if (x == 0)
                         angle = 0;

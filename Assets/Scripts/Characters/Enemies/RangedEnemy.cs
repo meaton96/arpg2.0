@@ -10,6 +10,12 @@ public class RangedEnemy : Enemy {
 
     }
     protected override void AttackPlayer() {
+        ProjectileAbility ability = availableAbilities[Random.Range(0, availableAbilities.Count)] as ProjectileAbility;
+        var proj = ability.Cast(transform.position, target.position, Vector3.zero, enemyCollider);
+
+        //workaround
+        //passing collider into spell wasnt working like it does for player for some reason
+        proj.layer = LayerMask.NameToLayer("EnemyProjectiles");
         base.AttackPlayer();
 
     }

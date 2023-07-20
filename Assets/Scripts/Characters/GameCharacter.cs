@@ -42,21 +42,23 @@ public abstract class GameCharacter : MonoBehaviour {
         PlayAttackAnimation();
     }
     protected virtual void PlayAttackAnimation() {
-        switch (character4DScript.WeaponType) {
-            case WeaponType.Melee1H:
-                animationManager.Slash(twoHanded: false);
-                break;
-            case WeaponType.Melee2H:
-            case WeaponType.Paired:
-                animationManager.Slash(twoHanded: true);
-                break;
-            case WeaponType.Bow:
-                animationManager.ShotBow();
-                break;
-            case WeaponType.Crossbow:
-                animationManager.CrossbowShot();
-                break;
-        }
+        animationManager.Attack();
+        //switch (character4DScript.WeaponType) {
+        //    case WeaponType.Melee1H:
+                
+        //        animationManager.Slash(twoHanded: false);
+        //        break;
+        //    case WeaponType.Melee2H:
+        //    case WeaponType.Paired:
+        //        animationManager.Slash(twoHanded: true);
+        //        break;
+        //    case WeaponType.Bow:
+        //        animationManager.ShotBow();
+        //        break;
+        //    case WeaponType.Crossbow:
+        //        animationManager.CrossbowShot();
+        //        break;
+        //}
     }
     protected virtual void StopMove() {}
     //replace with calculation from weapon damage
