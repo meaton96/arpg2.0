@@ -76,14 +76,9 @@ public abstract class Enemy : GameCharacter {
                 }
             }
             else {
-                Vector2 forces = new();
-                forces += Seek(target.position) * SEEK_MULTIPLIER;
-                forces += Flocking();
-                //Debug.Log(forces);
-                //forces += Seperate() * SEPERATE_MULTIPLIER; 
-                rb.AddForce(forces * FORCE_MULTIPLIER);
+                ApplySeekAndFlock();
             }
-           
+            
 
             /*if (InAttackRange()) {
                 Debug.Log("In Range");
@@ -122,12 +117,22 @@ public abstract class Enemy : GameCharacter {
     private IEnumerator DestroyAfterSeconds(float seconds) {
         yield return new WaitForSeconds(seconds);
         Destroy(gameObject);
+        GameController.Instance.RemoveEnemyFromList(this);
     }
     protected virtual void AttackPlayer() {
         PlayCastAnimation();
     }
     protected override void StopMove() {
         rb.velocity = Vector2.zero;
+    }
+    protected void ApplySeekAndFlock() {
+        Vector2 forces = new();
+        forces += Seek(target.position) * SEEK_MULTIPLIER;
+        forces += Flocking();
+        rb.AddForce(forces * FORCE_MULTIPLIER);
+    }
+    protected void ApplySeek() {
+        rb.AddForce(FORCE_MULTIPLIER * SEEK_MULTIPLIER * Seek(target.position));
     }
     private Vector2 Flocking() {
         List<Enemy> enemies = GameController.Instance.enemyList;
@@ -201,7 +206,7 @@ public abstract class Enemy : GameCharacter {
 
     protected bool InAttackRange() {
 
-        return GetDistanceSquared2D(player.transform.position, transform.position) <= Mathf.Pow(attackRange, 2);
+        return GetDistanceSquared2D(player.transform.position, transform.position) <= attackRange;
     }
     protected bool InAttackCooldown() {
         if (attackTimer >= attackCooldown) return true;

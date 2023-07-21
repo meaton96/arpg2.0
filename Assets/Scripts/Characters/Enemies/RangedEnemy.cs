@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RangedEnemy : Enemy {
 
-    [SerializeField] private int spellID;
+    [SerializeField] protected int spellID;
     public override void Init(float health, Player player, string type) {
         base.Init(health, player, type);
         availableAbilities.Add(GameController.Instance.allSpells[spellID]);

@@ -77,11 +77,7 @@ public class Player : GameCharacter {
     private float dodgeTimer = 0f;
     [SerializeField] private float dodgeSpeed;
     #endregion
-    #region Vars - Buff/Debuff tracking
-    //track current debuffs and buffs and timers
-    private List<Buff> currentBuffsDebuffs;
-    private List<float> currentBuffsDebuffsTimers;
-    #endregion
+    
     
     #region Start + Update
     // Start is called before the first frame update
@@ -91,8 +87,7 @@ public class Player : GameCharacter {
         movementSpeed = 3f;
 
         InitControls();
-        currentBuffsDebuffs = new();
-        currentBuffsDebuffsTimers = new();
+        
         
         Camera.main.transform.SetParent(transform, false);
         HUD = GameObject.FindWithTag("HUD").GetComponent<UIBehaviour>();

@@ -16,12 +16,12 @@ public class GameController : MonoBehaviour {
 
     #region Enemy Spawning
     //spawning vars for testing
-    public const bool SPAWN_ONLY_ONE_ENEMY_TYPE = true;
+    public const bool SPAWN_ONLY_ONE_ENEMY_TYPE = false;
     public const int ENEMY_INDEX = 2;
     //end test vars
     public float enemySpawnTimer, enemySpawnTime = 0.5f;
     float minRad = 3, maxRad = 10;
-    private int maxEnemies = 1;
+    private int maxEnemies = 10;
     private bool spawnEnemies = true;
     #endregion
 
@@ -67,15 +67,8 @@ public class GameController : MonoBehaviour {
             Instance = this;
         }
         enemyList = new();
-
-        Physics2D.IgnoreLayerCollision(PROJECTILE_LAYER, PROJECTILE_LAYER);
-        Physics2D.IgnoreLayerCollision(ENEMY_LAYER, ENEMY_LAYER);
-        Physics2D.IgnoreLayerCollision(ENEMY_LAYER, ENEMY_PROJECTILE_LAYER);
-        Physics2D.IgnoreLayerCollision(ENEMY_LAYER, PLAYER_LAYER);
-        Physics2D.IgnoreLayerCollision(PROJECTILE_LAYER, ENEMY_COLLISION_LAYER);
-        Physics2D.IgnoreLayerCollision(ENEMY_LAYER, ENEMY_COLLISION_LAYER);
-        Physics2D.IgnoreLayerCollision(PLAYER_LAYER, ENEMY_COLLISION_LAYER);
-        Physics2D.IgnoreLayerCollision(ENEMY_PROJECTILE_LAYER, ENEMY_COLLISION_LAYER);
+        
+        SetPhysicsIgnores();        
 
         InitializeDictionaries();
 
@@ -203,6 +196,23 @@ public class GameController : MonoBehaviour {
             );
 
         enemyList.Add(enemy);
+    }
+
+    public void RemoveEnemyFromList(Enemy enemy) {
+        enemyList.Remove(enemy);
+    }
+
+    void SetPhysicsIgnores() {
+        Physics2D.IgnoreLayerCollision(PROJECTILE_LAYER, PROJECTILE_LAYER);
+        Physics2D.IgnoreLayerCollision(ENEMY_PROJECTILE_LAYER, ENEMY_PROJECTILE_LAYER);
+        Physics2D.IgnoreLayerCollision(PROJECTILE_LAYER, ENEMY_PROJECTILE_LAYER);
+        Physics2D.IgnoreLayerCollision(ENEMY_LAYER, ENEMY_LAYER);
+        Physics2D.IgnoreLayerCollision(ENEMY_LAYER, ENEMY_PROJECTILE_LAYER);
+        Physics2D.IgnoreLayerCollision(ENEMY_LAYER, PLAYER_LAYER);
+        Physics2D.IgnoreLayerCollision(PROJECTILE_LAYER, ENEMY_COLLISION_LAYER);
+        Physics2D.IgnoreLayerCollision(ENEMY_LAYER, ENEMY_COLLISION_LAYER);
+        Physics2D.IgnoreLayerCollision(PLAYER_LAYER, ENEMY_COLLISION_LAYER);
+        Physics2D.IgnoreLayerCollision(ENEMY_PROJECTILE_LAYER, ENEMY_COLLISION_LAYER);
     }
 
 

@@ -7250,7 +7250,7 @@ MonoBehaviour:
   damageToastPrefab: {fileID: 3840923867986597724, guid: 18b9ba0f9b67ee74f9881715fc29e37c, type: 3}
   character4DScript: {fileID: 0}
   movementSpeed: 1.5
-  attackRange: 14
+  attackRange: 196
   attackCooldown: 2
   target: {fileID: 0}
   separationWeight: 1

@@ -13,6 +13,12 @@ public abstract class GameCharacter : MonoBehaviour {
     [HideInInspector] public ResourceManager resourceManager;
     [SerializeField] private GameObject damageToastPrefab;
     protected AnimationManager animationManager;
+
+    #region Vars - Buff/Debuff tracking
+    //track current debuffs and buffs and timers
+    protected List<Buff> currentBuffsDebuffs;
+    #endregion
+
     //direction the character is currently moving
     protected Vector3 movementDirection;
     //reference to the character script to change character direction
@@ -21,6 +27,7 @@ public abstract class GameCharacter : MonoBehaviour {
     [SerializeField] protected float movementSpeed;
 
     protected virtual void Start() {
+        currentBuffsDebuffs = new();
         character4DScript = GetComponent<Character4D>();
         character4DScript.SetDirection(Vector2.right);
         animationManager = character4DScript.AnimationManager;
