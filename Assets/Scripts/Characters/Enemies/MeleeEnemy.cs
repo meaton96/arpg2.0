@@ -12,7 +12,6 @@ public class MeleeEnemy : Enemy {
         basicAttackDamage = availableAbilities[0].CalculateDamage(player);
         character4DScript.WeaponType = Assets.HeroEditor4D.Common.Scripts.Enums.WeaponType.Melee1H;
         //attackCooldown = .25f * animationManager.animationSpeed;
-        Debug.Log(attackCooldown);
     }
     protected override void AttackPlayer() {
         

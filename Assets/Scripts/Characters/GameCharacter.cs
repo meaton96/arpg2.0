@@ -25,7 +25,7 @@ public abstract class GameCharacter : MonoBehaviour {
     public Character4D character4DScript;
 
     [SerializeField] protected float movementSpeed;
-
+    protected readonly Vector3 toastOffset = new(0.2f, 1f, 0f);
     protected virtual void Start() {
         currentBuffsDebuffs = new();
         character4DScript = GetComponent<Character4D>();
@@ -50,22 +50,7 @@ public abstract class GameCharacter : MonoBehaviour {
     }
     protected virtual void PlayAttackAnimation() {
         animationManager.Attack();
-        //switch (character4DScript.WeaponType) {
-        //    case WeaponType.Melee1H:
-                
-        //        animationManager.Slash(twoHanded: false);
-        //        break;
-        //    case WeaponType.Melee2H:
-        //    case WeaponType.Paired:
-        //        animationManager.Slash(twoHanded: true);
-        //        break;
-        //    case WeaponType.Bow:
-        //        animationManager.ShotBow();
-        //        break;
-        //    case WeaponType.Crossbow:
-        //        animationManager.CrossbowShot();
-        //        break;
-        //}
+        
     }
     protected virtual void StopMove() {}
     //replace with calculation from weapon damage
@@ -105,10 +90,19 @@ public abstract class GameCharacter : MonoBehaviour {
 
     public void HandleSpellHit(DamagingAbility ability, GameCharacter caster) {
         
+        float damage = ability.CalculateDamage(caster); 
         //temp - combat log?
         Debug.Log(caster.name + "'s " + ability._name + 
-            " hit " + name + " for " + ability.CalculateDamage(caster));
-        DamageHealth(ability.CalculateDamage(caster));
+            " hit " + name + " for " + damage);
+        var toastObject = Instantiate(
+            damageToastPrefab, 
+            transform.position + toastOffset, 
+            Quaternion.identity)
+                .GetComponent<DamageToast>();
+
+        toastObject.SetDamageAmount(damage);
+        
+        DamageHealth(damage);
     }
 
     protected float GetDistanceSquared2D(Vector3 v1, Vector3 v2) {

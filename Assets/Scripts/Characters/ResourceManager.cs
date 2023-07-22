@@ -63,7 +63,7 @@ public class ResourceManager : MonoBehaviour
         currentHealth -= healthCost;
         return true;
     }
-    //regenerate health called once per frame regens health at a rate or healthRegenIncrease + BASE_HEALTH_REGEN per second
+    //regenerate health called once per frame regens health at a rate of healthRegenIncrease + BASE_HEALTH_REGEN per second
     protected void RegenerateHealth() {
         if (healthTimer >= (1 / HEALTH_TICKS_PER_SECOND)) {
             currentHealth += GetTotalHealthRegen() / HEALTH_TICKS_PER_SECOND;
