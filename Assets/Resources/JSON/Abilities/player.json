@@ -58,7 +58,7 @@
     "manaCost": 20,
     "healthCost": 0,
 	"maxRange": 500,
-	"radius": 0.8,
+	"radius": 3,
     "onHitDebuffID": -1,
     "iconPath": "Interface/Sprites/Rpg_icons/pyromancer/8",
     "prefabPath": "flamestrike"
