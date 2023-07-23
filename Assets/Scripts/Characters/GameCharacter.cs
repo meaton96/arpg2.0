@@ -19,7 +19,7 @@ public abstract class GameCharacter : MonoBehaviour {
 
     #region Vars - Buff/Debuff tracking
     //track current debuffs and buffs and timers
-    protected List<Buff> currentBuffsDebuffs;
+    protected Dictionary<int, Buff> currentBuffsDebuffs;
     #endregion
     protected bool isAlive = true;
     //direction the character is currently moving
@@ -132,12 +132,15 @@ public abstract class GameCharacter : MonoBehaviour {
         //Debug.Log("Applying Buff: " +  buff.ToString());
         //HUD.DisplayNewBuff(buff);
         ApplyBuffByID(buff);
-        currentBuffsDebuffs.Add(buff);
+        currentBuffsDebuffs.Add(buff.id, buff);
     }
     public virtual void RemoveBuff(Buff buff) {
-        currentBuffsDebuffs.Remove(buff);
+        currentBuffsDebuffs.Remove(buff.id);
         RemoveBuffByID(buff);
        // HUD.ForceRemoveBuff(buff);
+    }
+    public bool BuffAlreadyApplied(Buff buff) {
+       return currentBuffsDebuffs.ContainsKey(buff.id);
     }
     public void IncreaseActionSpeed(float amount) {
         actionSpeed += amount;

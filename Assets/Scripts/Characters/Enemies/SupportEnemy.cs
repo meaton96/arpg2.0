@@ -5,20 +5,23 @@ using UnityEngine;
 using UnityEditor;
 using System.Linq;
 using UnityEditor.Profiling.Memory.Experimental;
+using System.Net;
 
 public class SupportEnemy : RangedEnemy {
     [SerializeField] protected float auraRangeSquared = 36;
     private const float pollNearbyEnemiesCooldown = .5f;
     private float pollTimer;
     [SerializeField] protected GameObject auraVisualPrefab;
-
+    [SerializeField] protected GameObject auraAttachPrefab;
+    Buff auraBuffToApply;
     
     // HashSet<Enemy> nearbyEnemies;
 
 
     public override void Init(Player player, List<Enemy> allEnemies, float health, float mana = 0) {
         base.Init(player, allEnemies, health, mana);
-        availableAbilities.Add(GameController.Instance.allSpells[spellID]);
+        //availableAbilities.Add(GameController.Instance.allSpells[spellID]);
+        auraBuffToApply = (GameController.Instance.allSpells[spellID] as Aura).buff;
         Instantiate(auraVisualPrefab, transform);
     }
 
@@ -33,6 +36,7 @@ public class SupportEnemy : RangedEnemy {
             if (pollTimer > pollNearbyEnemiesCooldown) {
                 var nearbyEnemies = GetNearbyEnemies();
                 GetTargetFromNearbyEnemies(nearbyEnemies);
+                ApplyAuraBuffToNearbyEnemies(nearbyEnemies);
                 pollTimer = 0;
             }
             else {
@@ -49,6 +53,21 @@ public class SupportEnemy : RangedEnemy {
         }
 
 
+    }
+    void ApplyAuraBuffToNearbyEnemies(List<Enemy> nearbyEnemies) {
+        foreach (Enemy enemy in nearbyEnemies) { 
+            if (enemy.BuffAlreadyApplied(auraBuffToApply)) continue;
+            var tempBuffWrap = Instantiate(auraAttachPrefab, enemy.transform).
+                GetComponent<TemporaryBuffWrapper>();
+            tempBuffWrap.Attach(
+                buff: auraBuffToApply,
+                caster: this,
+                attachedCharacter: enemy,
+                range: auraRangeSquared,
+                pollTimer: pollTimer
+                );
+
+        }
     }
     List<Enemy> GetNearbyEnemies() {
         if (allAgents.Count == 0) { return new List<Enemy>();  }
