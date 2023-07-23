@@ -16,7 +16,7 @@ public class BuffAbility : Ability {
     }
     public override List<GameObject> Cast(Vector3 instantiatePosition, Vector3 mousePos, Vector3 offset, Collider2D casterCollider) {
         var player = casterCollider.GetComponent<Player>();
-        buff.ApplyEffect(player);
+        player.ApplyBuff(buff);
         return null;
     }
     public void Init() {

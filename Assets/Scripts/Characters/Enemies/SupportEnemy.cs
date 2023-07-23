@@ -4,24 +4,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
+using UnityEditor.Profiling.Memory.Experimental;
 
-public class SupportEnemy : RangedEnemy
-{
+public class SupportEnemy : RangedEnemy {
     [SerializeField] protected float auraRangeSquared = 36;
     private const float pollNearbyEnemiesCooldown = .5f;
     private float pollTimer;
     [SerializeField] protected GameObject auraVisualPrefab;
 
-    HashSet<Enemy> nearbyEnemies;
+    
+    // HashSet<Enemy> nearbyEnemies;
 
-    public override void Init(float health, Player player, string type) {
-        base.Init(health, player, type);
+
+    public override void Init(Player player, List<Enemy> allEnemies, float health, float mana = 0) {
+        base.Init(player, allEnemies, health, mana);
         availableAbilities.Add(GameController.Instance.allSpells[spellID]);
         Instantiate(auraVisualPrefab, transform);
     }
 
     protected override void AttackPlayer() {
-        
+
     }
     protected override void Update() {
         if (!resourceManager.IsAlive()) {
@@ -29,7 +31,8 @@ public class SupportEnemy : RangedEnemy
         }
         else {
             if (pollTimer > pollNearbyEnemiesCooldown) {
-                UpdateNearbyEnemies();
+                var nearbyEnemies = GetNearbyEnemies();
+                GetTargetFromNearbyEnemies(nearbyEnemies);
                 pollTimer = 0;
             }
             else {
@@ -44,10 +47,18 @@ public class SupportEnemy : RangedEnemy
             movementDirection = rb.velocity.normalized;
             UpdateAnimation();
         }
-        
+
 
     }
-    void GetTargetFromNearbyEnemies() {
+    List<Enemy> GetNearbyEnemies() {
+        if (allAgents.Count == 0) { return new List<Enemy>();  }
+        List<Enemy> result = new();
+        result = allAgents.FindAll(
+            enemy => 
+            GetDistanceSquared2D(enemy.transform.position, transform.position) <= auraRangeSquared);
+        return result;
+    }
+    void GetTargetFromNearbyEnemies(List<Enemy> nearbyEnemies) {
         
         if (nearbyEnemies.Count == 0) {
             target = player.transform;
@@ -62,20 +73,20 @@ public class SupportEnemy : RangedEnemy
 
         }
     }
-    void UpdateNearbyEnemies() {
-        HashSet<Enemy> currentEnemySet = nearbyEnemies;
-        nearbyEnemies.Clear();
-        GameController.Instance.enemyList.ForEach(enemy => {
-            if (GetDistanceSquared2D(enemy.transform.position, transform.position) < attackRange) {
-                nearbyEnemies.Add(enemy);
-            }
-        });
-        var enemiesMovedOutOfRangeOrDied = currentEnemySet.Except(nearbyEnemies);
-        //need to remove the effect on these 
-        //if they had died they might be destroyed here which will cause an error
-        //not sure how to fix
-        
+    //void UpdateNearbyEnemies() {
+    //    HashSet<Enemy> currentEnemySet = nearbyEnemies;
+    //    nearbyEnemies.Clear();
+    //    GameController.Instance.enemyList.ForEach(enemy => {
+    //        if (GetDistanceSquared2D(enemy.transform.position, transform.position) < attackRange) {
+    //            nearbyEnemies.Add(enemy);
+    //        }
+    //    });
+    //    var enemiesMovedOutOfRangeOrDied = currentEnemySet.Except(nearbyEnemies);
+    //    //need to remove the effect on these 
+    //    //if they had died they might be destroyed here which will cause an error
+    //    //not sure how to fix
 
-    }
-    
+
+    //}
+
 }

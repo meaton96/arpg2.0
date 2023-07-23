@@ -17,12 +17,12 @@ public class HealthRegeneration_Flat : Buff {
             effect: "HealthRegeneration_Flat",
             amount: amount);
     }
-    public override void ApplyEffect(Player player) {
-        player.resourceManager.IncreaseHealthRegenFlat(amount);
-        base.ApplyEffect(player);
-    }
-    public override void RemoveEffect(Player player) {
-        player.resourceManager.DecreaseHealthRegenFlat(amount);
-        base.RemoveEffect(player);
-    }
+    //public override void ApplyEffect(Player player) {
+    //    player.resourceManager.IncreaseHealthRegenFlat(amount);
+    //    base.ApplyEffect(player);
+    //}
+    //public override void RemoveEffect(Player player) {
+    //    player.resourceManager.DecreaseHealthRegenFlat(amount);
+    //    base.RemoveEffect(player);
+    //}
 }

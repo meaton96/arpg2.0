@@ -38,11 +38,11 @@ public class Aura : Ability {
      //  buff.iconImage = Resources.Load<Sprite>(buff.iconPath);
     }
     public void ActivateAura(Player player) {
-        
-        buff.ApplyEffect(player);
+
+        player.ApplyBuff(buff);
     }
     public void DeactivateAura(Player player) {
-        buff.RemoveEffect(player);
+        player.RemoveBuff(buff);
     }
 
     public override string ToString() {

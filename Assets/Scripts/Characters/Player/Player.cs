@@ -57,7 +57,7 @@ public class Player : GameCharacter {
     #region Vars - combat stats
     //tracked as a float from 0 - 1 as a % cooldown reduction, .2 = 20% reduced cooldown
     [HideInInspector] public float cooldownReduction = 0;
-    [HideInInspector] public float actionSpeed = 1;
+    
     //NYI
     [HideInInspector] public float castSpeed;
     [HideInInspector] public float attackSpeed;
@@ -103,8 +103,7 @@ public class Player : GameCharacter {
         spellBar.EquipAbility(1, 401); //piercing shot
         spellBar.EquipAbility(2, 100); //flamestrike
         spellBar.EquipAbility(3, 200); //haste
-        spellBar.EquipAura(0, GameController.Instance.allSpells[900] as Aura);
-        spellBar.EquipAura(1, GameController.Instance.allSpells[901] as Aura);
+        
 
 
     }
@@ -113,7 +112,7 @@ public class Player : GameCharacter {
     // Update is called once per frame
     protected override void Update() {
 
-        if (isActive) {
+        if (isActive && isAlive) {
 
             if (state == State.dodging) {
                 HandleDodge();
@@ -276,13 +275,15 @@ public class Player : GameCharacter {
     #endregion
     #region Add/Removing Buffs/Auras
     
-    public void ApplyBuff(Buff buff) {
+    public override void ApplyBuff(Buff buff) {
         //Debug.Log("Applying Buff: " +  buff.ToString());
         HUD.DisplayNewBuff(buff);
+        base.ApplyBuff(buff);   
     }
-    public void RemoveBuff(Buff buff) {
-        currentBuffsDebuffs.Remove(buff);
+    public override void RemoveBuff(Buff buff) {
+        
         HUD.ForceRemoveBuff(buff);
+        base.RemoveBuff(buff);
     }
     #endregion
     #region Getters/Setters/ToString
@@ -317,11 +318,11 @@ public class Player : GameCharacter {
         character4DScript.Equip(item);
     }
 
-    public void IncreaseActionSpeed(float amount) {
-        actionSpeed += amount;
-    }
-    public void DecreaseActionSpeed(float amount) {
-        actionSpeed -= amount;
-    }
+
     #endregion
+
+    public override void RemoveOnDeath() {
+        Debug.Log("Player death");
+    }
+
 }

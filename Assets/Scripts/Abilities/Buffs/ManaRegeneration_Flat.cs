@@ -16,12 +16,12 @@ public class ManaRegeneration_Flat : Buff {
             amount: amount);
     }
 
-    public override void ApplyEffect(Player player) {
-        player.resourceManager.IncreaseManaRegenFlat(amount);
-        base.ApplyEffect(player);
-    }
-    public override void RemoveEffect(Player player) {
-        player.resourceManager.DecreaseManaRegenFlat(amount);
-        base.RemoveEffect(player);
-    }
+    //public override void ApplyEffect(Player player) {
+    //    player.resourceManager.IncreaseManaRegenFlat(amount);
+    //    base.ApplyEffect(player);
+    //}
+    //public override void RemoveEffect(Player player) {
+    //    player.resourceManager.DecreaseManaRegenFlat(amount);
+    //    base.RemoveEffect(player);
+    //}
 }

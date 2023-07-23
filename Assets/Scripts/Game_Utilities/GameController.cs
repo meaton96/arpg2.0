@@ -18,6 +18,13 @@ public class GameController : MonoBehaviour {
     //spawning vars for testing
     public const bool SPAWN_ONLY_ONE_ENEMY_TYPE = false;
     public const int ENEMY_INDEX = 2;
+    private readonly List<float> _ENEMY_SPAWN_WEIGHTS = new() {
+        5, //basic goblin
+        5, //shooter golin
+        2, //human cleric
+        1 //mage
+    };
+    private float _SPAWN_WEIGHT_TOTAL = 0;
     //end test vars
     public float enemySpawnTimer, enemySpawnTime = 0.5f;
     float minRad = 3, maxRad = 10;
@@ -33,7 +40,9 @@ public class GameController : MonoBehaviour {
     public const int PLAYER_LAYER = 3;
     public const int BACKGROUND_LAYER = 11;
     public const int ENEMY_PROJECTILE_LAYER = 12;
+    public const int IGNORE_COLLISION_LAYER = 13;
     public const int EFFECT_SPELL_ID_START_NUMBER = 1000;
+    
     public const int CAMERA_Z = -15;
     public const string JSON_PATH_BUFFS = "/JSON/abilities/buffs.json";
     public const string JSON_PATH_ABILITIES = "/JSON/Abilities/player.json";
@@ -53,8 +62,8 @@ public class GameController : MonoBehaviour {
 
     public List<Enemy> enemyList;
     public List<Enemy> enemyPrefabList;
-    
 
+    public List<Enemy> testList;
 
     
 
@@ -68,6 +77,10 @@ public class GameController : MonoBehaviour {
         }
         enemyList = new();
         
+        for (int x = 0; x < _ENEMY_SPAWN_WEIGHTS.Count; x++) {
+            _SPAWN_WEIGHT_TOTAL += _ENEMY_SPAWN_WEIGHTS[x];
+        }
+
         SetPhysicsIgnores();        
 
         InitializeDictionaries();
@@ -77,6 +90,8 @@ public class GameController : MonoBehaviour {
         ItemCollection.Active.IconCollections = new() { iconCollection };
         ItemCollection.Active.Items = new();
         CreateItem();
+
+
 
     }
     #region Create Item Test
@@ -131,16 +146,13 @@ public class GameController : MonoBehaviour {
     void Update() {
         if (Input.GetKeyDown(KeyCode.F1)) {
             player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity).GetComponent<Player>();
-
         }
         if (Input.GetKeyDown(KeyCode.F2)) {
-            player.EquipItem(new Item("FantasyHeroes.Basic.Armor.AcornArmor [ShowEars]"));
-
-
+            player.spellBar.EquipAura(0, allSpells[900] as Aura);
+            player.spellBar.EquipAura(1, allSpells[901] as Aura);
         }
         if (Input.GetKeyDown(KeyCode.F3)) {
             spawnEnemies = !spawnEnemies;
-
         }
 
         if (player != null && enemyList.Count < maxEnemies && spawnEnemies) {
@@ -170,7 +182,18 @@ public class GameController : MonoBehaviour {
     }
     //spawns a single enemy within minRad and maxRad radius of player randomly 
     private void SpawnEnemy() {
-        var index = UnityEngine.Random.Range(0, enemyPrefabList.Count);
+        int index = 0;
+        var rand = UnityEngine.Random.Range(0f, _SPAWN_WEIGHT_TOTAL);
+
+        float total = 0;
+        for (int i = 0; i < _ENEMY_SPAWN_WEIGHTS.Count; i++) {
+            total += _ENEMY_SPAWN_WEIGHTS[i];
+            if (rand < total) {
+                index = i;
+                break;
+            }
+        }
+
         if (SPAWN_ONLY_ONE_ENEMY_TYPE) {
             index = ENEMY_INDEX;
         }
@@ -188,11 +211,17 @@ public class GameController : MonoBehaviour {
 
 
         var enemy = Instantiate(enemyPrefabList[index], pos, Quaternion.identity);
-
+        //if (enemy is SupportEnemy) {
+        //    (enemy as SupportEnemy).Init(
+        //        health: 50,
+        //        player: player,
+        //        allEnemies: enemyList
+        //        );
+        //}
         enemy.Init(
-            health: 50,
             player: player,
-            enemyPrefabList[index].name
+            allEnemies: enemyList,
+            health: 50
             );
 
         enemyList.Add(enemy);
@@ -213,7 +242,16 @@ public class GameController : MonoBehaviour {
         Physics2D.IgnoreLayerCollision(ENEMY_LAYER, ENEMY_COLLISION_LAYER);
         Physics2D.IgnoreLayerCollision(PLAYER_LAYER, ENEMY_COLLISION_LAYER);
         Physics2D.IgnoreLayerCollision(ENEMY_PROJECTILE_LAYER, ENEMY_COLLISION_LAYER);
+
+        Physics2D.IgnoreLayerCollision(IGNORE_COLLISION_LAYER, PROJECTILE_LAYER);
+        Physics2D.IgnoreLayerCollision(IGNORE_COLLISION_LAYER, ENEMY_PROJECTILE_LAYER);
+        Physics2D.IgnoreLayerCollision(IGNORE_COLLISION_LAYER, ENEMY_LAYER);
+        Physics2D.IgnoreLayerCollision(IGNORE_COLLISION_LAYER, PLAYER_LAYER);
+        Physics2D.IgnoreLayerCollision(IGNORE_COLLISION_LAYER, ENEMY_COLLISION_LAYER);
+
     }
+
+     
 
 
 

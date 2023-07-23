@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 
 public class ProjectileBehaviour : MonoBehaviour {
     public const int WALL_LAYER = 6;
+    
     private const int DURATION = 10;
     private float timer;
     protected float speed;
@@ -62,7 +63,7 @@ public class ProjectileBehaviour : MonoBehaviour {
             Destroy(gameObject);
         }
         else {
-
+            
 
             if (chain > 0) {
 

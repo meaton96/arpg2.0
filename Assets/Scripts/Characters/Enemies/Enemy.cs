@@ -32,25 +32,16 @@ public abstract class Enemy : GameCharacter {
     protected const float FLOCKING_RANGE = 16f; //distance squared
 
     protected List<Ability> availableAbilities;
+    protected List<Enemy> allAgents;
 
-   
 
-    public virtual void Init(float health, Player player, string type) {
+
+    public virtual void Init(Player player, List<Enemy> allEnemies, float health, float mana = 0) {
         _CHARACTER_HALF_HEIGHT_ *= transform.localScale.x;
+        allAgents = allEnemies;
         base.Start();
         rb = GetComponent<Rigidbody2D>();
-        resourceManager.Init(health, 0, 0, 0);
-        this.player = player;
-        target = player.transform;
-        availableAbilities = new();
-        enemyCollider = GetComponent<Collider2D>();
-
-    }
-    public virtual void Init(float health, float mana, Player player, string type) {
-        _CHARACTER_HALF_HEIGHT_ *= transform.localScale.x;
-        base.Start();
-        rb = GetComponent<Rigidbody2D>();
-        resourceManager.Init(health, mana, 0, 5);
+        resourceManager.Init(health, mana, 0, mana == 0 ? 0 : 5);
         this.player = player;
         target = player.transform;
         availableAbilities = new();
@@ -60,10 +51,7 @@ public abstract class Enemy : GameCharacter {
 
     protected override void Update() {
         //Debug.Log(GetDistanceSquared2D(transform.position, player.transform.position));
-        if (!resourceManager.IsAlive()) {
-            animationManager.Die();
-        }
-        else {
+        if (isAlive){
             if (InAttackRange()) {
                 
                 if (attackTimer >= attackCooldown) {
@@ -111,13 +99,8 @@ public abstract class Enemy : GameCharacter {
         }
 
     }
-    public void RemoveOnDeath() {
-        StartCoroutine(DestroyAfterSeconds(1));
-    }
-    private IEnumerator DestroyAfterSeconds(float seconds) {
-        yield return new WaitForSeconds(seconds);
-        Destroy(gameObject);
-        GameController.Instance.RemoveEnemyFromList(this);
+    public override void RemoveOnDeath() {
+        Destroy(gameObject, 1);
     }
     protected virtual void AttackPlayer() {
         PlayCastAnimation();
@@ -135,16 +118,17 @@ public abstract class Enemy : GameCharacter {
         rb.AddForce(FORCE_MULTIPLIER * SEEK_MULTIPLIER * Seek(target.position));
     }
     private Vector2 Flocking() {
-        List<Enemy> enemies = GameController.Instance.enemyList;
+        
         Vector2 separationForce = Vector2.zero;
         Vector2 alignmentForce = Vector2.zero;
         Vector2 cohesionForce = Vector2.zero;
 
         int neighborCount = 0;
 
-        foreach (var enemy in enemies) {
+        foreach (var enemy in allAgents) {
             if (enemy == this)
                 continue;
+            if (enemy == null) continue;
 
             float distance = GetDistanceSquared2D(transform.position, enemy.transform.position);
 
@@ -202,7 +186,11 @@ public abstract class Enemy : GameCharacter {
         //Gizmos.DrawLine(transform.position, rb.velocity);
 
     }
+    protected override void ProcessDeath() {
+        allAgents.Remove(this);
+        base.ProcessDeath();
 
+    }
 
     protected bool InAttackRange() {
 

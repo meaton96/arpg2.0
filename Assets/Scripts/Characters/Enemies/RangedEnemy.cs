@@ -5,13 +5,8 @@ using UnityEngine;
 public class RangedEnemy : Enemy {
 
     [SerializeField] protected int spellID;
-    public override void Init(float health, Player player, string type) {
-        base.Init(health, player, type);
-        availableAbilities.Add(GameController.Instance.allSpells[spellID]);
-
-    }
-    public override void Init(float health, float mana, Player player, string type) {
-        base.Init(health, mana, player, type);
+    public override void Init(Player player, List<Enemy> allEnemies, float health, float mana = 0) {
+        base.Init(player, allEnemies,  health, mana);
         availableAbilities.Add(GameController.Instance.allSpells[spellID]);
 
     }

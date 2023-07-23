@@ -5,24 +5,25 @@ using UnityEngine;
 
 public class DamageToast : MonoBehaviour
 {
+    [SerializeField] private float movementSpeed = 1;
     public const float TOAST_DURATION = 2f;
-    private float toastTimer;
-    public readonly Vector3 TOAST_MOVEMENT_DIR = new(0, .05f, 0);
-    [SerializeField] private TextMeshProUGUI toastText;
+    public readonly Vector3 TOAST_MOVEMENT_DIR = new(.577f, 1.1547f, 0);
     // Start is called before the first frame update
     void Start()
     {
-        
+         
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (toastTimer > TOAST_DURATION) Destroy(gameObject);
-        toastTimer += Time.deltaTime;
-        transform.position += TOAST_MOVEMENT_DIR;
+        Destroy(gameObject, TOAST_DURATION);
+        transform.Translate(movementSpeed * TOAST_MOVEMENT_DIR) ;
     }
     public void SetDamageAmount(float amount) {
-        toastText.text = amount.ToString();
+        GetComponent<TextMeshPro>().text = amount.ToString();
+    }
+    public void SetInitialPosition(Vector3 pos) {
+       transform.position = pos;
     }
 }

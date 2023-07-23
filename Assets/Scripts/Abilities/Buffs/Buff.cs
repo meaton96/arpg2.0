@@ -7,6 +7,15 @@ using UnityEngine;
 
 public abstract class Buff : ScriptableObject
 {
+
+    #region BUFF_IDS
+    public const int _ID_HEALTH_REGEN_FLAT_ = 0;
+    public const int _ID_HEALTH_REGEN_PERCENT_ = 1;
+    public const int _ID_MANA_REGEN_FLAT_ = 2;
+    public const int _ID_MANA_REGEN_PERCENT_ = 3;
+    public const int _ID_ACTION_SPEED_INCREASE_ = 4;
+    #endregion
+
     private const string _ICON_PREFIX_ = "Interface/Sprites/Rpg_icons/buffs/";
     public string iconPath;
     const int PLAYER_RESOURCE_TYPE = 100;
@@ -46,8 +55,8 @@ public abstract class Buff : ScriptableObject
     } 
 
 
-    public virtual void ApplyEffect(Player player) { player.ApplyBuff(this); }
-    public virtual void RemoveEffect(Player player) {  player.RemoveBuff(this); }   
+    //public virtual void ApplyEffect(GameCharacter gc) { gc.ApplyBuff(this); }
+   // public virtual void RemoveEffect(GameCharacter gc) {  gc.RemoveBuff(this); }   
 
     public override string ToString() {
         return "name: " + _name + "\n" +

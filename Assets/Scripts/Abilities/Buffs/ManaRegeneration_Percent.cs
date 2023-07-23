@@ -18,12 +18,12 @@ public class ManaRegeneration_Percent : Buff
             effect: "ManaRegeneration_Percent",
             amount: amount);
     }
-    public override void ApplyEffect(Player player) {
-        player.resourceManager.IncreaseManaRegenPercent(amount);
-        base.ApplyEffect(player);
-    }
-    public override void RemoveEffect(Player player) {
-        player.resourceManager.DecreaseManaRegenPercent(amount);
-        base.RemoveEffect(player);
-    }
+    //public override void ApplyEffect(Player player) {
+    //    player.resourceManager.IncreaseManaRegenPercent(amount);
+    //    base.ApplyEffect(player);
+    //}
+    //public override void RemoveEffect(Player player) {
+    //    player.resourceManager.DecreaseManaRegenPercent(amount);
+    //    base.RemoveEffect(player);
+    //}
 }

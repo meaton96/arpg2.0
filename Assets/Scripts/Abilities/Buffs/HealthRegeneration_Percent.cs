@@ -16,12 +16,12 @@ public class HealthRegeneration_Percent : Buff {
             effect: "HealthRegeneration_Percent",
             amount: amount);
     }
-    public override void ApplyEffect(Player player) {
-        player.resourceManager.IncreaseHealthRegenPercent(amount);
-        base.ApplyEffect(player);
-    }
-    public override void RemoveEffect(Player player) {
-        player.resourceManager.DecreaseHealthRegenPercent(amount);
-        base.RemoveEffect(player);
-    }
+    //public override void ApplyEffect(Player player) {
+    //    player.resourceManager.IncreaseHealthRegenPercent(amount);
+    //    base.ApplyEffect(player);
+    //}
+    //public override void RemoveEffect(Player player) {
+    //    player.resourceManager.DecreaseHealthRegenPercent(amount);
+    //    base.RemoveEffect(player);
+    //}
 }

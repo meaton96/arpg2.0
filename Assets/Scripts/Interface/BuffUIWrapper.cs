@@ -52,7 +52,7 @@ public class BuffUIWrapper : MonoBehaviour {
     }
     public void RemoveBuff() {
         //remove effect from player, remove it from the buff bar, then destroy
-        Buff.RemoveEffect(GameController.Instance.player);
+        GameController.Instance.player.RemoveBuff(Buff);
         bar.RemoveBuffFromList(this);
 
         Destroy(gameObject);

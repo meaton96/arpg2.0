@@ -16,12 +16,12 @@ public class ActionSpeedIncrease : Buff
             effect: "ActionSpeed_Increase",
             amount: amount);
     }
-    public override void ApplyEffect(Player player) {
-        player.IncreaseActionSpeed(amount);
-        base.ApplyEffect(player);
-    }
-    public override void RemoveEffect(Player player) {
-        player.DecreaseActionSpeed(amount);
-        base.RemoveEffect(player);
-    }
+    //public override void ApplyEffect(GameCharacter player) {
+    //    player.IncreaseActionSpeed(amount);
+    //    base.ApplyEffect(player);
+    //}
+    //public override void RemoveEffect(GameCharacter player) {
+    //    player.DecreaseActionSpeed(amount);
+    //    base.RemoveEffect(player);
+    //}
 }
