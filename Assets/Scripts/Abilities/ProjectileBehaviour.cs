@@ -25,6 +25,8 @@ public class ProjectileBehaviour : MonoBehaviour {
     protected ProjectileAbility ability;
     protected Rigidbody2D rb;
     protected int enemiesHit = 0;
+    public float uniqueID;
+    public bool shotgun;
 
     #region Initialize
     // Start is called before the first frame update
@@ -43,7 +45,7 @@ public class ProjectileBehaviour : MonoBehaviour {
 
 
     public virtual void Init(GameCharacter caster, ProjectileAbility ability, GameObject prefab, Vector3 direction,
-                        float speed, int pierce, int chain, int enemiesHit = 0) {
+                        float speed, int pierce, int chain, float uniqueID, bool shotgun = false, int enemiesHit = 0) {
 
         this.prefab = prefab;
         this.speed = speed;
@@ -53,6 +55,8 @@ public class ProjectileBehaviour : MonoBehaviour {
         this.chain = chain;
         this.ability = ability;
         this.enemiesHit = enemiesHit;
+        this.uniqueID = uniqueID;   
+        this.shotgun = shotgun;
 
     }
     #endregion
@@ -158,6 +162,8 @@ public class ProjectileBehaviour : MonoBehaviour {
                     caster: caster,
                     pierce: pierce,
                     chain: chain - 1,
+                    uniqueID: uniqueID++,
+                    shotgun: shotgun,
                     enemiesHit: enemiesHit + 1
                     );
         //ignore the collision with the target this projectile orginially hit

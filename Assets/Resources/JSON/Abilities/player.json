@@ -29,7 +29,8 @@
     "manaCost": 15,
     "healthCost": 0,
     "iconPath": "Interface/Sprites/Rpg_icons/pyromancer/11",
-    "prefabPath": "Fireball"
+    "prefabPath": "Fireball",
+	"shotgun": true
   },
   "!010": {
     "type": "projectile",
@@ -110,6 +111,24 @@
     "onHitDebuffID": -1,
     "iconPath": "Interface/Sprites/Rpg_icons/archer/14",
     "prefabPath": "PiercingArrow"
+  },
+  "!402": {
+    "type": "attack_projectile",
+    "_name": "Multishot",
+    "damageEffectiveness": 0.9,
+    "description": "A basic bow shot",
+    "tags": [ "Attack", "Bow", "Projectile" ],
+    "cooldown": 0,
+    "baseProjectileSpeed": 9,
+    "baseProjectiles": 5,
+    "chainNumber": 0,
+    "pierceNumber": 0,
+    "manaCost": 10,
+    "healthCost": 0,
+    "onHitDebuffID": -1,
+    "iconPath": "Interface/Sprites/Rpg_icons/archer/15",
+    "prefabPath": "Arrow",
+	"shotgun": false
   },
   "!800": {
     "type": "ground_targeted_teleport",

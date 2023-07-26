@@ -10,12 +10,13 @@ public abstract class GameCharacter : MonoBehaviour {
     [HideInInspector] public Vector3 _CHARACTER_HALF_HEIGHT_ = new(0, 0.7f, 0);
     #endregion
 
+
     [HideInInspector] public ResourceManager resourceManager;
     [SerializeField] private GameObject damageToastPrefab;
     protected AnimationManager animationManager;
     [HideInInspector] public float actionSpeed = 1;
     public const int IGNORE_COLLISION_LAYER = 13;
-    public int DAMAGE_MIN = 8, DAMAGE_MAX = 18; 
+    public int DAMAGE_MIN = 8, DAMAGE_MAX = 18;
 
     #region Vars - Buff/Debuff tracking
     //track current debuffs and buffs and timers
@@ -45,7 +46,6 @@ public abstract class GameCharacter : MonoBehaviour {
         isAlive = resourceManager.IsAlive();
         if (!isAlive) {
             ProcessDeath();
-           
         }
 
 
@@ -59,21 +59,21 @@ public abstract class GameCharacter : MonoBehaviour {
     }
     protected virtual void PlayAttackAnimation() {
         animationManager.Attack();
-        
+
     }
-    protected virtual void StopMove() {}
+    protected virtual void StopMove() { }
     protected virtual void ProcessDeath() {
         gameObject.layer = IGNORE_COLLISION_LAYER;
         StopMove();
         animationManager.Die();
-        
+
     }
     //replace with calculation from weapon damage
     public virtual float GetAttackDamage() {
         return Random.Range(DAMAGE_MIN, DAMAGE_MAX);
     }
     private void OnTriggerEnter2D(Collider2D other) {
-        
+
         if (other.gameObject.layer == GameController.PROJECTILE_LAYER ||
             other.gameObject.layer == GameController.ENEMY_PROJECTILE_LAYER) {
             var projB = other.GetComponent<ProjectileBehaviour>();
@@ -93,7 +93,7 @@ public abstract class GameCharacter : MonoBehaviour {
     }
 
     protected virtual void UpdateAnimation() {
-        
+
         //change character direction
         if (Mathf.Abs(movementDirection.x) > Mathf.Abs(movementDirection.y)) {
             character4DScript.SetDirection(movementDirection.x < 0 ? Vector2.left : Vector2.right);
@@ -104,20 +104,27 @@ public abstract class GameCharacter : MonoBehaviour {
     }
 
     public void HandleSpellHit(DamagingAbility ability, GameCharacter caster) {
-        
-        float damage = ability.CalculateDamage(caster); 
+
+        float damage = ability.CalculateDamage(caster);
         //temp - combat log?
-        Debug.Log(caster.name + "'s " + ability._name + 
+        Debug.Log(caster.name + "'s " + ability._name +
             " hit " + name + " for " + damage);
 
         //var pos = Camera.main.WorldToScreenPoint(transform.position + toastOffset);
         //Debug.Log(pos);
+
+        DamageHealth(damage);
+        if (GameController.Instance.DisplayFloatingCombatText)
+            DisplayFloatingDamageNumber(damage);
+    }
+    private void DisplayFloatingDamageNumber(float damage) {
         var toastObject = Instantiate(
             damageToastPrefab, transform.position, Quaternion.identity).GetComponent<DamageToast>();
-        
-        
-        toastObject.SetDamageAmount(damage);
-        DamageHealth(damage);
+
+
+        var damInt = Mathf.RoundToInt(damage);
+
+        toastObject.SetDamageAmount(damInt);
     }
 
     protected float GetDistanceSquared2D(Vector3 v1, Vector3 v2) {
@@ -137,10 +144,10 @@ public abstract class GameCharacter : MonoBehaviour {
     public virtual void RemoveBuff(Buff buff) {
         currentBuffsDebuffs.Remove(buff.id);
         RemoveBuffByID(buff);
-       // HUD.ForceRemoveBuff(buff);
+        // HUD.ForceRemoveBuff(buff);
     }
     public bool BuffAlreadyApplied(Buff buff) {
-       return currentBuffsDebuffs.ContainsKey(buff.id);
+        return currentBuffsDebuffs.ContainsKey(buff.id);
     }
     public void IncreaseActionSpeed(float amount) {
         actionSpeed += amount;
@@ -190,7 +197,7 @@ public abstract class GameCharacter : MonoBehaviour {
     #endregion
 
     public virtual void RemoveOnDeath() {
-        
+
     }
-    
+
 }

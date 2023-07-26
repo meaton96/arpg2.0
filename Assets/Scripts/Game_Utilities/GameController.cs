@@ -48,6 +48,13 @@ public class GameController : MonoBehaviour {
     public const string JSON_PATH_ABILITIES = "/JSON/Abilities/player.json";
     #endregion
 
+    #region Vars - Game Settings
+    [HideInInspector] public int DISPLAY_ENEMY_HEALTH_ALWAYS;
+    public bool DisplayEnemyHealth { get { return DISPLAY_ENEMY_HEALTH_ALWAYS == 1; } }
+
+    [HideInInspector] public int DISPLAY_FLOATING_COMBAT_TEXT;
+    public bool DisplayFloatingCombatText { get { return DISPLAY_FLOATING_COMBAT_TEXT == 1; } }
+    #endregion
 
     public static GameController Instance;
     [SerializeField] private GameObject playerPrefab;
@@ -75,6 +82,8 @@ public class GameController : MonoBehaviour {
         else {
             Instance = this;
         }
+        InitSettings();
+        Debug.Log(DisplayFloatingCombatText);
         enemyList = new();
         
         for (int x = 0; x < _ENEMY_SPAWN_WEIGHTS.Count; x++) {
@@ -250,8 +259,11 @@ public class GameController : MonoBehaviour {
         Physics2D.IgnoreLayerCollision(IGNORE_COLLISION_LAYER, ENEMY_COLLISION_LAYER);
 
     }
+    void InitSettings() {
+        PlayerSettingsHelper.InitObjectSettings(this, "Game");
+    }
 
-     
+
 
 
 

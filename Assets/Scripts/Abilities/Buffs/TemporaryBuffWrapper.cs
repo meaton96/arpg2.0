@@ -9,22 +9,31 @@ public class TemporaryBuffWrapper : MonoBehaviour {
     float range;
     float timer;
     float pollTime;
-        
+
 
     private void Update() {
-        if (timer >= pollTime) {
-            var casterPos = caster.transform.position;
-            var myPos = transform.position;
-            var dist = Mathf.Pow(casterPos.x - myPos.x, 2) + Mathf.Pow(casterPos.y - myPos.y, 2);
-            if (dist > range) {
-                attachedCharacter.RemoveBuff(buff);
-                Destroy(gameObject);
-            }
-            timer = 0;
-        }else {
-            timer += Time.deltaTime;
-        }
+        if (caster == null || !caster.resourceManager.IsAlive()) {
+            attachedCharacter.RemoveBuff(buff);
+            Destroy(gameObject);
 
+        }
+        else {
+            if (timer >= pollTime) {
+
+                var casterPos = caster.transform.position;
+                var myPos = transform.position;
+                var dist = Mathf.Pow(casterPos.x - myPos.x, 2) + Mathf.Pow(casterPos.y - myPos.y, 2);
+                if (dist > range) {
+                    attachedCharacter.RemoveBuff(buff);
+                    Destroy(gameObject);
+                }
+                timer = 0;
+
+            }
+            else {
+                timer += Time.deltaTime;
+            }
+        }
     }
 
     public void Attach(Buff buff, GameCharacter caster, GameCharacter attachedCharacter, float range, float pollTimer) {

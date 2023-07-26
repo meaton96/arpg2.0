@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Graphs;
 using UnityEngine;
 using UnityEngine.Assertions;
 using static UnityEditor.PlayerSettings;
@@ -13,18 +14,15 @@ public class ProjectileAbility : DamagingAbility {
     public float baseProjectileSpeed;
     public int chainNumber;
     public int pierceNumber;
-
-
+    public bool shotgun;
 
 
     protected float speedMulti = 1f;
     protected int projIncrease = 0;
 
-    protected const float minAngle = 2f;
-    protected const float maxAngle = 20f;
-
-    protected const float minDistance = .05f;
-    protected const float maxDistance = 25f;
+    protected const float MAX_ANGLE = 140;
+    protected const float minDistance = 0.05f;
+    protected const float maxDistance = 64f;
 
 
 
@@ -41,20 +39,33 @@ public class ProjectileAbility : DamagingAbility {
 
         List<GameObject> projectiles = new();
         Vector3 dir = (targetPos - pos).normalized;
+        var numProj = baseProjectiles + projIncrease;
+        var maxSpread = MAX_ANGLE / numProj;
+        var minSpread = maxSpread / 3f;
 
-        float spreadAngle = 0;
-        //check if collider is player or npc firing maybe
+
+        float spreadAngle;
+        //caster is player
         if (casterCollider.gameObject.layer == GameController.PLAYER_LAYER) {
-            //grab the distance from player to the mouse
-
-            spreadAngle = GetSpreadAngle(pos, targetPos);                      //how far apart each projectile should be from eachother in degrees
+            //how far apart each projectile should be from eachother
+            float distSquaredToTarget = Mathf.Pow(targetPos.x - pos.x, 2) + Mathf.Pow(targetPos.y - pos.y, 2);
+            spreadAngle = (1 - distSquaredToTarget / maxDistance) * maxSpread;
+            if (spreadAngle < minSpread) {
+                spreadAngle = minSpread;
+            }
+            else if (spreadAngle > maxSpread) {
+                spreadAngle = maxSpread;
+            }
         }
         else {
-            spreadAngle = (maxAngle - minAngle) / 2f;
+            //caster is an npc
+            spreadAngle = (maxSpread + minSpread) / 2f;
         }
 
         float angle;
-
+        //create a unique ID for this spell cast to pass to the projectiles
+        //this is to prevent projectile shotgunning
+        float uniqueID = Time.time * Vector3.Dot(pos, targetPos);
 
         float mouseAngleOffXAxis = Mathf.Atan(dir.y / dir.x);
 
@@ -63,7 +74,7 @@ public class ProjectileAbility : DamagingAbility {
             mouseAngleOffXAxis += Mathf.PI;
 
         //grab total number of projectiles
-        var numProj = baseProjectiles + projIncrease;
+        
         //create a spread of projectiles centered on 0 degrees
         for (int x = 0; x < numProj; x++) {
             if (numProj % 2 != 0) {
@@ -104,6 +115,8 @@ public class ProjectileAbility : DamagingAbility {
             //make a new direction vector to pass into the velocity
             Vector3 newDir = new(Mathf.Cos(angle * Mathf.Deg2Rad), -Mathf.Sin(angle * Mathf.Deg2Rad), 0f);
 
+            
+
             //set the velocity 
             proj.Init(ability: this,
                       prefab: abilityPreFab,
@@ -111,7 +124,8 @@ public class ProjectileAbility : DamagingAbility {
                       speed: baseProjectileSpeed * speedMulti,
                       caster: casterCollider.GetComponent<GameCharacter>(),
                       pierce: pierceNumber,
-                      chain: chainNumber);
+                      chain: chainNumber,
+                      uniqueID: uniqueID);
             projectiles.Add(proj.gameObject);
 
 
@@ -120,28 +134,6 @@ public class ProjectileAbility : DamagingAbility {
         throw new System.Exception("No projectiles were created");
 
     }
-
-    private float GetSpreadAngle(Vector3 pos, Vector3 targetPos) {
-        float distSquaredToTarget = Mathf.Pow(targetPos.x - pos.x, 2) + Mathf.Pow(targetPos.y - pos.y, 2);
-        float spreadAngle;
-        //cap the spread angle by max bounds
-        if (distSquaredToTarget > maxDistance) {
-            spreadAngle = minAngle;
-        }
-        else if (distSquaredToTarget < minDistance) {
-            spreadAngle = maxAngle;
-        }
-        else {
-            var distanceRation = distSquaredToTarget / maxDistance;
-            spreadAngle = (1 - distanceRation) * maxAngle;
-        }
-        return spreadAngle;
-    }
-
-
-
-
-
 
     public override string ToString() {
         return base.ToString() +

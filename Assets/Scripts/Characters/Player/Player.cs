@@ -12,8 +12,8 @@ public class Player : GameCharacter {
 
     //toggle all logic
     private bool isActive = true;
-    private const float _MAX_HEALTH_ = 100;
-    private const float _MAX_MANA_ = 100;
+    private const float _MAX_HEALTH_ = 1000;
+    private const float _MAX_MANA_ = 1000;
 
     #region Vars - movement
     private const float MOVEMENT_TOLERANCE = 0.01f;
@@ -37,6 +37,8 @@ public class Player : GameCharacter {
 
     public const int KEY_CODE_ABILITY_4 = 0; //left click
     public const int KEY_CODE_ABILITY_5 = 1; //right click
+
+    public int DISPLAY_FLOATING_COMBAT_TEXT;
 
     #endregion
     #region Vars - Helper Objects
@@ -97,7 +99,7 @@ public class Player : GameCharacter {
         //animationManager.SetWeaponType(WeaponType.Melee2H);
 
 
-        spellBar.EquipAbility(4, 400);   //arrow shot
+        spellBar.EquipAbility(4, 402);   //multishot
         spellBar.EquipAbility(5, 1);   //fireball x3
         spellBar.EquipAbility(0, 800); //teleport
         spellBar.EquipAbility(1, 401); //piercing shot
@@ -186,7 +188,7 @@ public class Player : GameCharacter {
     #endregion
     #region Player Input
     private void InitControls() {
-        PlayerSettingsHelper.InitPlayerControls(this);
+        PlayerSettingsHelper.InitObjectSettings(this, "Player");
     }
 
 
