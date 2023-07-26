@@ -100,7 +100,7 @@ public class Player : GameCharacter {
 
 
         spellBar.EquipAbility(4, 402);   //multishot
-        spellBar.EquipAbility(5, 1);   //fireball x3
+        spellBar.EquipAbility(5, 403);   //barage
         spellBar.EquipAbility(0, 800); //teleport
         spellBar.EquipAbility(1, 401); //piercing shot
         spellBar.EquipAbility(2, 100); //flamestrike

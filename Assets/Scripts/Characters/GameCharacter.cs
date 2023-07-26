@@ -99,27 +99,18 @@ public abstract class GameCharacter : MonoBehaviour {
                     HandleSpellHit(
                         projB.GetAbility(),
                         projB.GetCaster());
-                    //Debug.Log(spellHitUniqueIDs.Count);
                 }
                 else {
                     //do not process spell hit since the target was already hit
                 }
             }
             else {
+                //spell shotguns so process every hit
                 HandleSpellHit(
                         projB.GetAbility(),
                         projB.GetCaster());
             }
 
-        }
-        else if (other.gameObject.layer == GameController.SPELL_EFFECT_LAYER) {
-            //var ssa = other.GetComponent<SpawnedSpellAnimation>();
-            //HandleSpellHit(
-            //    ssa.GetAbility(),
-            //    ssa.GetCaster());
-        }
-        else {
-            //assume hit another actor?
         }
     }
     protected bool SpellAlreadyHit(float uID) {

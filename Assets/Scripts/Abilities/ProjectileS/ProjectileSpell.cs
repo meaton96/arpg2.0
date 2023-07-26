@@ -74,7 +74,7 @@ public class ProjectileAbility : DamagingAbility {
             mouseAngleOffXAxis += Mathf.PI;
 
         //grab total number of projectiles
-        
+
         //create a spread of projectiles centered on 0 degrees
         for (int x = 0; x < numProj; x++) {
             if (numProj % 2 != 0) {
@@ -115,8 +115,6 @@ public class ProjectileAbility : DamagingAbility {
             //make a new direction vector to pass into the velocity
             Vector3 newDir = new(Mathf.Cos(angle * Mathf.Deg2Rad), -Mathf.Sin(angle * Mathf.Deg2Rad), 0f);
 
-            
-
             //set the velocity 
             proj.Init(ability: this,
                       prefab: abilityPreFab,
@@ -127,8 +125,6 @@ public class ProjectileAbility : DamagingAbility {
                       chain: chainNumber,
                       uniqueID: uniqueID);
             projectiles.Add(proj.gameObject);
-
-
         }
         if (projectiles.Count > 0) { return projectiles; }
         throw new System.Exception("No projectiles were created");
