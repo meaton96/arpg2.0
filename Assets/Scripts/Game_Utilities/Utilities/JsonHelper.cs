@@ -65,6 +65,9 @@ public class JsonHelper {
                         case Ability._ID_BUFF:
                             ability = ScriptableObject.CreateInstance<BuffAbility>();
                             break;
+                        case Ability._ID_ATTACK_PROJ_MULTI:
+                            ability = ScriptableObject.CreateInstance<MulticastProjectileAbility>();
+                            break;
                         default:
                             break;
                     }

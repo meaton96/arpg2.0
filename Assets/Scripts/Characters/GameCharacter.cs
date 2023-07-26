@@ -131,7 +131,9 @@ public abstract class GameCharacter : MonoBehaviour {
             character4DScript.SetDirection(movementDirection.y > 0 ? Vector2.up : Vector2.down);
 
     }
-
+    public void CastMultipleAbilties(IEnumerator coRoutine) {
+        StartCoroutine(coRoutine);
+    }
     public void HandleSpellHit(DamagingAbility ability, GameCharacter caster) {
 
         float damage = ability.CalculateDamage(caster);

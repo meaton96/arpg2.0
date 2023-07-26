@@ -7,19 +7,19 @@ public class MulticastProjectileAbility : ProjectileAbility
 {
 
     public int numCasts;
-    public float baseCastDelay = 0.25f;
     public int baseAbilityID;
     readonly List<GameObject> createdProjectiles = new();
 
     public override List<GameObject> Cast(Vector3 pos, Vector3 targetPos, Vector3 offset, Collider2D casterCollider) {
         casterCollider.GetComponent<GameCharacter>().
-            StartCoroutine(
-            CastMultipleTimes(pos, targetPos, offset, casterCollider));
+            CastMultipleAbilties(
+                CastMultipleTimes(pos, targetPos, offset, casterCollider));   
         return createdProjectiles;
     }
     private IEnumerator CastMultipleTimes(Vector3 pos, Vector3 targetPos,
         Vector3 offset, Collider2D casterCollider) {
         createdProjectiles.Clear();
+        var baseCastDelay = 0.25f / numCasts;
         var castDelay = baseCastDelay / casterCollider.GetComponent<GameCharacter>().actionSpeed;
         for (int i = 0; i < numCasts; i++) {
             createdProjectiles.

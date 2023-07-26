@@ -17,6 +17,7 @@ public abstract class Ability : ScriptableObject {
     public const string _ID_TELEPORT = "ground_targeted_teleport";
     public const string _ID_GROUND_TARGETED_AOE = "ground_targeted_aoe";
     public const string _ID_BUFF = "buff_ability";
+    public const string _ID_ATTACK_PROJ_MULTI = "attack_projectile_multi";
 
     //public const int BUFF_TYPE_ID_START = 100;
     //public const int BUFF_TYPE_ID_END = 199;

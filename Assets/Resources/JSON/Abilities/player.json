@@ -131,7 +131,7 @@
 	"shotgun": false
   },
   "!403": {
-    "type": "attack_projectile",
+    "type": "attack_projectile_multi",
     "_name": "Barrage",
     "damageEffectiveness": 0.5,
     "description": "A bow shot that quickly fires a burst of arrows",
