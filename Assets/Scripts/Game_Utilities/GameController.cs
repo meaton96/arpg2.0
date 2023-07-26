@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour {
     #region Enemy Spawning
     //spawning vars for testing
     public const bool SPAWN_ONLY_ONE_ENEMY_TYPE = false;
+    public const bool ENABLE_ENEMY_LOGIC = false;
     public const int ENEMY_INDEX = 2;
     private readonly List<float> _ENEMY_SPAWN_WEIGHTS = new() {
         5, //basic goblin
@@ -83,7 +84,6 @@ public class GameController : MonoBehaviour {
             Instance = this;
         }
         InitSettings();
-        Debug.Log(DisplayFloatingCombatText);
         enemyList = new();
         
         for (int x = 0; x < _ENEMY_SPAWN_WEIGHTS.Count; x++) {
@@ -220,17 +220,11 @@ public class GameController : MonoBehaviour {
 
 
         var enemy = Instantiate(enemyPrefabList[index], pos, Quaternion.identity);
-        //if (enemy is SupportEnemy) {
-        //    (enemy as SupportEnemy).Init(
-        //        health: 50,
-        //        player: player,
-        //        allEnemies: enemyList
-        //        );
-        //}
         enemy.Init(
             player: player,
             allEnemies: enemyList,
-            health: 50
+            health: 50,
+            isActive: ENABLE_ENEMY_LOGIC
             );
 
         enemyList.Add(enemy);

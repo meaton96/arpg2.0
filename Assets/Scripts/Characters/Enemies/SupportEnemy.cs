@@ -2,10 +2,7 @@ using System.Collections;
 using Assets.HeroEditor4D.Common.Scripts.Enums;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using System.Linq;
-using UnityEditor.Profiling.Memory.Experimental;
-using System.Net;
 
 public class SupportEnemy : RangedEnemy {
     [SerializeField] protected float auraRangeSquared = 36;
@@ -18,8 +15,9 @@ public class SupportEnemy : RangedEnemy {
     // HashSet<Enemy> nearbyEnemies;
 
 
-    public override void Init(Player player, List<Enemy> allEnemies, float health, float mana = 0) {
-        base.Init(player, allEnemies, health, mana);
+    public override void Init(Player player, List<Enemy> allEnemies, 
+        float health, float mana = 0, bool isActive = true) {
+        base.Init(player, allEnemies, health, mana, isActive);
         //availableAbilities.Add(GameController.Instance.allSpells[spellID]);
         auraBuffToApply = (GameController.Instance.allSpells[spellID] as Aura).buff;
         Instantiate(auraVisualPrefab, transform);
@@ -33,23 +31,26 @@ public class SupportEnemy : RangedEnemy {
             animationManager.Die();
         }
         else {
-            if (pollTimer > pollNearbyEnemiesCooldown) {
-                var nearbyEnemies = GetNearbyEnemies();
-                GetTargetFromNearbyEnemies(nearbyEnemies);
-                ApplyAuraBuffToNearbyEnemies(nearbyEnemies);
-                pollTimer = 0;
+            if (isActive) {
+                if (pollTimer > pollNearbyEnemiesCooldown) {
+                    var nearbyEnemies = GetNearbyEnemies();
+                    GetTargetFromNearbyEnemies(nearbyEnemies);
+                    ApplyAuraBuffToNearbyEnemies(nearbyEnemies);
+                    pollTimer = 0;
+                }
+                else {
+                    pollTimer += Time.deltaTime;
+                }
+                if (target != null) {
+                    ApplySeek();
+                }
+                if (rb.velocity.magnitude > 0) {
+                    animationManager.SetState(CharacterState.Walk);
+                }
+                movementDirection = rb.velocity.normalized;
+                UpdateAnimation();
+                UpdateSpellHitList();
             }
-            else {
-                pollTimer += Time.deltaTime;
-            }
-            if (target != null) {
-                ApplySeek();
-            }
-            if (rb.velocity.magnitude > 0) {
-                animationManager.SetState(CharacterState.Walk);
-            }
-            movementDirection = rb.velocity.normalized;
-            UpdateAnimation();
         }
 
 

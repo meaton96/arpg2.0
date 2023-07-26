@@ -120,7 +120,7 @@ public class Player : GameCharacter {
                 HandleDodge();
             }
             else {
-                UpdateAnimation();
+                base.Update();
                 if (!animationManager.IsAction) //animation lock
                  {
                     HandleAnimationLockedInput();

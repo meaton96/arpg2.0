@@ -2,6 +2,7 @@ using Assets.HeroEditor4D.Common.Scripts.CharacterScripts;
 using Assets.HeroEditor4D.Common.Scripts.Enums;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public abstract class GameCharacter : MonoBehaviour {
@@ -30,6 +31,10 @@ public abstract class GameCharacter : MonoBehaviour {
 
     [SerializeField] protected float movementSpeed;
     protected readonly Vector3 toastOffset = new(5f, 10f, 0f);
+
+    protected List<float> spellHitUniqueIDs;
+    protected float SPELL_HIT_LIST_RESET_TIME = 1;
+    protected float spellHitListTimer;
     protected virtual void Start() {
 
         currentBuffsDebuffs = new();
@@ -37,6 +42,7 @@ public abstract class GameCharacter : MonoBehaviour {
         character4DScript.SetDirection(Vector2.right);
         animationManager = character4DScript.AnimationManager;
         resourceManager = GetComponent<ResourceManager>();
+        spellHitUniqueIDs = new();
     }
 
     public void DamageHealth(float amount) {
@@ -51,7 +57,18 @@ public abstract class GameCharacter : MonoBehaviour {
 
     }
     protected virtual void Update() {
+        UpdateSpellHitList();
         UpdateAnimation();
+    }
+    protected void UpdateSpellHitList() {
+        if (spellHitListTimer > SPELL_HIT_LIST_RESET_TIME) {
+            spellHitListTimer = 0;
+            spellHitUniqueIDs.Clear();
+        }
+        else {
+            spellHitListTimer += Time.deltaTime;
+        }
+
     }
     public void PlayCastAnimation() {
         StopMove();
@@ -77,9 +94,23 @@ public abstract class GameCharacter : MonoBehaviour {
         if (other.gameObject.layer == GameController.PROJECTILE_LAYER ||
             other.gameObject.layer == GameController.ENEMY_PROJECTILE_LAYER) {
             var projB = other.GetComponent<ProjectileBehaviour>();
-            HandleSpellHit(
-                projB.GetAbility(),
-                projB.GetCaster());
+            if (!projB.shotgun) {
+                if (!SpellAlreadyHit(projB.uniqueID)) {
+                    HandleSpellHit(
+                        projB.GetAbility(),
+                        projB.GetCaster());
+                    //Debug.Log(spellHitUniqueIDs.Count);
+                }
+                else {
+                    //do not process spell hit since the target was already hit
+                }
+            }
+            else {
+                HandleSpellHit(
+                        projB.GetAbility(),
+                        projB.GetCaster());
+            }
+
         }
         else if (other.gameObject.layer == GameController.SPELL_EFFECT_LAYER) {
             //var ssa = other.GetComponent<SpawnedSpellAnimation>();
@@ -90,6 +121,13 @@ public abstract class GameCharacter : MonoBehaviour {
         else {
             //assume hit another actor?
         }
+    }
+    protected bool SpellAlreadyHit(float uID) {
+        if (spellHitUniqueIDs.Contains(uID)) {
+            return true;
+        }
+        spellHitUniqueIDs.Add(uID);
+        return false;
     }
 
     protected virtual void UpdateAnimation() {

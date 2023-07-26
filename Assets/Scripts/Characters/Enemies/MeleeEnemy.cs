@@ -6,8 +6,8 @@ public class MeleeEnemy : Enemy {
 
     public float basicAttackDamage;
     public float attackTime;
-    public override void Init(Player player, List<Enemy> allEnemies, float health, float mana = 0) {
-        base.Init(player, allEnemies, health, mana);
+    public override void Init(Player player, List<Enemy> allEnemies, float health, float mana = 0, bool isActive = true) {
+        base.Init(player, allEnemies, health, mana, isActive);
         availableAbilities.Add(GameController.Instance.allSpells[400]);
         basicAttackDamage = availableAbilities[0].CalculateDamage(player);
         character4DScript.WeaponType = Assets.HeroEditor4D.Common.Scripts.Enums.WeaponType.Melee1H;

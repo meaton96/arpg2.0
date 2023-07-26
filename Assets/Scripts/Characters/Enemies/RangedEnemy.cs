@@ -5,8 +5,8 @@ using UnityEngine;
 public class RangedEnemy : Enemy {
 
     [SerializeField] protected int spellID;
-    public override void Init(Player player, List<Enemy> allEnemies, float health, float mana = 0) {
-        base.Init(player, allEnemies,  health, mana);
+    public override void Init(Player player, List<Enemy> allEnemies, float health, float mana = 0, bool isActive = true) {
+        base.Init(player, allEnemies,  health, mana, isActive);
         availableAbilities.Add(GameController.Instance.allSpells[spellID]);
 
     }
@@ -19,9 +19,7 @@ public class RangedEnemy : Enemy {
             for (int x = 0; x < proj.Count; x++) {
                 proj[x].layer = LayerMask.NameToLayer("EnemyProjectiles");
             }
-            
         }
-        
         base.AttackPlayer();
 
     }

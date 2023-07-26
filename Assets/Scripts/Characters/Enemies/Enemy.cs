@@ -30,13 +30,14 @@ public abstract class Enemy : GameCharacter {
     protected const float MIN_SEP_RANGE = 0.1f, MAX_SEP_RANGE = 5;
     protected const float MAXIMUM_SPEED = 2f;
     protected const float FLOCKING_RANGE = 16f; //distance squared
+    protected bool isActive;
 
     protected List<Ability> availableAbilities;
     protected List<Enemy> allAgents;
 
 
 
-    public virtual void Init(Player player, List<Enemy> allEnemies, float health, float mana = 0) {
+    public virtual void Init(Player player, List<Enemy> allEnemies, float health, float mana = 0, bool isActive = true) {
         _CHARACTER_HALF_HEIGHT_ *= transform.localScale.x;
         allAgents = allEnemies;
         base.Start();
@@ -46,56 +47,37 @@ public abstract class Enemy : GameCharacter {
         target = player.transform;
         availableAbilities = new();
         enemyCollider = GetComponent<Collider2D>();
-
+        this.isActive = isActive;
     }
 
     protected override void Update() {
         //Debug.Log(GetDistanceSquared2D(transform.position, player.transform.position));
-        if (isAlive){
-            if (InAttackRange()) {
-                
-                if (attackTimer >= attackCooldown) {
+        if (isAlive) {
+            if (isActive) {
+                if (InAttackRange()) {
 
-                    AttackPlayer();
-                    attackTimer = 0;
+                    if (attackTimer >= attackCooldown) {
+
+                        AttackPlayer();
+                        attackTimer = 0;
+                    }
+                    else {
+                        attackTimer += Time.deltaTime;
+                    }
                 }
                 else {
-                    attackTimer += Time.deltaTime;
-                }
-            }
-            else {
-                ApplySeekAndFlock();
-            }
-            
-
-            /*if (InAttackRange()) {
-                Debug.Log("In Range");
-                state = State.Attacking;
-                if (!InAttackCooldown() && !animationManager.IsAction) {
-                    AttackPlayer();
-                }
-                else {
-                    //shuffle around or something a bit 
-
+                    ApplySeekAndFlock();
                 }
 
+                if (rb.velocity.magnitude > 0) {
+                    animationManager.SetState(CharacterState.Walk);
+                }
+                movementDirection = rb.velocity.normalized;
+                // if (rb.velocity.magnitude > MAXIMUM_SPEED)
+                //     rb.velocity = movementDirection * MAXIMUM_SPEED;
             }
-            else {
-                Vector2 forces = new();
-                forces += Seek(target.position) * SEEK_MULTIPLIER;
-                forces += Flocking();
-                //Debug.Log(forces);
-                //forces += Seperate() * SEPERATE_MULTIPLIER; 
-                rb.AddForce(forces * FORCE_MULTIPLIER);
-            }*/
-
-            if (rb.velocity.magnitude > 0) {
-                animationManager.SetState(CharacterState.Walk);
-            }
-            movementDirection = rb.velocity.normalized;
-            // if (rb.velocity.magnitude > MAXIMUM_SPEED)
-            //     rb.velocity = movementDirection * MAXIMUM_SPEED;
             base.Update();
+
         }
 
     }
@@ -118,7 +100,7 @@ public abstract class Enemy : GameCharacter {
         rb.AddForce(FORCE_MULTIPLIER * SEEK_MULTIPLIER * Seek(target.position));
     }
     private Vector2 Flocking() {
-        
+
         Vector2 separationForce = Vector2.zero;
         Vector2 alignmentForce = Vector2.zero;
         Vector2 cohesionForce = Vector2.zero;
