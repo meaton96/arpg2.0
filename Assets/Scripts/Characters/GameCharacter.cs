@@ -15,9 +15,9 @@ public abstract class GameCharacter : MonoBehaviour {
 
     [HideInInspector] public ResourceManager resourceManager;
     protected AnimationManager animationManager;
-    
-    
-    
+
+
+
 
     #region Vars - Buff/Debuff tracking
     //track current debuffs and buffs and timers
@@ -32,7 +32,7 @@ public abstract class GameCharacter : MonoBehaviour {
     #region Vars - Combat Stats
     [HideInInspector] public float actionSpeed = 1;
     [SerializeField] protected float movementSpeed;
-    protected float damageMulti = 1;
+    [HideInInspector] public float damageMulti = 1;
     #endregion
     #region Vars - Damage Text
     protected readonly Vector3 toastOffset = new(5f, 10f, 0f);
@@ -147,9 +147,17 @@ public abstract class GameCharacter : MonoBehaviour {
         Debug.Log(caster.name + "'s " + ability._name +
             " hit " + name + " for " + damage);
 
+        if (ability.onHitDebuffID != -1) {
+            ApplyOnHitDebuff(ability.onHitDebuffID);
+        }
         DamageHealth(damage);
         if (GameController.Instance.DisplayFloatingCombatText)
             DisplayFloatingDamageNumber(damage);
+    }
+    void ApplyOnHitDebuff(int id) {
+        switch (id) {
+
+        }
     }
     private void DisplayFloatingDamageNumber(float damage) {
         var toastObject = Instantiate(
@@ -179,7 +187,17 @@ public abstract class GameCharacter : MonoBehaviour {
     public virtual void RemoveBuff(Buff buff) {
         currentBuffsDebuffs.Remove(buff.id);
         RemoveBuffByID(buff);
+        GetComponent<SpriteRenderer>().color = Color.white;
         // HUD.ForceRemoveBuff(buff);
+    }
+    public virtual void ApplyDurationBuff(Buff buff) {
+        ApplyBuff(buff);
+        StartCoroutine(RemoveBuffAfterSeconds(buff, buff.duration));
+    }
+    private IEnumerator RemoveBuffAfterSeconds(Buff buff, float seconds) {
+        yield return new WaitForSeconds(seconds);
+        RemoveBuff(buff);
+        yield return null;
     }
     public bool BuffAlreadyApplied(Buff buff) {
         return currentBuffsDebuffs.ContainsKey(buff.id);
@@ -225,7 +243,7 @@ public abstract class GameCharacter : MonoBehaviour {
                 resourceManager.DecreaseManaRegenPercent(buff.amount);
                 break;
             case Buff._ID_ACTION_SPEED_INCREASE_:
-                DecreaseActionSpeed(buff.amount);
+                IncreaseActionSpeed(buff.amount);
                 break;
         }
     }

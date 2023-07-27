@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TemporaryBuffWrapper : MonoBehaviour {
+public class TempBuffWrapper_Distance : MonoBehaviour {
     Buff buff;
     GameCharacter caster;
     GameCharacter attachedCharacter;

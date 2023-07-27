@@ -63,7 +63,7 @@ public class JsonHelper {
                             ability = ScriptableObject.CreateInstance<Teleport>();
                             break;
                         case Ability._ID_BUFF:
-                            ability = ScriptableObject.CreateInstance<BuffAbility>();
+                            ability = ScriptableObject.CreateInstance<SelfBuffAbility>();
                             break;
                         case Ability._ID_ATTACK_PROJ_MULTI:
                             ability = ScriptableObject.CreateInstance<MulticastProjectileAbility>();
@@ -153,8 +153,8 @@ public class JsonHelper {
         if (ability is Aura) {
             (ability as Aura).Init();
         }
-        if (ability is BuffAbility) {
-            (ability as BuffAbility).Init();
+        if (ability is SelfBuffAbility) {
+            (ability as SelfBuffAbility).Init();
         }
 
         return ability;

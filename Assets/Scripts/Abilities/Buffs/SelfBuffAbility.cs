@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuffAbility : Ability {
-    public Buff buff;
-    public float duration;
-    public string effectName;
-    public float effectAmount;
+public class SelfBuffAbility : Ability {
+    public Buff buff;           //buff to apply
+    public float duration;      //how long to apply the buff for
+    public string effectName;   //effect name that corresponds to the line in player JSON
+    public float effectAmount;  //how much of the effect to apply
 
 
     public override string ToString() {
@@ -14,21 +14,23 @@ public class BuffAbility : Ability {
             "Duration: " + duration + "\n" +
             "Buff: " + buff.ToString();
     }
+    //casts the ability by applying the buff to the player
     public override List<GameObject> Cast(Vector3 instantiatePosition, Vector3 mousePos, Vector3 offset, Collider2D casterCollider) {
         var player = casterCollider.GetComponent<Player>();
         player.ApplyBuff(buff);
         return null;
     }
-    public void Init() {
+    public override void Init() {
         
         if (effectName == "Action_Speed_Increase") {
             buff = CreateInstance<ActionSpeedIncrease>();
             (buff as ActionSpeedIncrease).CreateBuffWrapper(duration, effectAmount);
         }
+
     }
 
     public override Ability CopyInstance() {
-        Ability ability = CreateInstance<BuffAbility>();
+        Ability ability = CreateInstance<SelfBuffAbility>();
 
 
         ability._name = _name;
@@ -44,10 +46,10 @@ public class BuffAbility : Ability {
 
 
         //  (ability as ProjectileAbility).caster = caster;
-        (ability as BuffAbility).effectAmount = effectAmount;
-        (ability as BuffAbility).effectName = effectName;
-        (ability as BuffAbility).duration = duration;
-        (ability as BuffAbility).buff = buff;
+        (ability as SelfBuffAbility).effectAmount = effectAmount;
+        (ability as SelfBuffAbility).effectName = effectName;
+        (ability as SelfBuffAbility).duration = duration;
+        (ability as SelfBuffAbility).buff = buff;
 
         //(ability as BuffAbility).Init();
 

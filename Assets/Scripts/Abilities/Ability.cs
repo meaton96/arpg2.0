@@ -32,7 +32,9 @@ public abstract class Ability : ScriptableObject {
     public int healthCost;
     public float cooldown;
     public GameObject abilityPreFab;
-    public int onHitDebuffID;
+    public int onHitDebuffID = -1;
+    public float onHitEffectAmount = 0;
+    public Buff onHitDebuff;
 
     /// <summary>
     /// attempts to cast the ability
@@ -75,8 +77,33 @@ public abstract class Ability : ScriptableObject {
             "tags: " + s + "\n";
 
     }
-    
+
     public abstract Ability CopyInstance();
     public virtual float CalculateDamage(float damageMin, float damageMax) { return 0; }
+
+
+    //Work in Progress
+    public virtual void Init() {
+        if (onHitDebuffID != -1) {
+            Buff oBuff;
+            switch (onHitDebuffID) {
+                case Buff._ID_HEALTH_REGEN_FLAT_:
+                    oBuff = CreateInstance<HealthRegeneration_Flat>();
+                    break;
+                case Buff._ID_HEALTH_REGEN_PERCENT_:
+                    oBuff = CreateInstance<HealthRegeneration_Flat>();
+                    break;
+                case Buff._ID_MANA_REGEN_FLAT_:
+                    oBuff = CreateInstance<HealthRegeneration_Flat>();
+                    break;
+                case Buff._ID_MANA_REGEN_PERCENT_:
+                    oBuff = CreateInstance<HealthRegeneration_Flat>();
+                    break;
+                case Buff._ID_ACTION_SPEED_INCREASE_:
+                    oBuff = CreateInstance<HealthRegeneration_Flat>();
+                    break;
+            }
+        }
+    }
 }
 

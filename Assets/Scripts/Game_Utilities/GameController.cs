@@ -42,10 +42,10 @@ public class GameController : MonoBehaviour {
     public const int BACKGROUND_LAYER = 11;
     public const int ENEMY_PROJECTILE_LAYER = 12;
     public const int IGNORE_COLLISION_LAYER = 13;
-    public const int EFFECT_SPELL_ID_START_NUMBER = 1000;
+   // public const int EFFECT_SPELL_ID_START_NUMBER = 1000;
     
     public const int CAMERA_Z = -15;
-    public const string JSON_PATH_BUFFS = "/JSON/abilities/buffs.json";
+    //public const string JSON_PATH_BUFFS = "/JSON/abilities/buffs.json";
     public const string JSON_PATH_ABILITIES = "/JSON/Abilities/player.json";
     #endregion
 
@@ -63,7 +63,7 @@ public class GameController : MonoBehaviour {
     //[SerializeField] private GameObject playerPrefabBow;
     public Player player;
     public Dictionary<int, Ability> allSpells = new();
-    public Dictionary<int, Buff> allBuffsDebuffs = new();
+  //  public Dictionary<int, Buff> allBuffsDebuffs = new();
 
     public SpriteCollection itemSpriteCollection;
     public IconCollection iconCollection;

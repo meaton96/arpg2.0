@@ -13,7 +13,7 @@ public class Aura : Ability {
     public Buff buff;
 
 
-    public void Init() {
+    public override void Init() {
         if (effectName == "HealthRegeneration_Flat") {
             buff = CreateInstance<HealthRegeneration_Flat>();
             (buff as HealthRegeneration_Flat).CreateBuffWrapper(-1, effectAmount);

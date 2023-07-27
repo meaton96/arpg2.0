@@ -59,7 +59,7 @@ public class SupportEnemy : RangedEnemy {
         foreach (Enemy enemy in nearbyEnemies) { 
             if (enemy.BuffAlreadyApplied(auraBuffToApply)) continue;
             var tempBuffWrap = Instantiate(auraAttachPrefab, enemy.transform).
-                GetComponent<TemporaryBuffWrapper>();
+                GetComponent<TempBuffWrapper_Distance>();
             tempBuffWrap.Attach(
                 buff: auraBuffToApply,
                 caster: this,

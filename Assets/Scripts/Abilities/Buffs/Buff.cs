@@ -18,8 +18,6 @@ public abstract class Buff : ScriptableObject
 
     private const string _ICON_PREFIX_ = "Interface/Sprites/Rpg_icons/buffs/";
     public string iconPath;
-    const int PLAYER_RESOURCE_TYPE = 100;
-    const int PLAYER_FIELD_TYPE = 101;
     public string _name;
     public int id;
     public string description;

@@ -438,14 +438,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _CHARACTER_HALF_HEIGHT_: {x: 0, y: 0.7, z: 0}
-  resourceManager: {fileID: 6767171416876917092}
-  damageToastPrefab: {fileID: 52251255580844802, guid: 120af22e1f47e66408501b3a85dbc88d, type: 3}
-  actionSpeed: 1
   DAMAGE_MIN: 8
   DAMAGE_MAX: 18
+  resourceManager: {fileID: 6767171416876917092}
   character4DScript: {fileID: 114216053546988558}
+  actionSpeed: 1
   movementSpeed: 3
+  damageToastPrefab: {fileID: 52251255580844802, guid: 120af22e1f47e66408501b3a85dbc88d, type: 3}
   movementSpeedMultiplier: 1
+  DISPLAY_FLOATING_COMBAT_TEXT: 0
   spellBar: {fileID: 6432203791143967343}
   HUD: {fileID: 0}
   playerCollider: {fileID: 0}
@@ -19142,6 +19143,14 @@ PrefabInstance:
     - target: {fileID: 6328725919845732526, guid: c08ea87286e9fdc4d992a5f9c40ec399, type: 3}
       propertyPath: m_Layer
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6703169515354887693, guid: c08ea87286e9fdc4d992a5f9c40ec399, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6703169515354887693, guid: c08ea87286e9fdc4d992a5f9c40ec399, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6825954102205953209, guid: c08ea87286e9fdc4d992a5f9c40ec399, type: 3}
       propertyPath: m_Layer

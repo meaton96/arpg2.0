@@ -45,7 +45,8 @@
     "pierceNumber": 1,
     "manaCost": 10,
     "healthCost": 0,
-    "onHitDebuffID": 1002,
+    "onHitDebuffID": 4,
+	"onHitEffectAmount": -0.3,
     "iconPath": "Interface/Sprites/Rpg_icons/cryomancer/14",
     "prefabPath": "Icelance"
   },
@@ -60,7 +61,6 @@
     "healthCost": 0,
 	"maxRange": 500,
 	"radius": 3,
-    "onHitDebuffID": -1,
     "iconPath": "Interface/Sprites/Rpg_icons/pyromancer/8",
     "prefabPath": "flamestrike"
   },
@@ -90,7 +90,6 @@
     "pierceNumber": 0,
     "manaCost": 0,
     "healthCost": 0,
-    "onHitDebuffID": -1,
     "iconPath": "Interface/Sprites/Rpg_icons/archer/11",
     "prefabPath": "Arrow"
   },
@@ -108,7 +107,6 @@
     "pierceNumber": 3,
     "manaCost": 15,
     "healthCost": 0,
-    "onHitDebuffID": -1,
     "iconPath": "Interface/Sprites/Rpg_icons/archer/14",
     "prefabPath": "PiercingArrow"
   },
@@ -125,7 +123,6 @@
     "pierceNumber": 0,
     "manaCost": 10,
     "healthCost": 0,
-    "onHitDebuffID": -1,
     "iconPath": "Interface/Sprites/Rpg_icons/archer/15",
     "prefabPath": "Arrow",
 	"shotgun": false
@@ -158,7 +155,6 @@
     "pierceNumber": 0,
     "manaCost": 0,
     "healthCost": 0,
-    "onHitDebuffID": -1,
     "iconPath": "Interface/Sprites/Rpg_icons/archer/11",
     "prefabPath": "Arrow"
   },
