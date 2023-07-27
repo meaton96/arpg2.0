@@ -72,9 +72,9 @@
     "cooldown": 30,
     "manaCost": 30,
     "healthCost": 0,
-    "effectName": "Action_Speed_Increase",	
-    "effectAmount": 0.3,
-	"duration": 10,
+    "effectID": 1500,	
+    "effectAmount": 2.0,
+	"duration": 3,
     "iconPath": "Interface/Sprites/Rpg_icons/buffs/24"
   },
   "!400": {
@@ -177,7 +177,7 @@
     "cooldown": 0.25,
     "manaCost": 0,
     "healthCost": 0,
-    "effectName": "HealthRegeneration_Flat",
+    "effectID": 1003,
     "effectAmount": 5,
     "iconPath": "Interface/Sprites/Rpg_icons/alchemist/49"
   },
@@ -189,7 +189,7 @@
     "cooldown": 0.25,
     "manaCost": 0,
     "healthCost": 0,
-    "effectName": "ManaRegeneration_Flat",
+    "effectID": 1002,
     "effectAmount": 5,
     "iconPath": "Interface/Sprites/Rpg_icons/alchemist/28"
   }

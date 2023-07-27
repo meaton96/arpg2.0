@@ -1,6 +1,8 @@
 using Assets.HeroEditor4D.Common.Scripts.CharacterScripts;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Linq;
 using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
@@ -23,13 +25,26 @@ public class ResourceManager : MonoBehaviour
     [HideInInspector] public float manaRegenIncrease_flat;
     [HideInInspector] public float manaRegenIncrease_multi = 1;
 
-    
+    FieldInfo[] fields;
+    private readonly List<string> fieldNameFilter = new() {
+        "healthRegenIncrease_flat",
+        "healthRegenIncrease_multi",
+        "manaRegenIncrease_flat",
+        "manaRegenIncrease_multi",
+        "currentHealth",
+        "maxHealth"
+
+    };
+
 
     public void Init(float maxHealth, float maxMana, float baseHealthRegen = 5, float baseManaRegen = 5) {
         this.maxMana = currentMana = maxMana;
         BASE_HEALTH_REGEN = baseHealthRegen;
         BASE_HEALTH_REGEN = baseManaRegen;
         currentHealth = this.maxHealth = maxHealth;
+        fields = GetType().GetFields();
+        FieldInfo[] filteredFields = fields.Where(f => fieldNameFilter.Contains(f.Name)).ToArray();
+        fields = filteredFields;
     }
 
     protected void Update() {
@@ -37,7 +52,7 @@ public class ResourceManager : MonoBehaviour
         RegenerateHealth();
     }
 
-    //regenerate mana called once per frame regens mana at a rate or manaRegenIncrease + BASE_MANA_REGEN per second
+    //regenerate mana called once per frame regens mana at a rate of manaRegenIncrease + BASE_MANA_REGEN per second
     protected void RegenerateMana() {
         
         if (manaTimer >= (1 / MANA_TICKS_PER_SECOND)) {
@@ -51,8 +66,19 @@ public class ResourceManager : MonoBehaviour
             currentMana = maxMana;
         }
     }
+    public bool IncreaseFloatFieldByAmount(string fieldName, float amount) {
+        if (!fieldNameFilter.Contains(fieldName)) { throw new System.ArgumentException("invalid field name"); }
 
-    
+        foreach (var field in fields) {
+            if (field.Name ==  fieldName) {
+                if (field.FieldType != typeof(float)) throw new System.ArgumentException("field is not a modifiable float value");
+                field.SetValue(this, (float)field.GetValue(this) + amount);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public bool TrySpendResource(int healthCost, int manaCost) {
         if (healthCost > currentHealth)
             return false;

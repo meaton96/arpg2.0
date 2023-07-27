@@ -5,17 +5,17 @@ using UnityEngine;
 public class ActionSpeedIncrease : Buff
 {
     const int _ID_ = 4;
-    public void CreateBuffWrapper(float duration, float amount) {
-        CreateBuff(
-            eType: EffectType.Buff,
-            _name: "Action Speed Increase",
-            id: _ID_,
-            description: "provides a percent increase to action speed",
-            iconPath: "24",
-            duration: duration,
-            effect: "ActionSpeed_Increase",
-            amount: amount);
-    }
+    //public void CreateBuffWrapper(float duration, float amount) {
+    //    Init(
+    //        eType: EffectType.Buff,
+    //        _name: "Action Speed Increase",
+    //        id: _ID_,
+    //        description: "provides a percent increase to action speed",
+    //        iconPath: "24",
+    //        duration: duration,
+    //        effect: "actionSpeed",
+    //        amount: amount);
+    //}
     //public override void ApplyEffect(GameCharacter player) {
     //    player.IncreaseActionSpeed(amount);
     //    base.ApplyEffect(player);

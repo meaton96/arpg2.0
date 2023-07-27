@@ -43,7 +43,7 @@ public class ExpandingIconBar : MonoBehaviour
     public void RemoveBuff(Buff buff) {
         try {
             //get the buff from the list and remove it
-            var buffWrapper = ActiveBuffs.SingleOrDefault(b => b.Buff._name == buff._name);
+            var buffWrapper = ActiveBuffs.SingleOrDefault(b => b.Buff.id == buff.id);
             buffWrapper.RemoveBuff();
         }
         catch (System.Exception) {

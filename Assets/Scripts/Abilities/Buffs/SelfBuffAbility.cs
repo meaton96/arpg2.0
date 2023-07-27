@@ -5,7 +5,7 @@ using UnityEngine;
 public class SelfBuffAbility : Ability {
     public Buff buff;           //buff to apply
     public float duration;      //how long to apply the buff for
-    public string effectName;   //effect name that corresponds to the line in player JSON
+    public int effectID;   //effect name that corresponds to the line in player JSON
     public float effectAmount;  //how much of the effect to apply
 
 
@@ -16,16 +16,18 @@ public class SelfBuffAbility : Ability {
     }
     //casts the ability by applying the buff to the player
     public override List<GameObject> Cast(Vector3 instantiatePosition, Vector3 mousePos, Vector3 offset, Collider2D casterCollider) {
-        var player = casterCollider.GetComponent<Player>();
+        var player = casterCollider.GetComponent<GameCharacter>();
         player.ApplyBuff(buff);
         return null;
     }
     public override void Init() {
-        
-        if (effectName == "Action_Speed_Increase") {
-            buff = CreateInstance<ActionSpeedIncrease>();
-            (buff as ActionSpeedIncrease).CreateBuffWrapper(duration, effectAmount);
-        }
+
+        //if (effectName == "Action_Speed_Increase") {
+        //    buff = CreateInstance<ActionSpeedIncrease>();
+        //    (buff as ActionSpeedIncrease).CreateBuffWrapper(duration, effectAmount);
+        //}
+        buff = GameController.Instance.GetBuffByID(effectID);
+        buff.SetDurationAndEffect(duration, effectAmount);
 
     }
 
@@ -47,7 +49,7 @@ public class SelfBuffAbility : Ability {
 
         //  (ability as ProjectileAbility).caster = caster;
         (ability as SelfBuffAbility).effectAmount = effectAmount;
-        (ability as SelfBuffAbility).effectName = effectName;
+        (ability as SelfBuffAbility).effectID = effectID;
         (ability as SelfBuffAbility).duration = duration;
         (ability as SelfBuffAbility).buff = buff;
 

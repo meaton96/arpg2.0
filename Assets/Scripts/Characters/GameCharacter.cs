@@ -1,8 +1,10 @@
 using Assets.HeroEditor4D.Common.Scripts.CharacterScripts;
 using Assets.HeroEditor4D.Common.Scripts.Enums;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
 public abstract class GameCharacter : MonoBehaviour {
@@ -16,8 +18,13 @@ public abstract class GameCharacter : MonoBehaviour {
     [HideInInspector] public ResourceManager resourceManager;
     protected AnimationManager animationManager;
 
+    FieldInfo[] fields;
+    private readonly List<string> fieldNameFilter = new() {
+        "actionSpeed",
+        "movementSpeed",
+        "damageMulti",
 
-
+    };
 
     #region Vars - Buff/Debuff tracking
     //track current debuffs and buffs and timers
@@ -53,6 +60,9 @@ public abstract class GameCharacter : MonoBehaviour {
         animationManager = character4DScript.AnimationManager;
         resourceManager = GetComponent<ResourceManager>();
         spellHitUniqueIDs = new();
+        fields = GetType().GetFields();
+        var filteredFields = fields.Where(f => fieldNameFilter.Contains(f.Name)).ToArray();
+        fields = filteredFields;
     }
     #endregion
     #region Update
@@ -155,17 +165,12 @@ public abstract class GameCharacter : MonoBehaviour {
             DisplayFloatingDamageNumber(damage);
     }
     void ApplyOnHitDebuff(int id) {
-        switch (id) {
 
-        }
     }
     private void DisplayFloatingDamageNumber(float damage) {
         var toastObject = Instantiate(
             damageToastPrefab, transform.position, Quaternion.identity).GetComponent<DamageToast>();
-
-
         var damInt = Mathf.RoundToInt(damage);
-
         toastObject.SetDamageAmount(damInt);
     }
     #endregion
@@ -181,72 +186,110 @@ public abstract class GameCharacter : MonoBehaviour {
     public virtual void ApplyBuff(Buff buff) {
         //Debug.Log("Applying Buff: " +  buff.ToString());
         //HUD.DisplayNewBuff(buff);
-        ApplyBuffByID(buff);
-        currentBuffsDebuffs.Add(buff.id, buff);
+        //ApplyBuffByID(buff);
+        try {
+            if (IncreaseFloatFieldByAmount(buff.effect, buff.amount))
+                currentBuffsDebuffs.Add(buff.id, buff);
+        }
+        catch (ArgumentException) {
+            Debug.Log("Invalid buff effect name");
+        }
+        if (buff.duration != -1)
+            StartCoroutine(RemoveBuffAfterSeconds(buff, buff.duration));
+
     }
     public virtual void RemoveBuff(Buff buff) {
-        currentBuffsDebuffs.Remove(buff.id);
-        RemoveBuffByID(buff);
-        GetComponent<SpriteRenderer>().color = Color.white;
+        if (currentBuffsDebuffs.Remove(buff.id)) {
+
+            try {
+                if (DecreaseFloatFieldByAmount(buff.effect, buff.amount))
+                    currentBuffsDebuffs.Add(buff.id, buff);
+            }
+            catch (ArgumentException) {
+                Debug.Log("Invalid buff effect name");
+            }
+        }
+        else {
+            Debug.Log("excessive remove buff call");
+        }
+        //RemoveBuffByID(buff);
+        //GetComponent<SpriteRenderer>().color = Color.white;
         // HUD.ForceRemoveBuff(buff);
-    }
-    public virtual void ApplyDurationBuff(Buff buff) {
-        ApplyBuff(buff);
-        StartCoroutine(RemoveBuffAfterSeconds(buff, buff.duration));
     }
     private IEnumerator RemoveBuffAfterSeconds(Buff buff, float seconds) {
         yield return new WaitForSeconds(seconds);
         RemoveBuff(buff);
-        yield return null;
+        yield break;
     }
     public bool BuffAlreadyApplied(Buff buff) {
         return currentBuffsDebuffs.ContainsKey(buff.id);
     }
-    public void IncreaseActionSpeed(float amount) {
-        actionSpeed += amount;
+    //public void IncreaseActionSpeed(float amount) {
+    //    actionSpeed += amount;
+    //}
+    //public void DecreaseActionSpeed(float amount) {
+    //    actionSpeed -= amount;
+    //}
+
+    public bool IncreaseFloatFieldByAmount(string fieldName, float amount) {
+        Debug.Log($"changing field {fieldName} by {amount}");
+        if (!fieldNameFilter.Contains(fieldName)) {
+            if (resourceManager.IncreaseFloatFieldByAmount(fieldName, amount))
+                return true;
+        }
+        foreach (var field in fields) {
+            if (field.Name == fieldName) {
+                if (field.FieldType != typeof(float)) throw new ArgumentException("field is not a modifiable float value");
+                field.SetValue(this, (float)field.GetValue(this) + amount);
+                return true;
+            }
+        }
+        return false;
+
     }
-    public void DecreaseActionSpeed(float amount) {
-        actionSpeed -= amount;
+    public bool DecreaseFloatFieldByAmount(string fieldName, float amount) {
+        return IncreaseFloatFieldByAmount(fieldName, -amount);
     }
 
-    protected void ApplyBuffByID(Buff buff) {
-        switch (buff.id) {
-            case Buff._ID_HEALTH_REGEN_FLAT_:
-                resourceManager.IncreaseHealthRegenFlat(buff.amount);
-                break;
-            case Buff._ID_HEALTH_REGEN_PERCENT_:
-                resourceManager.IncreaseHealthRegenPercent(buff.amount);
-                break;
-            case Buff._ID_MANA_REGEN_FLAT_:
-                resourceManager.IncreaseManaRegenFlat(buff.amount);
-                break;
-            case Buff._ID_MANA_REGEN_PERCENT_:
-                resourceManager.IncreaseManaRegenPercent(buff.amount);
-                break;
-            case Buff._ID_ACTION_SPEED_INCREASE_:
-                IncreaseActionSpeed(buff.amount);
-                break;
-        }
-    }
-    protected void RemoveBuffByID(Buff buff) {
-        switch (buff.id) {
-            case Buff._ID_HEALTH_REGEN_FLAT_:
-                resourceManager.DecreaseHealthRegenFlat(buff.amount);
-                break;
-            case Buff._ID_HEALTH_REGEN_PERCENT_:
-                resourceManager.DecreaseHealthRegenPercent(buff.amount);
-                break;
-            case Buff._ID_MANA_REGEN_FLAT_:
-                resourceManager.DecreaseManaRegenFlat(buff.amount);
-                break;
-            case Buff._ID_MANA_REGEN_PERCENT_:
-                resourceManager.DecreaseManaRegenPercent(buff.amount);
-                break;
-            case Buff._ID_ACTION_SPEED_INCREASE_:
-                IncreaseActionSpeed(buff.amount);
-                break;
-        }
-    }
+    //protected void ApplyBuffByID(Buff buff) {
+    //    switch (buff.id) {
+    //        case Buff._ID_HEALTH_REGEN_FLAT_:
+    //            resourceManager.IncreaseHealthRegenFlat(buff.amount);
+    //            break;
+    //        case Buff._ID_HEALTH_REGEN_PERCENT_:
+    //            resourceManager.IncreaseHealthRegenPercent(buff.amount);
+    //            break;
+    //        case Buff._ID_MANA_REGEN_FLAT_:
+    //            resourceManager.IncreaseManaRegenFlat(buff.amount);
+    //            break;
+    //        case Buff._ID_MANA_REGEN_PERCENT_:
+    //            resourceManager.IncreaseManaRegenPercent(buff.amount);
+    //            break;
+    //        case Buff._ID_ACTION_SPEED_INCREASE_:
+    //            IncreaseActionSpeed(buff.amount);
+    //            break;
+    //    }
+    //}
+    //protected void RemoveBuffByID(Buff buff) {
+    //    switch (buff.id) {
+    //        case Buff._ID_HEALTH_REGEN_FLAT_:
+    //            resourceManager.DecreaseHealthRegenFlat(buff.amount);
+    //            break;
+    //        case Buff._ID_HEALTH_REGEN_PERCENT_:
+    //            resourceManager.DecreaseHealthRegenPercent(buff.amount);
+    //            break;
+    //        case Buff._ID_MANA_REGEN_FLAT_:
+    //            resourceManager.DecreaseManaRegenFlat(buff.amount);
+    //            break;
+    //        case Buff._ID_MANA_REGEN_PERCENT_:
+    //            resourceManager.DecreaseManaRegenPercent(buff.amount);
+    //            break;
+    //        case Buff._ID_ACTION_SPEED_INCREASE_:
+    //            IncreaseActionSpeed(buff.amount);
+    //            break;
+    //    }
+    //}
+    //
     #endregion
 
     public virtual void RemoveOnDeath() {
@@ -254,7 +297,7 @@ public abstract class GameCharacter : MonoBehaviour {
     }
     //replace with calculation from weapon damage
     public virtual float GetAttackDamage() {
-        return Random.Range(DAMAGE_MIN, DAMAGE_MAX);
+        return UnityEngine.Random.Range(DAMAGE_MIN, DAMAGE_MAX);
     }
     public virtual float CalculateDamage(DamagingAbility ability) {
         //replace damage constants with weapon damage

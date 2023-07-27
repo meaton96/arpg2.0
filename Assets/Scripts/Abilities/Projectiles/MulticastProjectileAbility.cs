@@ -21,10 +21,11 @@ public class MulticastProjectileAbility : ProjectileAbility
         createdProjectiles.Clear();
         var baseCastDelay = 0.25f / numCasts;
         var castDelay = baseCastDelay / casterCollider.GetComponent<GameCharacter>().actionSpeed;
+        var ability = GameController.Instance.GetAbilityByID(baseAbilityID);
         for (int i = 0; i < numCasts; i++) {
             createdProjectiles.
-                AddRange(GameController.Instance.allSpells[baseAbilityID].
-                Cast(pos, targetPos, offset, casterCollider));
+                AddRange(ability.
+                    Cast(pos, targetPos, offset, casterCollider));
 
             yield return new WaitForSeconds(castDelay);
         }

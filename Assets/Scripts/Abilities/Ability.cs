@@ -85,24 +85,7 @@ public abstract class Ability : ScriptableObject {
     //Work in Progress
     public virtual void Init() {
         if (onHitDebuffID != -1) {
-            Buff oBuff;
-            switch (onHitDebuffID) {
-                case Buff._ID_HEALTH_REGEN_FLAT_:
-                    oBuff = CreateInstance<HealthRegeneration_Flat>();
-                    break;
-                case Buff._ID_HEALTH_REGEN_PERCENT_:
-                    oBuff = CreateInstance<HealthRegeneration_Flat>();
-                    break;
-                case Buff._ID_MANA_REGEN_FLAT_:
-                    oBuff = CreateInstance<HealthRegeneration_Flat>();
-                    break;
-                case Buff._ID_MANA_REGEN_PERCENT_:
-                    oBuff = CreateInstance<HealthRegeneration_Flat>();
-                    break;
-                case Buff._ID_ACTION_SPEED_INCREASE_:
-                    oBuff = CreateInstance<HealthRegeneration_Flat>();
-                    break;
-            }
+            
         }
     }
 }

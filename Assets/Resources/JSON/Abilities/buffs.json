@@ -1,22 +1,59 @@
 {
   "!1000": {
-    "_name": "HealthRegeneration_Flat",
-    "effectName": "HealthRegeneration_Flat",
-    "iconPath": "Interface/Sprites/Rpg_icons/buffs/7"
+	  "type": 0,
+	  "_name": "Percent Mana Regneration",
+	  "description": "provides a percentage increase to mana regeneration",
+	  "iconPath": "buffs/17",
+	  "effect": "manaRegenIncrease_multi"
   },
   "!1001": {
-    "_name": "ManaRegeneration_Flat",
-    "effectName": "ManaRegeneration_Flat",
-    "iconPath": "Interface/Sprites/Rpg_icons/buffs/17"
+	  "type": 0,
+	  "_name": "Percent Health Regneration",
+	  "description": "provides a percentage increase to health regeneration",
+	  "iconPath": "buffs/7",
+	  "effect": "healthRegenIncrease_multi"
   },
   "!1002": {
-    "_name": "Slow",
-    "effect": "movementSpeedMultiplier",
-    "iconPath": "Interface/Sprites/Rpg_icons/debuffs/8"
+	  "type": 0,
+	  "_name": "Flat Mana Regneration",
+	  "description": "provides a flat increase to mana regeneration",
+	  "iconPath": "buffs/17",
+	  "effect": "manaRegenIncrease_flat"
   },
-  "!1004": {
-    "_name": "ActionSpeedIncrease",
-    "effect": "actionSpeed",
-    "iconPath": "Interface/Sprites/Rpg_icons/buffs/24"
+  "!1003": {
+	  "type": 0,
+	  "_name": "Percent Health Regneration",
+	  "description": "provides a percentage increase to health regeneration",
+	  "iconPath": "buffs/7",
+	  "effect": "healthRegenIncrease_flat"
+	  
+  },
+  "!1500": {
+	  "type": 0,
+	  "_name": "Action Speed Buff",
+	  "description": "provides an increase to action speed",
+	  "iconPath": "buffs/24",
+	  "effect": "actionSpeed"  
+  },
+  "!1501": {
+	  "type": 1,
+	  "_name": "Action Speed Decrease",
+	  "description": "provides a decrease to action speed",
+	  "iconPath": "debuffs/12",
+	  "effect": "actionSpeed"  
+  },
+  "!1502": {
+	  "type": 1,
+	  "_name": "Movement Speed Decrease Small",
+	  "description": "provides a small decrease to movement speed",
+	  "iconPath": "debuffs/8",
+	  "effect": "movementSpeed"  
+  },
+  "!1503": {
+	  "type": 1,
+	  "_name": "Movement Speed Decrease Large",
+	  "description": "provides a large decrease to movement speed",
+	  "iconPath": "debuffs/19",
+	  "effect": "movementSpeed"  
   }
 }

@@ -7,6 +7,8 @@ using Assets.HeroEditor4D.InventorySystem.Scripts.Enums;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
@@ -45,7 +47,7 @@ public class GameController : MonoBehaviour {
    // public const int EFFECT_SPELL_ID_START_NUMBER = 1000;
     
     public const int CAMERA_Z = -15;
-    //public const string JSON_PATH_BUFFS = "/JSON/abilities/buffs.json";
+    public const string JSON_PATH_BUFFS = "/JSON/abilities/buffs.json";
     public const string JSON_PATH_ABILITIES = "/JSON/Abilities/player.json";
     #endregion
 
@@ -62,8 +64,8 @@ public class GameController : MonoBehaviour {
     
     //[SerializeField] private GameObject playerPrefabBow;
     public Player player;
-    public Dictionary<int, Ability> allSpells = new();
-  //  public Dictionary<int, Buff> allBuffsDebuffs = new();
+    private Dictionary<int, Ability> allSpells = new();
+    private Dictionary<int, Buff> allBuffsDebuffs = new();
 
     public SpriteCollection itemSpriteCollection;
     public IconCollection iconCollection;
@@ -167,7 +169,6 @@ public class GameController : MonoBehaviour {
         if (player != null && enemyList.Count < maxEnemies && spawnEnemies) {
             SpawnEnemies();
         }
-
     }
 
     public static Vector3 CameraToWorldPointMousePos() {
@@ -175,9 +176,8 @@ public class GameController : MonoBehaviour {
     }
 
     private void InitializeDictionaries() {
-        
+        allBuffsDebuffs = JsonHelper.ParseAllBuffsAndDebuffs(JSON_PATH_BUFFS);
         allSpells = JsonHelper.ParseAllAbilities(JSON_PATH_ABILITIES);
-
     }
 
     private void SpawnEnemies() {
@@ -202,7 +202,7 @@ public class GameController : MonoBehaviour {
                 break;
             }
         }
-
+        
         if (SPAWN_ONLY_ONE_ENEMY_TYPE) {
             index = ENEMY_INDEX;
         }
@@ -255,6 +255,26 @@ public class GameController : MonoBehaviour {
     }
     void InitSettings() {
         PlayerSettingsHelper.InitObjectSettings(this, "Game");
+    }
+
+    public Ability GetAbilityByID(int id) {
+        Ability ability = null;
+        try {
+            ability = allSpells[id].CopyInstance();
+        } catch (KeyNotFoundException e) {
+            Debug.Log(e);
+        }
+        return ability;
+    }
+    public Buff GetBuffByID(int id) {
+        Buff buff = null;
+        try {
+            buff = allBuffsDebuffs[id].CopyInstance();
+        }
+        catch (KeyNotFoundException e) {
+            Debug.Log(e);
+        }
+        return buff;
     }
 
 
