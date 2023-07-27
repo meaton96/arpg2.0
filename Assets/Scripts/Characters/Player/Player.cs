@@ -287,9 +287,16 @@ public class Player : GameCharacter {
         HUD.ForceRemoveBuff(buff);
         base.RemoveBuff(buff);
     }
+    //public void ActivateAura(Buff buff) {
+
+    //    ApplyBuff(buff);
+    //}
+    //public void DeactivateAura(Buff buff) {
+    //    RemoveBuff(buff);
+    //}
     #endregion
     #region Getters/Setters/ToString
-    
+
     public override string ToString() {
         return "Health: " + resourceManager.currentHealth + "/" + resourceManager.maxHealth + "\n" +
             "Mana:" + resourceManager.currentMana + "/" + resourceManager.maxMana + "\n" +

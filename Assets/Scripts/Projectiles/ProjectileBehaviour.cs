@@ -180,7 +180,7 @@ public class ProjectileBehaviour : MonoBehaviour {
         //Debug.Log(ability.CalculateDamage());
         //Debug.Log(ability.CalculateDamage(caster));
 
-        return ability.CalculateDamage(caster);
+        return caster.CalculateDamage(ability);
 
 
     }

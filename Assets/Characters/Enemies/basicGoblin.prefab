@@ -7278,7 +7278,7 @@ MonoBehaviour:
   separationWeight: 1
   alignmentWeight: 1
   cohesionWeight: 1
-  basicAttackDamage: 0
+  basicAttackDamage: 15
   attackTime: 0
 --- !u!50 &5757264661440035119
 Rigidbody2D:

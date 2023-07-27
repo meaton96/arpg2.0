@@ -8,8 +8,8 @@ using UnityEngine.Assertions;
 public class ProjectileAttack : ProjectileAbility {
 
     public float damageEffectiveness;
-    public override float CalculateDamage(GameCharacter caster) {
-        return  caster.GetAttackDamage() * damageEffectiveness;
+    public override float CalculateDamage(float damageMin, float damageMax) {
+        return  Random.Range(damageMin, damageMax) * damageEffectiveness;
     }
     public override Ability CopyInstance() {
 

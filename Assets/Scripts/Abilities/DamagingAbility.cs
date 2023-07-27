@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class DamagingAbility : Ability
 {
     public float baseDamage;
-    public override float CalculateDamage(GameCharacter caster) {
+    public override float CalculateDamage(float damageMin, float damageMax) {
         return baseDamage;
     }
     public override string ToString() {

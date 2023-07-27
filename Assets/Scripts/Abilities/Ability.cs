@@ -35,7 +35,7 @@ public abstract class Ability : ScriptableObject {
     public int onHitDebuffID;
 
     /// <summary>
-    /// 
+    /// attempts to cast the ability
     /// </summary>
     /// <param name="instantiatePosition">The position to spawn the spell</param>
     /// <param name="mousePos">The position of the mouse</param>
@@ -45,7 +45,7 @@ public abstract class Ability : ScriptableObject {
         return new List<GameObject>() { Instantiate(abilityPreFab, instantiatePosition, Quaternion.identity) };
     }
     /// <summary>
-    /// 
+    /// attempts to cast the ability
     /// </summary>
     /// <param name="instantiatePosition">The position to spawn the spell</param>
     /// <param name="casterCollider">the collider of the caster to prevent collision</param>
@@ -71,17 +71,12 @@ public abstract class Ability : ScriptableObject {
             "mana cost: " + manaCost + "\n" +
             "health cost: " + healthCost + "\n" +
             "icon_path: " + iconImage.name + "\n" +
-           "prefab name: " + abilityPreFab.name + "\n" +
+            "prefab name: " + abilityPreFab.name + "\n" +
             "tags: " + s + "\n";
 
     }
-    public void ProcessCollision(params Collider2D[] colliders) {
-        if (onHitDebuffID >= GameController.EFFECT_SPELL_ID_START_NUMBER) {
-            //apply on hit effect
-        }
-        //do damage or whatever
-    }
+    
     public abstract Ability CopyInstance();
-    public virtual float CalculateDamage(GameCharacter caster) { return 0; }
+    public virtual float CalculateDamage(float damageMin, float damageMax) { return 0; }
 }
 

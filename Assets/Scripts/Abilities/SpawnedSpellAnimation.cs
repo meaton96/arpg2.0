@@ -27,7 +27,7 @@ public class SpawnedSpellAnimation : MonoBehaviour {
     public void Remove() { Destroy(gameObject); }
 
     public virtual float CalculateDamage() {
-        return ability.CalculateDamage(caster);
+        return caster.CalculateDamage(ability);
     }
     public DamagingAbility GetAbility() { return ability; }
     public GameCharacter GetCaster() { return caster; }
