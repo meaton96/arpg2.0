@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "NewGroundTargetedAOE", menuName = "Custom Assets/Ground Targeted AOE")]
 public class GroundTargetedAOEAbility : GroundTargetedAbility {
     public const string _TARGETING_CIRCLE_PREFAB_PATH = "Prefabs/??";
 

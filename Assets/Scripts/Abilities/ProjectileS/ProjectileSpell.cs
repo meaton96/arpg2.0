@@ -11,8 +11,8 @@ using static UnityEditor.PlayerSettings;
 [CreateAssetMenu(fileName = "NewProjectileAbility", menuName = "Custom Assets/Projectile/Projectile Spell")]
 public class ProjectileAbility : DamagingAbility {
     // public GameCharacter caster;
-    public int baseProjectiles;
-    public float baseProjectileSpeed;
+    public int baseProjectiles = 1;
+    public float baseProjectileSpeed = 10;
     public int chainNumber;
     public int pierceNumber;
     public bool shotgun;
