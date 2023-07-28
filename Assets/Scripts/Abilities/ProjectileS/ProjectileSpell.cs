@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using static UnityEditor.PlayerSettings;
 
+[CreateAssetMenu(fileName = "NewProjectileAbility", menuName = "Custom Assets/Projectile/Projectile Spell")]
 public class ProjectileAbility : DamagingAbility {
     // public GameCharacter caster;
     public int baseProjectiles;
@@ -141,28 +142,29 @@ public class ProjectileAbility : DamagingAbility {
     public override Ability CopyInstance() {
         Ability ability = CreateInstance<ProjectileAbility>();
 
+        CopyTo(ability);
 
-        ability._name = _name;
-        ability.description = description;
-        ability.id = id;
-        ability.tags = new(tags);
-        ability.iconImage = iconImage;
-        ability.manaCost = manaCost;
-        ability.healthCost = healthCost;
-        ability.cooldown = cooldown;
-        ability.abilityPreFab = abilityPreFab;
-        ability.onHitDebuffID = onHitDebuffID;
+        //ability._name = _name;
+        //ability.description = description;
+        //ability.id = id;
+        //ability.tags = new(tags);
+        //ability.iconImage = iconImage;
+        //ability.manaCost = manaCost;
+        //ability.healthCost = healthCost;
+        //ability.cooldown = cooldown;
+        //ability.abilityPreFab = abilityPreFab;
+        //ability.onHitDebuffID = onHitDebuffID;
 
 
-        //  (ability as ProjectileAbility).caster = caster;
-        (ability as ProjectileAbility).baseProjectiles = baseProjectiles;
-        (ability as ProjectileAbility).baseProjectileSpeed = baseProjectileSpeed;
-        (ability as ProjectileAbility).chainNumber = chainNumber;
-        (ability as ProjectileAbility).pierceNumber = pierceNumber;
+        ////  (ability as ProjectileAbility).caster = caster;
+        //(ability as ProjectileAbility).baseProjectiles = baseProjectiles;
+        //(ability as ProjectileAbility).baseProjectileSpeed = baseProjectileSpeed;
+        //(ability as ProjectileAbility).chainNumber = chainNumber;
+        //(ability as ProjectileAbility).pierceNumber = pierceNumber;
 
-        (ability as ProjectileAbility).speedMulti = speedMulti;
-        (ability as ProjectileAbility).projIncrease = projIncrease;
-        (ability as ProjectileAbility).baseDamage = baseDamage;
+        //(ability as ProjectileAbility).speedMulti = speedMulti;
+        //(ability as ProjectileAbility).projIncrease = projIncrease;
+        //(ability as ProjectileAbility).baseDamage = baseDamage;
 
 
         return ability;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "NewSelfBuff", menuName = "Custom Assets/Self Buff")]
 public class SelfBuffAbility : Ability {
     public Buff buff;           //buff to apply
     public float duration;      //how long to apply the buff for
@@ -34,24 +35,29 @@ public class SelfBuffAbility : Ability {
     public override Ability CopyInstance() {
         Ability ability = CreateInstance<SelfBuffAbility>();
 
+        var otherFields = ability.GetType().GetFields();
+        var theseFields = ability.GetType().GetFields();
 
-        ability._name = _name;
-        ability.description = description;
-        ability.id = id;
-        ability.tags = new(tags);
-        ability.iconImage = iconImage;
-        ability.manaCost = manaCost;
-        ability.healthCost = healthCost;
-        ability.cooldown = cooldown;
-        ability.abilityPreFab = abilityPreFab;
-        ability.onHitDebuffID = onHitDebuffID;
+        for (int i = 0; i < otherFields.Length; i++) {
+            otherFields[i].SetValue(ability, theseFields[i]);
+        }
+        //ability._name = _name;
+        //ability.description = description;
+        //ability.id = id;
+        //ability.tags = new(tags);
+        //ability.iconImage = iconImage;
+        //ability.manaCost = manaCost;
+        //ability.healthCost = healthCost;
+        //ability.cooldown = cooldown;
+        //ability.abilityPreFab = abilityPreFab;
+        //ability.onHitDebuffID = onHitDebuffID;
 
 
-        //  (ability as ProjectileAbility).caster = caster;
-        (ability as SelfBuffAbility).effectAmount = effectAmount;
-        (ability as SelfBuffAbility).effectID = effectID;
-        (ability as SelfBuffAbility).duration = duration;
-        (ability as SelfBuffAbility).buff = buff;
+        ////  (ability as ProjectileAbility).caster = caster;
+        //(ability as SelfBuffAbility).effectAmount = effectAmount;
+        //(ability as SelfBuffAbility).effectID = effectID;
+        //(ability as SelfBuffAbility).duration = duration;
+        //(ability as SelfBuffAbility).buff = buff;
 
         //(ability as BuffAbility).Init();
 

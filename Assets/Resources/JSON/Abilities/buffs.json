@@ -22,7 +22,7 @@
   },
   "!1003": {
 	  "type": 0,
-	  "_name": "Percent Health Regneration",
+	  "_name": "Flat Health Regneration",
 	  "description": "provides a percentage increase to health regeneration",
 	  "iconPath": "buffs/7",
 	  "effect": "healthRegenIncrease_flat"

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "NewTeleport", menuName = "Custom Assets/Teleport")]
 public class Teleport : GroundTargetedAbility
 {
     
@@ -19,21 +20,7 @@ public class Teleport : GroundTargetedAbility
     public override Ability CopyInstance() {
 
         Ability ability = CreateInstance<Teleport>();
-
-        ability._name = _name;
-        ability.description = description;
-        ability.id = id;
-        ability.tags = new(tags);
-        ability.iconImage = iconImage;
-        ability.manaCost = manaCost;
-        ability.healthCost = healthCost;
-        ability.cooldown = cooldown;
-        ability.abilityPreFab = abilityPreFab;
-        ability.onHitDebuffID = onHitDebuffID;
-
-        (ability as Teleport).maxRange = maxRange;
-
-
+        CopyTo(ability);
         return ability;
     }
 

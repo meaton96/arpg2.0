@@ -25,20 +25,21 @@ public class GroundTargetedAOEAbility : GroundTargetedAbility {
 
         Ability ability = CreateInstance<GroundTargetedAOEAbility>();
 
-        ability._name = _name;
-        ability.description = description;
-        ability.id = id;
-        ability.tags = new(tags);
-        ability.iconImage = iconImage;
-        ability.manaCost = manaCost;
-        ability.healthCost = healthCost;
-        ability.cooldown = cooldown;
-        ability.abilityPreFab = abilityPreFab;
-        ability.onHitDebuffID = onHitDebuffID;
-        
-        (ability as GroundTargetedAOEAbility).maxRange = maxRange;
-        (ability as GroundTargetedAOEAbility).radius = radius;
-        (ability as GroundTargetedAOEAbility).baseDamage = baseDamage;
+        CopyTo(ability);
+        //ability._name = _name;
+        //ability.description = description;
+        //ability.id = id;
+        //ability.tags = new(tags);
+        //ability.iconImage = iconImage;
+        //ability.manaCost = manaCost;
+        //ability.healthCost = healthCost;
+        //ability.cooldown = cooldown;
+        //ability.abilityPreFab = abilityPreFab;
+        //ability.onHitDebuffID = onHitDebuffID;
+
+        //(ability as GroundTargetedAOEAbility).maxRange = maxRange;
+        //(ability as GroundTargetedAOEAbility).radius = radius;
+        //(ability as GroundTargetedAOEAbility).baseDamage = baseDamage;
 
 
         return ability;

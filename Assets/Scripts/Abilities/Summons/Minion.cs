@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "NewMinionAbility", menuName = "Custom Assets/Summon/Minion")]
 public class Minion : Ability {
 
 
     public override Ability CopyInstance() {
-        throw new System.NotImplementedException();
+        Ability ability = CreateInstance<Minion>(); 
+        CopyTo(ability);
+        return ability;
     }
 }

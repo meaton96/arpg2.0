@@ -6,6 +6,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "NewAura", menuName = "Custom Assets/Aura")]
 public class Aura : Ability {
     public const string BUFF_PATH = "/Scripts/Abilities/Buffs";
     //public string effectName;

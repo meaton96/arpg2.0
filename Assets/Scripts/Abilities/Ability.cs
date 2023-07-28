@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,6 +35,7 @@ public abstract class Ability : ScriptableObject {
     public GameObject abilityPreFab;
     public int onHitDebuffID = -1;
     public float onHitEffectAmount = 0;
+    public float onHitDuration = 0;
     public Buff onHitDebuff;
 
     /// <summary>
@@ -79,13 +81,28 @@ public abstract class Ability : ScriptableObject {
     }
 
     public abstract Ability CopyInstance();
+    /// <summary>
+    /// Copies all fields values from this class to the other class
+    /// </summary>
+    /// <param name="other">The ability to copy the values to</param>
+    protected void CopyTo(Ability other) {
+        // Get all fields of the Ability class using reflection
+        FieldInfo[] fields = typeof(Ability).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+
+        foreach (var field in fields) {
+            // Copy the value from the current instance to the target instance
+            var value = field.GetValue(this);
+            field.SetValue(other, value);
+        }
+    }
     public virtual float CalculateDamage(float damageMin, float damageMax) { return 0; }
 
 
     //Work in Progress
     public virtual void Init() {
         if (onHitDebuffID != -1) {
-            
+            onHitDebuff = GameController.Instance.GetBuffByID(onHitDebuffID);
+            onHitDebuff.SetDurationAndEffect(onHitDuration, onHitEffectAmount);
         }
     }
 }

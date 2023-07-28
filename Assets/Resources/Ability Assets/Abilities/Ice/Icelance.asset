@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Icelance
+  m_EditorClassIdentifier: MyScripts::ProjectileAbility
+  _name: Icelance
+  description: A lance of ice that pieces and slows
+  id: 0
+  tags:
+  - Spell
+  - Ice
+  - Projectile
+  iconImage: {fileID: 0}
+  manaCost: 8
+  healthCost: 0
+  cooldown: 0
+  abilityPreFab: {fileID: 0}
+  onHitDebuffID: 1502
+  onHitEffectAmount: -0.3
+  onHitDuration: 4
+  onHitDebuff: {fileID: 0}
+  baseDamage: 10
+  baseProjectiles: 1
+  baseProjectileSpeed: 20
+  chainNumber: 0
+  pierceNumber: 2
+  shotgun: 0

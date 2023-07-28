@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "NewMultiCastProjectileAbility", menuName = "Custom Assets/Projectile/Multicast Projectile")]
 public class MulticastProjectileAbility : ProjectileAbility
 {
 
@@ -33,31 +34,31 @@ public class MulticastProjectileAbility : ProjectileAbility
     }
     public override Ability CopyInstance() {
         Ability ability = CreateInstance<MulticastProjectileAbility>();
+        CopyTo(ability);
+
+        //ability._name = _name;
+        //ability.description = description;
+        //ability.id = id;
+        //ability.tags = new(tags);
+        //ability.iconImage = iconImage;
+        //ability.manaCost = manaCost;
+        //ability.healthCost = healthCost;
+        //ability.cooldown = cooldown;
+        //ability.abilityPreFab = abilityPreFab;
+        //ability.onHitDebuffID = onHitDebuffID;
 
 
-        ability._name = _name;
-        ability.description = description;
-        ability.id = id;
-        ability.tags = new(tags);
-        ability.iconImage = iconImage;
-        ability.manaCost = manaCost;
-        ability.healthCost = healthCost;
-        ability.cooldown = cooldown;
-        ability.abilityPreFab = abilityPreFab;
-        ability.onHitDebuffID = onHitDebuffID;
+        ////  (ability as ProjectileAbility).caster = caster;
+        //(ability as MulticastProjectileAbility).baseProjectiles = baseProjectiles;
+        //(ability as MulticastProjectileAbility).baseProjectileSpeed = baseProjectileSpeed;
+        //(ability as MulticastProjectileAbility).chainNumber = chainNumber;
+        //(ability as MulticastProjectileAbility).pierceNumber = pierceNumber;
 
-
-        //  (ability as ProjectileAbility).caster = caster;
-        (ability as MulticastProjectileAbility).baseProjectiles = baseProjectiles;
-        (ability as MulticastProjectileAbility).baseProjectileSpeed = baseProjectileSpeed;
-        (ability as MulticastProjectileAbility).chainNumber = chainNumber;
-        (ability as MulticastProjectileAbility).pierceNumber = pierceNumber;
-
-        (ability as MulticastProjectileAbility).speedMulti = speedMulti;
-        (ability as MulticastProjectileAbility).projIncrease = projIncrease;
-        (ability as MulticastProjectileAbility).baseDamage = baseDamage;
-        (ability as MulticastProjectileAbility).numCasts= numCasts;
-        (ability as MulticastProjectileAbility).baseAbilityID = baseAbilityID;
+        //(ability as MulticastProjectileAbility).speedMulti = speedMulti;
+        //(ability as MulticastProjectileAbility).projIncrease = projIncrease;
+        //(ability as MulticastProjectileAbility).baseDamage = baseDamage;
+        //(ability as MulticastProjectileAbility).numCasts= numCasts;
+        //(ability as MulticastProjectileAbility).baseAbilityID = baseAbilityID;
 
 
 

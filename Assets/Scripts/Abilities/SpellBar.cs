@@ -17,7 +17,7 @@ public class SpellBar : MonoBehaviour {
     public AuraWrapper[] auraWrappers = new AuraWrapper[3];
     [SerializeField] private GameObject[] auraBarImages = new GameObject[3];
 
-    
+
     [SerializeField] private Sprite noAbilityEquippedImage;
     [SerializeField] private Player player;
 
@@ -28,8 +28,8 @@ public class SpellBar : MonoBehaviour {
     #region Abilties Bar
     //equip the ability in the slot slot
     //ability is equipped via ID number and pulled fromthe game controller singleton
-    public void EquipAbility(int slot, int Id) {
-        var ability = GameController.Instance.GetAbilityByID(Id);
+    public void EquipAbility(int slot, int id) {
+        var ability = GameController.Instance.GetAbilityByID(id);
         UpdateIcons();
         spellWrappers[slot] = Instantiate(abilityWrapperPrefab, transform);
         spellWrappers[slot].Init(ability, spellTimers[slot]);
@@ -53,7 +53,7 @@ public class SpellBar : MonoBehaviour {
     //checks if there is an ability or aura equipped in the slot and sets the sprite
     //to the default image if there isnt one equipped
     public void UpdateIcons() {
-        for (int x = 0; x < spellWrappers.Length; x++ ){
+        for (int x = 0; x < spellWrappers.Length; x++) {
             if (spellWrappers[x] == null)
                 spellBarImages[x].GetComponent<Image>().sprite = noAbilityEquippedImage;
         }
@@ -73,11 +73,11 @@ public class SpellBar : MonoBehaviour {
         }
         auraWrappers[slot] = Instantiate(auraWrapperPrefab, transform);
         auraWrappers[slot].Init(aura, auraBarImages[slot]);
-        
+
         auraWrappers[slot].EquipAura(player);
     }
 
-    
+
     public void UnEquipAura(int slot) {
         if (slot < 0 || slot >= auraWrappers.Length) { return; }
         auraWrappers[slot].UnEquipAura(player);

@@ -79,7 +79,7 @@ public class Player : GameCharacter {
     private float dodgeTimer = 0f;
     [SerializeField] private float dodgeSpeed;
     #endregion
-    
+
     
     #region Start + Update
     // Start is called before the first frame update
@@ -105,11 +105,11 @@ public class Player : GameCharacter {
         spellBar.EquipAbility(1, 401); //piercing shot
         spellBar.EquipAbility(2, 100); //flamestrike
         spellBar.EquipAbility(3, 200); //haste
-        
+
 
 
     }
-   
+
 
     // Update is called once per frame
     protected override void Update() {

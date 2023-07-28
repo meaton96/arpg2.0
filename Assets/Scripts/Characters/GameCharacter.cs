@@ -160,14 +160,14 @@ public abstract class GameCharacter : MonoBehaviour {
             " hit " + name + " for " + damage);
 
         if (ability.onHitDebuffID != -1) {
-            ApplyOnHitDebuff(ability.onHitDebuffID);
+            ApplyOnHitDebuff(ability.onHitDebuff);
         }
         DamageHealth(damage);
         if (GameController.Instance.DisplayFloatingCombatText)
             DisplayFloatingDamageNumber(damage);
     }
-    void ApplyOnHitDebuff(int id) {
-
+    void ApplyOnHitDebuff(Buff buff) {
+        
     }
     private void DisplayFloatingDamageNumber(float damage) {
         var toastObject = Instantiate(

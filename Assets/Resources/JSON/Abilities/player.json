@@ -45,8 +45,9 @@
     "pierceNumber": 1,
     "manaCost": 10,
     "healthCost": 0,
-    "onHitDebuffID": 4,
+    "onHitDebuffID": 1502,
 	"onHitEffectAmount": -0.3,
+	"onHitDuration": 4,
     "iconPath": "Interface/Sprites/Rpg_icons/cryomancer/14",
     "prefabPath": "Icelance"
   },

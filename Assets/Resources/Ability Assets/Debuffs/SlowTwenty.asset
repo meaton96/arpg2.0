@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 722b727b31e3bc640b74c0701c1ecb59, type: 3}
+  m_Name: SlowTwenty
+  m_EditorClassIdentifier: 
+  iconPath: 
+  _name: 20% Slow
+  id: 1502
+  description: 20% reduced movement speed
+  iconImage: {fileID: 0}
+  duration: 5
+  effect: movementSpeed
+  amount: 0.2
+  etype: 1

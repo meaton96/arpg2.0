@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "NewBuff", menuName = "Custom Assets/Buff")]
 public class Buff : ScriptableObject
 {
 
@@ -33,9 +34,12 @@ public class Buff : ScriptableObject
     }
     public EffectType etype;
 
+    /// <summary>
+    /// Initialize the buff by loading the iconImage, only ever needs to be called on first buff creation
+    /// </summary>
+    /// <returns>this Buff after creating the iconImage</returns>
+    /// <exception cref="FileNotFoundException"></exception>
     public virtual Buff Init() {
-        
-        
         iconImage = Resources.Load<Sprite>(_ICON_PREFIX_ + iconPath);
         if (iconImage == null) {
             throw new FileNotFoundException($"Missing Icon Sprite for Buff {id} at path " +
@@ -47,14 +51,25 @@ public class Buff : ScriptableObject
     
     public Buff CopyInstance() {
         Buff buff = CreateInstance<Buff>();
-        buff.id = id;
-        buff.description = description;
-        buff.iconImage = iconImage;
-        buff._name = _name;
-        buff.duration = duration;
-        buff.effect = effect;
-        buff.iconPath = iconPath;
-        buff.amount = amount;
+        
+        // Get all fields of the Ability class using reflection
+        FieldInfo[] fields = typeof(Buff).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+
+        foreach (var field in fields)
+        {
+            // Copy the value from the current instance to the target instance
+            var value = field.GetValue(this);
+            field.SetValue(buff, value);
+        }
+
+        //buff.id = id;
+        //buff.description = description;
+        //buff.iconImage = iconImage;
+        //buff._name = _name;
+        //buff.duration = duration;
+        //buff.effect = effect;
+        //buff.iconPath = iconPath;
+        //buff.amount = amount;
         return buff;
     }
     public void SetDuration(float duration) {
