@@ -48,7 +48,7 @@ public class Player : GameCharacter {
     [HideInInspector] public UIBehaviour HUD;
     [HideInInspector] public Collider2D playerCollider;
 
-    [SerializeField] private Ability[] abilities;
+    //[SerializeField] private Ability[] abilities;
 
     //public PlayerResourceManager resourceManager;
 
@@ -101,16 +101,14 @@ public class Player : GameCharacter {
         //animationManager.SetWeaponType(WeaponType.Melee2H);
 
 
-        //spellBar.EquipAbility(4, 402);   //multishot
-        //spellBar.EquipAbility(5, 403);   //barage
-        //spellBar.EquipAbility(0, 800); //teleport
-        //spellBar.EquipAbility(1, 401); //piercing shot
-        //spellBar.EquipAbility(2, 100); //flamestrike
-        //spellBar.EquipAbility(3, 200); //haste
+        spellBar.EquipAbility(4, 402);   //multishot
+        spellBar.EquipAbility(5, 403);   //barage
+        spellBar.EquipAbility(0, 800); //teleport
+        spellBar.EquipAbility(1, 401); //piercing shot
+        spellBar.EquipAbility(2, 100); //flamestrike
+        spellBar.EquipAbility(3, 200); //haste
 
-        for (int i = 0; i < abilities.Length; i++) {
-            spellBar.EquipAbility(i, abilities[i]);
-        }
+            
 
 
     }

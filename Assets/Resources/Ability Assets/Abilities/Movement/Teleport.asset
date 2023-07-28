@@ -12,18 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaa2e5c5743782a468f69ced0598d925, type: 3}
   m_Name: Teleport
   m_EditorClassIdentifier: 
-  _name: 
-  description: 
-  id: 0
-  tags: []
-  iconImage: {fileID: 0}
-  manaCost: 0
+  _name: Teleport
+  description: Teleport forward some distance
+  id: 800
+  tags:
+  - Movement
+  iconImage: {fileID: 21300000, guid: d60ce054c5d7abd4998c384178c7d5cf, type: 3}
+  manaCost: 10
   healthCost: 0
-  cooldown: 0
+  cooldown: 8
   abilityPreFab: {fileID: 0}
   onHitDebuffID: -1
   onHitEffectAmount: 0
   onHitDuration: 0
   onHitDebuff: {fileID: 0}
   baseDamage: 0
-  maxRange: 0
+  maxRange: 20

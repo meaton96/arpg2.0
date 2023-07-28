@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: SlowFifty
   m_EditorClassIdentifier: 
   iconPath: 
-  _name: 20% Slow
-  id: 1502
-  description: 20% reduced movement speed
+  _name: 50% Slow
+  id: 1503
+  description: 50% reduced movement speed
   iconImage: {fileID: 21300000, guid: 6be46ef1329c5624d9f5f7bf2ab90b5e, type: 3}
   duration: 5
   effect: movementSpeed

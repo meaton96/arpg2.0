@@ -39,12 +39,13 @@ public class SelfBuffAbility : Ability {
         var theseFields = ability.GetType().GetFields();
 
         for (int i = 0; i < otherFields.Length; i++) {
-            try {
-                otherFields[i].SetValue(ability, theseFields[i]);
-            } catch (System.Exception) {
+            if (otherFields[i].GetType() == typeof(Buff)) {
                 ability.onHitDebuff = onHitDebuff;
-                continue;
             }
+            else {
+                otherFields[i].SetValue(ability, theseFields[i]);
+            }
+           
         }
         //ability._name = _name;
         //ability.description = description;

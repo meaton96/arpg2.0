@@ -29,7 +29,7 @@ public class SpellBar : MonoBehaviour {
     //equip the ability in the slot slot
     //ability is equipped via ID number and pulled from the game controller singleton
     public void EquipAbility(int slot, int id) {
-        var ability = GameController.Instance.GetAbilityByID(id);
+        var ability = AbilityCollectionSingleton.Instance.GetAbilityByID(id);
         UpdateIcons();
         spellWrappers[slot] = Instantiate(abilityWrapperPrefab, transform);
         spellWrappers[slot].Init(ability, spellTimers[slot]);

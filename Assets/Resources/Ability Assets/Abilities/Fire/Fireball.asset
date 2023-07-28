@@ -9,18 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 39468eed18646e942a907f47b48f097b, type: 3}
   m_Name: Fireball
   m_EditorClassIdentifier: MyScripts::ProjectileAbility
-  _name: fireball
-  description: ball of fire
+  _name: Fireball
+  description: A ball of fire
   id: 0
   tags:
   - Spell
   - Fire
   - Projectile
-  iconImage: {fileID: 21300000, guid: 3b36db2d8ce95bb45b4bc5ee555eeeb8, type: 3}
-  manaCost: 7
+  iconImage: {fileID: 0}
+  manaCost: 5
   healthCost: 0
   cooldown: 0
   abilityPreFab: {fileID: 6350832118067335528, guid: a4fd38713dcfea744910f175280162f4, type: 3}
@@ -30,7 +30,7 @@ MonoBehaviour:
   onHitDebuff: {fileID: 0}
   baseDamage: 20
   baseProjectiles: 1
-  baseProjectileSpeed: 15
+  baseProjectileSpeed: 10
   chainNumber: 0
   pierceNumber: 0
   shotgun: 0

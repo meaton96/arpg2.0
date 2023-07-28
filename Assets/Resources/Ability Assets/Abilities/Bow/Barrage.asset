@@ -12,15 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22e1765b3ab72134ebc012565be67a37, type: 3}
   m_Name: Barrage
   m_EditorClassIdentifier: 
-  _name: 
-  description: 
-  id: 0
-  tags: []
-  iconImage: {fileID: 0}
-  manaCost: 0
+  _name: Barrage
+  description: A bow shot that quickly fires a burst of arrows
+  id: 403
+  tags:
+  - Attack
+  - Bow
+  - Projectile
+  - Physical
+  iconImage: {fileID: 21300000, guid: 04ad6d2ed00a68a4fa661e0f10164f72, type: 3}
+  manaCost: 15
   healthCost: 0
   cooldown: 0
-  abilityPreFab: {fileID: 0}
+  abilityPreFab: {fileID: 6350832118067335528, guid: d080357d9dff9ed48b837a3026202eb0, type: 3}
   onHitDebuffID: -1
   onHitEffectAmount: 0
   onHitDuration: 0
@@ -31,5 +35,5 @@ MonoBehaviour:
   chainNumber: 0
   pierceNumber: 0
   shotgun: 0
-  numCasts: 0
-  baseAbilityID: 0
+  numCasts: 4
+  baseAbility: {fileID: 11400000, guid: fc6d8647e87f56a428ac686f48f5d4e1, type: 2}

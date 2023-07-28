@@ -9,18 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 39468eed18646e942a907f47b48f097b, type: 3}
   m_Name: Icelance
   m_EditorClassIdentifier: MyScripts::ProjectileAbility
   _name: Icelance
-  description: A lance of ice that pieces and slows
+  description: A lance of ice that pierces enemies
   id: 10
   tags:
   - Spell
   - Ice
   - Projectile
   iconImage: {fileID: 21300000, guid: 139b887e587c7634faaaceaecdc0a640, type: 3}
-  manaCost: 8
+  manaCost: 10
   healthCost: 0
   cooldown: 0
   abilityPreFab: {fileID: 6350832118067335528, guid: c9e3e1e01cf1b8a41924aeac793c675b, type: 3}
@@ -30,7 +30,7 @@ MonoBehaviour:
   onHitDebuff: {fileID: 11400000, guid: 6c5a77c984d6db547a5cfb9ff22695e6, type: 2}
   baseDamage: 10
   baseProjectiles: 1
-  baseProjectileSpeed: 20
+  baseProjectileSpeed: 10
   chainNumber: 0
   pierceNumber: 2
   shotgun: 0
