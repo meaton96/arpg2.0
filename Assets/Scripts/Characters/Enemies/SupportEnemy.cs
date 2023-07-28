@@ -48,8 +48,7 @@ public class SupportEnemy : RangedEnemy {
                     animationManager.SetState(CharacterState.Walk);
                 }
                 movementDirection = rb.velocity.normalized;
-                UpdateAnimation();
-                UpdateSpellHitList();
+                UpdateFunctionWrapper();
             }
         }
 

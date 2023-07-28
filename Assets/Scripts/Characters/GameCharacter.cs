@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using UnityEngine;
 
 public abstract class GameCharacter : MonoBehaviour {
@@ -15,8 +16,10 @@ public abstract class GameCharacter : MonoBehaviour {
     public const int IGNORE_COLLISION_LAYER = 13;
     public int DAMAGE_MIN = 8, DAMAGE_MAX = 18;
 
-    [HideInInspector] public ResourceManager resourceManager;
+    public ResourceManager resourceManager;
     protected AnimationManager animationManager;
+    [SerializeField] protected GameObject attachedBuffPrefab;
+    
 
     FieldInfo[] fields;
     private readonly List<string> fieldNameFilter = new() {
@@ -55,10 +58,10 @@ public abstract class GameCharacter : MonoBehaviour {
     protected virtual void Start() {
 
         currentBuffsDebuffs = new();
-        character4DScript = GetComponent<Character4D>();
+        //character4DScript = GetComponent<Character4D>();
         character4DScript.SetDirection(Vector2.right);
         animationManager = character4DScript.AnimationManager;
-        resourceManager = GetComponent<ResourceManager>();
+       // resourceManager = GetComponent<ResourceManager>();
         spellHitUniqueIDs = new();
         fields = GetType().GetFields();
         var filteredFields = fields.Where(f => fieldNameFilter.Contains(f.Name)).ToArray();
@@ -67,8 +70,7 @@ public abstract class GameCharacter : MonoBehaviour {
     #endregion
     #region Update
     protected virtual void Update() {
-        UpdateSpellHitList();
-        UpdateAnimation();
+        UpdateFunctionWrapper();
     }
     #endregion
     #region Animation
@@ -194,27 +196,36 @@ public abstract class GameCharacter : MonoBehaviour {
         catch (ArgumentException) {
             Debug.Log("Invalid buff effect name");
         }
-        if (buff.duration != -1)
-            StartCoroutine(RemoveBuffAfterSeconds(buff, buff.duration));
+        if (buff.duration != -1) {
+            var aBuff = Instantiate(attachedBuffPrefab, transform).GetComponent<AttachedBuff>();
+            aBuff.Init(buff, this);
+            //StartCoroutine(RemoveBuffAfterSeconds(buff, buff.duration));
+        }
+
 
     }
     public virtual void RemoveBuff(Buff buff) {
         if (currentBuffsDebuffs.Remove(buff.id)) {
 
-            try {
-                if (DecreaseFloatFieldByAmount(buff.effect, buff.amount))
-                    currentBuffsDebuffs.Add(buff.id, buff);
-            }
-            catch (ArgumentException) {
-                Debug.Log("Invalid buff effect name");
-            }
+            DecreaseFloatFieldByAmount(buff.effect, buff.amount);
         }
         else {
-            Debug.Log("excessive remove buff call");
+            throw new Exception("buff not found");
         }
         //RemoveBuffByID(buff);
         //GetComponent<SpriteRenderer>().color = Color.white;
         // HUD.ForceRemoveBuff(buff);
+    }
+    public virtual void RemoveBuffByID(int buffID) {
+        if (currentBuffsDebuffs.Remove(buffID)) {
+            var buff = GameController.Instance.GetBuffByID(buffID);
+            DecreaseFloatFieldByAmount(buff.effect, buff.amount);
+        }
+    }
+    protected void UpdateFunctionWrapper() {
+        UpdateSpellHitList();
+        UpdateAnimation();
+        
     }
     private IEnumerator RemoveBuffAfterSeconds(Buff buff, float seconds) {
         yield return new WaitForSeconds(seconds);
@@ -232,7 +243,7 @@ public abstract class GameCharacter : MonoBehaviour {
     //}
 
     public bool IncreaseFloatFieldByAmount(string fieldName, float amount) {
-        Debug.Log($"changing field {fieldName} by {amount}");
+        Debug.Log($"changing {fieldName} by {amount}");
         if (!fieldNameFilter.Contains(fieldName)) {
             if (resourceManager.IncreaseFloatFieldByAmount(fieldName, amount))
                 return true;
@@ -245,7 +256,6 @@ public abstract class GameCharacter : MonoBehaviour {
             }
         }
         return false;
-
     }
     public bool DecreaseFloatFieldByAmount(string fieldName, float amount) {
         return IncreaseFloatFieldByAmount(fieldName, -amount);

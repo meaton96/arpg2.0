@@ -468,6 +468,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySpawnTimer: 0
   enemySpawnTime: 1.5
+  DISPLAY_ENEMY_HEALTH_ALWAYS: 0
+  DISPLAY_FLOATING_COMBAT_TEXT: 0
   playerPrefab: {fileID: 1063387080856860, guid: c87adda723ff0d347b96797bbc579bf1, type: 3}
   player: {fileID: 0}
   itemSpriteCollection: {fileID: 11400000, guid: ed0b296bc13a33144a4e9ea08d0ad5d5, type: 2}

@@ -7265,13 +7265,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _CHARACTER_HALF_HEIGHT_: {x: 0, y: 0.7, z: 0}
-  resourceManager: {fileID: 0}
-  damageToastPrefab: {fileID: 52251255580844802, guid: 120af22e1f47e66408501b3a85dbc88d, type: 3}
-  actionSpeed: 1
   DAMAGE_MIN: 8
   DAMAGE_MAX: 18
-  character4DScript: {fileID: 0}
+  resourceManager: {fileID: 5820402308954821554}
+  attachedBuffPrefab: {fileID: 7986172374756387701, guid: 15802d014d874f24a8c457cf1ffcd43c, type: 3}
+  character4DScript: {fileID: 2919585124672248670}
+  actionSpeed: 1
   movementSpeed: 1.5
+  damageMulti: 1
+  damageToastPrefab: {fileID: 52251255580844802, guid: 120af22e1f47e66408501b3a85dbc88d, type: 3}
   attackRange: 4
   attackCooldown: 1
   target: {fileID: 0}

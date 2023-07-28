@@ -441,9 +441,11 @@ MonoBehaviour:
   DAMAGE_MIN: 8
   DAMAGE_MAX: 18
   resourceManager: {fileID: 6767171416876917092}
+  attachedBuffPrefab: {fileID: 7986172374756387701, guid: 15802d014d874f24a8c457cf1ffcd43c, type: 3}
   character4DScript: {fileID: 114216053546988558}
   actionSpeed: 1
   movementSpeed: 3
+  damageMulti: 1
   damageToastPrefab: {fileID: 52251255580844802, guid: 120af22e1f47e66408501b3a85dbc88d, type: 3}
   movementSpeedMultiplier: 1
   DISPLAY_FLOATING_COMBAT_TEXT: 0
