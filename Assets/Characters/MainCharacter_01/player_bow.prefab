@@ -452,6 +452,13 @@ MonoBehaviour:
   spellBar: {fileID: 6432203791143967343}
   HUD: {fileID: 0}
   playerCollider: {fileID: 0}
+  abilities:
+  - {fileID: 11400000, guid: 468f181e5b2a57d42a2634658141359c, type: 2}
+  - {fileID: 11400000, guid: 5ed8648e1de316547a8d46a1bd04a376, type: 2}
+  - {fileID: 11400000, guid: daefe16f098b86248a5450c6654ed4cc, type: 2}
+  - {fileID: 11400000, guid: 07151248737291e43905c365161f289f, type: 2}
+  - {fileID: 11400000, guid: a6724f93e824b1848a26d02167ee0b48, type: 2}
+  - {fileID: 11400000, guid: a4f6b3f052c968542becc6021551007f, type: 2}
   cooldownReduction: 0
   castSpeed: 0
   attackSpeed: 0

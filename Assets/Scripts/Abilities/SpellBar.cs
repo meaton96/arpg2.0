@@ -27,9 +27,15 @@ public class SpellBar : MonoBehaviour {
 
     #region Abilties Bar
     //equip the ability in the slot slot
-    //ability is equipped via ID number and pulled fromthe game controller singleton
+    //ability is equipped via ID number and pulled from the game controller singleton
     public void EquipAbility(int slot, int id) {
         var ability = GameController.Instance.GetAbilityByID(id);
+        UpdateIcons();
+        spellWrappers[slot] = Instantiate(abilityWrapperPrefab, transform);
+        spellWrappers[slot].Init(ability, spellTimers[slot]);
+        spellBarImages[slot].GetComponent<Image>().sprite = ability.iconImage;
+    }
+    public void EquipAbility(int slot, Ability ability) {
         UpdateIcons();
         spellWrappers[slot] = Instantiate(abilityWrapperPrefab, transform);
         spellWrappers[slot].Init(ability, spellTimers[slot]);

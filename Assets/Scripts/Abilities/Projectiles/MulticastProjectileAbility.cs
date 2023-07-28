@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewMultiCastProjectileAbility", menuName = "Custom Assets/Projectile/Multicast Projectile")]
+[CreateAssetMenu(fileName = "NewMultiCastProjectileAbility", menuName = "Custom Assets/Projectile/Multicast Projectile Spell")]
 public class MulticastProjectileAbility : ProjectileAbility
 {
 
     public int numCasts;
-    public int baseAbilityID;
+    public Ability baseAbility;
     readonly List<GameObject> createdProjectiles = new();
 
     public override List<GameObject> Cast(Vector3 pos, Vector3 targetPos, Vector3 offset, Collider2D casterCollider) {
@@ -22,10 +22,10 @@ public class MulticastProjectileAbility : ProjectileAbility
         createdProjectiles.Clear();
         var baseCastDelay = 0.25f / numCasts;
         var castDelay = baseCastDelay / casterCollider.GetComponent<GameCharacter>().actionSpeed;
-        var ability = GameController.Instance.GetAbilityByID(baseAbilityID);
+        
         for (int i = 0; i < numCasts; i++) {
             createdProjectiles.
-                AddRange(ability.
+                AddRange(baseAbility.
                     Cast(pos, targetPos, offset, casterCollider));
 
             yield return new WaitForSeconds(castDelay);
