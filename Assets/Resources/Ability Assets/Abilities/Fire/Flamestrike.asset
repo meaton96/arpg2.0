@@ -12,19 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d0a9d00fc799a143b04182b4e63b503, type: 3}
   m_Name: Flamestrike
   m_EditorClassIdentifier: 
-  _name: 
-  description: 
-  id: 0
-  tags: []
-  iconImage: {fileID: 0}
-  manaCost: 0
+  _name: Flamestrike
+  description: An AoE flame attack that damages multiple enemies
+  id: 100
+  tags:
+  - Spell
+  - Fire
+  - AoE
+  iconImage: {fileID: 21300000, guid: a5896da35bdf5ad4f98b0133ccea1aef, type: 3}
+  manaCost: 20
   healthCost: 0
   cooldown: 0
-  abilityPreFab: {fileID: 0}
+  abilityPreFab: {fileID: 6967502257464330412, guid: 4a6192f6244970b4f9cb85f063376eb9, type: 3}
   onHitDebuffID: -1
   onHitEffectAmount: 0
   onHitDuration: 0
   onHitDebuff: {fileID: 0}
-  baseDamage: 0
-  maxRange: 0
-  radius: 0
+  baseDamage: 12
+  maxRange: 500
+  radius: 3

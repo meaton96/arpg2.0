@@ -12,23 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 289332cb90ad10440b01852555ca3924, type: 3}
   m_Name: Shoot
   m_EditorClassIdentifier: 
-  _name: 
-  description: 
-  id: 0
-  tags: []
+  _name: Shoot
+  description: A Basic Bow Shot
+  id: 400
+  tags:
+  - Attack
+  - Bow
+  - Projectile
   iconImage: {fileID: 0}
   manaCost: 0
   healthCost: 0
   cooldown: 0
-  abilityPreFab: {fileID: 0}
+  abilityPreFab: {fileID: 6350832118067335528, guid: d080357d9dff9ed48b837a3026202eb0, type: 3}
   onHitDebuffID: -1
   onHitEffectAmount: 0
   onHitDuration: 0
   onHitDebuff: {fileID: 0}
   baseDamage: 0
-  baseProjectiles: 0
-  baseProjectileSpeed: 0
+  baseProjectiles: 1
+  baseProjectileSpeed: 10
   chainNumber: 0
   pierceNumber: 0
   shotgun: 0
-  damageEffectiveness: 0
+  damageEffectiveness: 1

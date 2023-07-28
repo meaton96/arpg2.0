@@ -16,7 +16,7 @@ MonoBehaviour:
   _name: 20% Slow
   id: 1502
   description: 20% reduced movement speed
-  iconImage: {fileID: 0}
+  iconImage: {fileID: 21300000, guid: cf7523968c3d6b64ca8b0bc63c6a6adf, type: 3}
   duration: 5
   effect: movementSpeed
   amount: 0.2
