@@ -101,7 +101,7 @@ public class Player : GameCharacter {
         //animationManager.SetWeaponType(WeaponType.Melee2H);
 
 
-        spellBar.EquipAbility(4, 402);   //multishot
+        spellBar.EquipAbility(4, 405);   //iceshot
         spellBar.EquipAbility(5, 403);   //barage
         spellBar.EquipAbility(0, 800); //teleport
         spellBar.EquipAbility(1, 401); //piercing shot
@@ -285,10 +285,10 @@ public class Player : GameCharacter {
         HUD.DisplayNewBuff(buff);
         base.ApplyBuff(buff);   
     }
-    public override void RemoveBuff(Buff buff) {
+    public override bool RemoveBuff(Buff buff) {
         
         HUD.ForceRemoveBuff(buff);
-        base.RemoveBuff(buff);
+        return base.RemoveBuff(buff);
     }
     #endregion
     #region Getters/Setters/ToString

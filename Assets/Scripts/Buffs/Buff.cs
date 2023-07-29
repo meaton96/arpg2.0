@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ public class Buff : ScriptableObject
     public int id;
     public string description;
     public Sprite iconImage;
+    
 
     //public int type;
     public float duration = -1;
@@ -33,13 +35,14 @@ public class Buff : ScriptableObject
         Debuff
     }
     public EffectType etype;
-
+    public string uniqueId;
     /// <summary>
     /// Initialize the buff by loading the iconImage, only ever needs to be called on first buff creation
     /// </summary>
     /// <returns>this Buff after creating the iconImage</returns>
     /// <exception cref="FileNotFoundException"></exception>
     public virtual Buff Init() {
+        uniqueId = Time.timeAsDouble + _name;
         iconImage = Resources.Load<Sprite>(_ICON_PREFIX_ + iconPath);
         if (iconImage == null) {
             throw new FileNotFoundException($"Missing Icon Sprite for Buff {id} at path " +
@@ -96,4 +99,6 @@ public class Buff : ScriptableObject
             "amount: " + amount + "\n" +
             "sprite: " + iconImage.ToString();
     }
+    
+
 }

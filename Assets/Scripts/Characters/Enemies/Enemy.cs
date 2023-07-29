@@ -40,7 +40,7 @@ public abstract class Enemy : GameCharacter {
     public virtual void Init(Player player, List<Enemy> allEnemies, float health, float mana = 0, bool isActive = true) {
         _CHARACTER_HALF_HEIGHT_ *= transform.localScale.x;
         allAgents = allEnemies;
-        base.Start();
+        
         rb = GetComponent<Rigidbody2D>();
         resourceManager.Init(health, mana, 0, mana == 0 ? 0 : 5);
         this.player = player;

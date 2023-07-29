@@ -5,17 +5,15 @@ using System.Linq;
 using UnityEditor.UIElements;
 using UnityEngine;
 
-public class ExpandingIconBar : MonoBehaviour
-{
+public class ExpandingIconBar : MonoBehaviour {
     public List<BuffUIWrapper> ActiveBuffs;
     int numBuffs = 0;
     [SerializeField] private GameObject BuffUIWrapperPrefab;
     public float IconSize = 50;
     public float IconSpacing = 8;
-    
+
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         ActiveBuffs = new();
     }
     //adds the buff the to buff bar
@@ -31,8 +29,8 @@ public class ExpandingIconBar : MonoBehaviour
 
         numBuffs++;
         //add the buff wrapper to the storage
-        ActiveBuffs.Add(buffWrapper);   
-        
+        ActiveBuffs.Add(buffWrapper);
+
     }
     public void RemoveBuffFromList(BuffUIWrapper b) {
         ActiveBuffs.Remove(b);
@@ -44,12 +42,13 @@ public class ExpandingIconBar : MonoBehaviour
         try {
             //get the buff from the list and remove it
             var buffWrapper = ActiveBuffs.SingleOrDefault(b => b.Buff.id == buff.id);
-            buffWrapper.RemoveBuff();
+            if (buffWrapper != null)
+                buffWrapper.RemoveBuff();
         }
         catch (System.Exception) {
             Debug.Log("no buff found to remove - shouldnt ever happen");
         }
-        
+
     }
-    
+
 }

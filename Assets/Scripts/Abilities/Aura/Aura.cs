@@ -15,32 +15,32 @@ public class Aura : Ability {
     public Buff buff;
 
 
-    public override void Init() {
-        buff = AbilityCollectionSingleton.Instance.GetBuffCopyByID(effectID);
-        buff.SetEffectAmount(effectAmount);
-        //if (effectName == "HealthRegeneration_Flat") {
-        //    buff = CreateInstance<HealthRegeneration_Flat>();
-        //    (buff as HealthRegeneration_Flat).CreateBuffWrapper(-1, effectAmount);
+    //public override void Init() {
+    //    buff = AbilityCollectionSingleton.Instance.GetBuffCopyByID(effectID);
+    //    buff.SetEffectAmount(effectAmount);
+    //    //if (effectName == "HealthRegeneration_Flat") {
+    //    //    buff = CreateInstance<HealthRegeneration_Flat>();
+    //    //    (buff as HealthRegeneration_Flat).CreateBuffWrapper(-1, effectAmount);
             
-        //}
-        //else if (effectName == "HealthRegeneration_Percent") { 
-        //    buff = CreateInstance<HealthRegeneration_Percent>();
-        //    (buff as HealthRegeneration_Percent).CreateBuffWrapper(-1, effectAmount);
-        //}
-        //else if (effectName == "ManaRegeneration_Flat") { 
-        //    buff = CreateInstance<ManaRegeneration_Flat>();
-        //    (buff as ManaRegeneration_Flat).CreateBuffWrapper(-1, effectAmount);
-        //}
-        //else if (effectName == "ManaRegeneration_Percent") { 
-        //    buff = CreateInstance<ManaRegeneration_Percent>();
-        //    (buff as ManaRegeneration_Percent).CreateBuffWrapper(-1, effectAmount);
-        //}
+    //    //}
+    //    //else if (effectName == "HealthRegeneration_Percent") { 
+    //    //    buff = CreateInstance<HealthRegeneration_Percent>();
+    //    //    (buff as HealthRegeneration_Percent).CreateBuffWrapper(-1, effectAmount);
+    //    //}
+    //    //else if (effectName == "ManaRegeneration_Flat") { 
+    //    //    buff = CreateInstance<ManaRegeneration_Flat>();
+    //    //    (buff as ManaRegeneration_Flat).CreateBuffWrapper(-1, effectAmount);
+    //    //}
+    //    //else if (effectName == "ManaRegeneration_Percent") { 
+    //    //    buff = CreateInstance<ManaRegeneration_Percent>();
+    //    //    (buff as ManaRegeneration_Percent).CreateBuffWrapper(-1, effectAmount);
+    //    //}
         
-        //else {
-        //    throw new FileNotFoundException("buff file was not found");
-        //}
-     //  buff.iconImage = Resources.Load<Sprite>(buff.iconPath);
-    }
+    //    //else {
+    //    //    throw new FileNotFoundException("buff file was not found");
+    //    //}
+    // //  buff.iconImage = Resources.Load<Sprite>(buff.iconPath);
+    //}
     public void ActivateAura(Player player) {
 
         player.ApplyBuff(buff);
@@ -68,7 +68,7 @@ public class Aura : Ability {
         ability.healthCost = healthCost;
         ability.cooldown = cooldown;
         ability.abilityPreFab = abilityPreFab;
-        ability.onHitDebuffID = onHitDebuffID;
+      //  ability.onHitDebuffID = onHitDebuffID;
 
         (ability as Aura).effectID = effectID;
         (ability as Aura).effectAmount = effectAmount;

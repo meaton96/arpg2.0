@@ -21,16 +21,16 @@ public class SelfBuffAbility : Ability {
         player.ApplyBuff(buff);
         return null;
     }
-    public override void Init() {
+    //public override void Init() {
 
-        //if (effectName == "Action_Speed_Increase") {
-        //    buff = CreateInstance<ActionSpeedIncrease>();
-        //    (buff as ActionSpeedIncrease).CreateBuffWrapper(duration, effectAmount);
-        //}
-        buff = AbilityCollectionSingleton.Instance.GetBuffCopyByID(effectID);
-        buff.SetDurationAndEffect(duration, effectAmount);
+    //    //if (effectName == "Action_Speed_Increase") {
+    //    //    buff = CreateInstance<ActionSpeedIncrease>();
+    //    //    (buff as ActionSpeedIncrease).CreateBuffWrapper(duration, effectAmount);
+    //    //}
+    //    buff = AbilityCollectionSingleton.Instance.GetBuffCopyByID(effectID);
+    //    buff.SetDurationAndEffect(duration, effectAmount);
 
-    }
+    //}
 
     public override Ability CopyInstance() {
         Ability ability = CreateInstance<SelfBuffAbility>();

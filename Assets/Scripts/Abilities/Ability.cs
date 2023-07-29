@@ -33,7 +33,7 @@ public abstract class Ability : ScriptableObject {
     public int healthCost;
     public float cooldown;
     public GameObject abilityPreFab;
-    public int onHitDebuffID = -1;
+   // public int onHitDebuffID = -1;
     public float onHitEffectAmount = 0;
     public float onHitDuration = 0;
     public Buff onHitDebuff;
@@ -99,11 +99,11 @@ public abstract class Ability : ScriptableObject {
 
 
     //Work in Progress
-    public virtual void Init() {
-        if (onHitDebuffID != -1) {
-            onHitDebuff = AbilityCollectionSingleton.Instance.GetBuffCopyByID(onHitDebuffID);
-            onHitDebuff.SetDurationAndEffect(onHitDuration, onHitEffectAmount);
-        }
-    }
+    //public virtual void Init() {
+    //    if (onHitDebuff != null) {
+    //        onHitDebuff = onHitDebuff.CopyInstance();
+    //        onHitDebuff.SetDurationAndEffect(onHitDuration, onHitEffectAmount);
+    //    }
+    //}
 }
 

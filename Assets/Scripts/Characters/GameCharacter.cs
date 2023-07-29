@@ -19,7 +19,7 @@ public abstract class GameCharacter : MonoBehaviour {
     public ResourceManager resourceManager;
     protected AnimationManager animationManager;
     [SerializeField] protected GameObject attachedBuffPrefab;
-    
+
 
     FieldInfo[] fields;
     private readonly List<string> fieldNameFilter = new() {
@@ -31,7 +31,7 @@ public abstract class GameCharacter : MonoBehaviour {
 
     #region Vars - Buff/Debuff tracking
     //track current debuffs and buffs and timers
-    protected Dictionary<int, Buff> currentBuffsDebuffs;
+    protected Dictionary<string, AttachedBuff> currentBuffsDebuffs;
     #endregion
     protected bool isAlive = true;
     //direction the character is currently moving
@@ -41,7 +41,7 @@ public abstract class GameCharacter : MonoBehaviour {
 
     #region Vars - Combat Stats
     [HideInInspector] public float actionSpeed = 1;
-    [SerializeField] protected float movementSpeed;
+    public float movementSpeed;
     [HideInInspector] public float damageMulti = 1;
     #endregion
     #region Vars - Damage Text
@@ -61,11 +61,14 @@ public abstract class GameCharacter : MonoBehaviour {
         //character4DScript = GetComponent<Character4D>();
         character4DScript.SetDirection(Vector2.right);
         animationManager = character4DScript.AnimationManager;
-       // resourceManager = GetComponent<ResourceManager>();
+        // resourceManager = GetComponent<ResourceManager>();
         spellHitUniqueIDs = new();
         fields = GetType().GetFields();
+
         var filteredFields = fields.Where(f => fieldNameFilter.Contains(f.Name)).ToArray();
+
         fields = filteredFields;
+        //Debug.Log(name + " " + fields.Length);
     }
     #endregion
     #region Update
@@ -159,16 +162,14 @@ public abstract class GameCharacter : MonoBehaviour {
         //Debug.Log(caster.name + "'s " + ability._name +
         //    " hit " + name + " for " + damage);
 
-        if (ability.onHitDebuffID != -1) {
-            ApplyOnHitDebuff(ability.onHitDebuff);
+        if (ability.onHitDebuff != null) {
+            ApplyBuff(ability.onHitDebuff);
         }
         DamageHealth(damage);
         if (GameController.Instance.DisplayFloatingCombatText)
             DisplayFloatingDamageNumber(damage);
     }
-    void ApplyOnHitDebuff(Buff buff) {
-        
-    }
+
     private void DisplayFloatingDamageNumber(float damage) {
         var toastObject = Instantiate(
             damageToastPrefab, transform.position, Quaternion.identity).GetComponent<DamageToast>();
@@ -189,43 +190,63 @@ public abstract class GameCharacter : MonoBehaviour {
         //Debug.Log("Applying Buff: " +  buff.ToString());
         //HUD.DisplayNewBuff(buff);
         //ApplyBuffByID(buff);
+        Debug.Log($"trying to applying {buff._name} to {name}");
+        bool success = false;
         try {
-            if (IncreaseFloatFieldByAmount(buff.effect, buff.amount))
-                currentBuffsDebuffs.Add(buff.id, buff);
+            if (BuffAlreadyApplied(buff)) {
+                //currentBuffsDebuffs.TryGetValue(buff.uniqueId, out AttachedBuff aBuff)) {
+                //  Debug.Log("Extend buff duration");
+                //if (aBuff.buff == buff) {
+                //    aBuff.SetTimer(buff.duration);
+                //}
+                currentBuffsDebuffs[buff.uniqueId].SetTimer(buff.duration);
+                
+            }
+            else {
+                success = IncreaseFloatFieldByAmount(buff.effect, buff.amount);
+
+            }
         }
-        catch (ArgumentException) {
-            Debug.Log("Invalid buff effect name");
+        catch (Exception e) {
+            Debug.Log(e);
         }
-        if (buff.duration != -1) {
+        if (buff.duration != -1 && success) {
+            Debug.Log("applied buff");
             var aBuff = Instantiate(attachedBuffPrefab, transform).GetComponent<AttachedBuff>();
             aBuff.Init(buff, this);
+            currentBuffsDebuffs.Add(buff.uniqueId, aBuff);
             //StartCoroutine(RemoveBuffAfterSeconds(buff, buff.duration));
         }
 
 
     }
-    public virtual void RemoveBuff(Buff buff) {
-        if (currentBuffsDebuffs.Remove(buff.id)) {
+    public virtual bool RemoveBuff(Buff buff) {
+        //Debug.Log($"removing {buff}");
+        if (currentBuffsDebuffs.Remove(buff.uniqueId)) {
 
-            DecreaseFloatFieldByAmount(buff.effect, buff.amount);
+            return DecreaseFloatFieldByAmount(buff.effect, buff.amount);
         }
         else {
-            throw new Exception("buff not found");
+            // throw new Exception("buff not found");
+            Debug.Log($"failed to remove buff {buff} from {name}");
         }
+        return false;
         //RemoveBuffByID(buff);
         //GetComponent<SpriteRenderer>().color = Color.white;
         // HUD.ForceRemoveBuff(buff);
     }
-    public virtual void RemoveBuffByID(int buffID) {
-        if (currentBuffsDebuffs.Remove(buffID)) {
-            var buff = AbilityCollectionSingleton.Instance.GetBuffByID(buffID);
-            DecreaseFloatFieldByAmount(buff.effect, buff.amount);
+    public virtual bool RemoveBuffByID(string buffID) {
+        if (currentBuffsDebuffs.TryGetValue(buffID, out AttachedBuff aBuff)) {
+            DecreaseFloatFieldByAmount(aBuff.buff.effect, aBuff.buff.amount);
+            currentBuffsDebuffs.Remove(buffID);
+            return true;
         }
+        return false;
     }
     protected void UpdateFunctionWrapper() {
         UpdateSpellHitList();
         UpdateAnimation();
-        
+
     }
     //private IEnumerator RemoveBuffAfterSeconds(Buff buff, float seconds) {
     //    yield return new WaitForSeconds(seconds);
@@ -233,7 +254,7 @@ public abstract class GameCharacter : MonoBehaviour {
     //    yield break;
     //}
     public bool BuffAlreadyApplied(Buff buff) {
-        return currentBuffsDebuffs.ContainsKey(buff.id);
+        return currentBuffsDebuffs.ContainsKey(buff.uniqueId);
     }
     //public void IncreaseActionSpeed(float amount) {
     //    actionSpeed += amount;
@@ -243,17 +264,21 @@ public abstract class GameCharacter : MonoBehaviour {
     //}
 
     public bool IncreaseFloatFieldByAmount(string fieldName, float amount) {
+        //Debug.Log(fieldName);
         if (!fieldNameFilter.Contains(fieldName)) {
             if (resourceManager.IncreaseFloatFieldByAmount(fieldName, amount))
                 return true;
         }
+        // Debug.Log(fieldNameFilter);
         foreach (var field in fields) {
+            //  Debug.Log(field.Name);
             if (field.Name == fieldName) {
                 if (field.FieldType != typeof(float)) throw new ArgumentException("field is not a modifiable float value");
                 field.SetValue(this, (float)field.GetValue(this) + amount);
                 return true;
             }
         }
+        // Debug.Log("how did we get here?");
         return false;
     }
     public bool DecreaseFloatFieldByAmount(string fieldName, float amount) {

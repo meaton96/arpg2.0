@@ -9,25 +9,27 @@ public class AttachedBuff : MonoBehaviour
     float timer;
     float time;
     GameCharacter character;
-
+    
 
     // Update is called once per frame
     void Update()
     {
-        if (timer >= time) {
+        if (timer <= 0) {
             character.RemoveBuff(buff);
             Destroy(gameObject);
         }
         else {
-            timer += Time.deltaTime;
+            timer -= Time.deltaTime;
         }
 
     }
+    public void ResetTimer() { timer = buff.duration; }
+    public void SetTimer(float time) { timer = time;  }
     public void Init(Buff buff, GameCharacter gameCharacter) {
         this.buff = buff;
         character = gameCharacter;
-        timer = 0;
         time = buff.duration;
+        timer = time;
         
     }
 }

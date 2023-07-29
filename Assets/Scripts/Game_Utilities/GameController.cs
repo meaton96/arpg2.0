@@ -31,7 +31,7 @@ public class GameController : MonoBehaviour {
     //end test vars
     public float enemySpawnTimer, enemySpawnTime = 0.5f;
     float minRad = 3, maxRad = 10;
-    private int maxEnemies = 10;
+    private int maxEnemies = 1;
     private bool spawnEnemies = true;
     #endregion
 
