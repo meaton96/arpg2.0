@@ -12334,6 +12334,7 @@ MonoBehaviour:
   alignmentWeight: 1
   cohesionWeight: 1
   spellID: 1
+  attackDelayTime: 0
 --- !u!50 &2738649252434267582
 Rigidbody2D:
   serializedVersion: 4
