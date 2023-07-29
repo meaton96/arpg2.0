@@ -18,6 +18,7 @@ public class UIBehaviour : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI characterDataText;
     [SerializeField] private GameObject charPanel;
     [SerializeField] private ExpandingIconBar BuffBar;
+    [SerializeField] private ExpandingIconBar DebuffBar;
     private bool charPanelDisplayed = false;
     ResourceManager playerResourceManager;
 

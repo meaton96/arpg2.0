@@ -12,7 +12,7 @@ using static UnityEditor.PlayerSettings;
 public class ProjectileAbility : DamagingAbility {
     // public GameCharacter caster;
     public int baseProjectiles = 1;
-    public float baseProjectileSpeed = 10;
+    [HideInInspector] public float baseProjectileSpeed = 15;
     public int chainNumber;
     public int pierceNumber;
     public bool shotgun;
@@ -109,7 +109,9 @@ public class ProjectileAbility : DamagingAbility {
                         -angle)));
 
             var proj = projectile.GetComponent<ProjectileBehaviour>();
-
+            if (casterCollider.gameObject.TryGetComponent(out Enemy _)) {
+                projectile.layer = LayerMask.NameToLayer("EnemyProjectiles");
+            }
             //ignore collision with the caster
             Physics2D.IgnoreCollision(casterCollider, projectile.GetComponent<Collider2D>());
 

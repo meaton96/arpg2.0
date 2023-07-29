@@ -156,8 +156,8 @@ public abstract class GameCharacter : MonoBehaviour {
 
         float damage = caster.CalculateDamage(ability);
         //temp - combat log?
-        Debug.Log(caster.name + "'s " + ability._name +
-            " hit " + name + " for " + damage);
+        //Debug.Log(caster.name + "'s " + ability._name +
+        //    " hit " + name + " for " + damage);
 
         if (ability.onHitDebuffID != -1) {
             ApplyOnHitDebuff(ability.onHitDebuff);
@@ -227,11 +227,11 @@ public abstract class GameCharacter : MonoBehaviour {
         UpdateAnimation();
         
     }
-    private IEnumerator RemoveBuffAfterSeconds(Buff buff, float seconds) {
-        yield return new WaitForSeconds(seconds);
-        RemoveBuff(buff);
-        yield break;
-    }
+    //private IEnumerator RemoveBuffAfterSeconds(Buff buff, float seconds) {
+    //    yield return new WaitForSeconds(seconds);
+    //    RemoveBuff(buff);
+    //    yield break;
+    //}
     public bool BuffAlreadyApplied(Buff buff) {
         return currentBuffsDebuffs.ContainsKey(buff.id);
     }
@@ -243,7 +243,6 @@ public abstract class GameCharacter : MonoBehaviour {
     //}
 
     public bool IncreaseFloatFieldByAmount(string fieldName, float amount) {
-        Debug.Log($"changing {fieldName} by {amount}");
         if (!fieldNameFilter.Contains(fieldName)) {
             if (resourceManager.IncreaseFloatFieldByAmount(fieldName, amount))
                 return true;
