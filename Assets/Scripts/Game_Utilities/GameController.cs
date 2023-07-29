@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour {
     #region Enemy Spawning
     //spawning vars for testing
     public const bool SPAWN_ONLY_ONE_ENEMY_TYPE = false;
-    public const bool ENABLE_ENEMY_LOGIC = false;
+    public const bool ENABLE_ENEMY_LOGIC = true;
     public const int ENEMY_INDEX = 2;
     private readonly List<float> _ENEMY_SPAWN_WEIGHTS = new() {
         5, //basic goblin
@@ -64,8 +64,8 @@ public class GameController : MonoBehaviour {
     
     //[SerializeField] private GameObject playerPrefabBow;
     public Player player;
-    private Dictionary<int, Ability> allSpells = new();
-    private Dictionary<int, Buff> allBuffsDebuffs = new();
+    //private Dictionary<int, Ability> allSpells = new();
+    //private Dictionary<int, Buff> allBuffsDebuffs = new();
 
     public SpriteCollection itemSpriteCollection;
     public IconCollection iconCollection;
@@ -94,7 +94,7 @@ public class GameController : MonoBehaviour {
 
         SetPhysicsIgnores();        
 
-        InitializeDictionaries();
+       // InitializeDictionaries();
 
         ItemCollection.Active = ScriptableObject.CreateInstance<ItemCollection>();
         ItemCollection.Active.SpriteCollections = new() { itemSpriteCollection };
@@ -159,8 +159,8 @@ public class GameController : MonoBehaviour {
             player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity).GetComponent<Player>();
         }
         if (Input.GetKeyDown(KeyCode.F2)) {
-            player.spellBar.EquipAura(0, allSpells[900] as Aura);
-            player.spellBar.EquipAura(1, allSpells[901] as Aura);
+           // player.spellBar.EquipAura(0, allSpells[900] as Aura);
+          //  player.spellBar.EquipAura(1, allSpells[901] as Aura);
         }
         if (Input.GetKeyDown(KeyCode.F3)) {
             spawnEnemies = !spawnEnemies;
@@ -175,10 +175,10 @@ public class GameController : MonoBehaviour {
         return Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, -CAMERA_Z));
     }
 
-    private void InitializeDictionaries() {
-        allBuffsDebuffs = JsonHelper.ParseAllBuffsAndDebuffs(JSON_PATH_BUFFS);
-        allSpells = JsonHelper.ParseAllAbilities(JSON_PATH_ABILITIES);
-    }
+    //private void InitializeDictionaries() {
+    //    allBuffsDebuffs = JsonHelper.ParseAllBuffsAndDebuffs(JSON_PATH_BUFFS);
+    //    allSpells = JsonHelper.ParseAllAbilities(JSON_PATH_ABILITIES);
+    //}
 
     private void SpawnEnemies() {
         if (enemySpawnTimer <= 0) {
@@ -257,25 +257,25 @@ public class GameController : MonoBehaviour {
         PlayerSettingsHelper.InitObjectSettings(this, "Game");
     }
 
-    public Ability GetAbilityByID(int id) {
-        Ability ability = null;
-        try {
-            ability = allSpells[id].CopyInstance();
-        } catch (KeyNotFoundException e) {
-            Debug.Log(e);
-        }
-        return ability;
-    }
-    public Buff GetBuffByID(int id) {
-        Buff buff = null;
-        try {
-            buff = allBuffsDebuffs[id].CopyInstance();
-        }
-        catch (KeyNotFoundException e) {
-            Debug.Log(e);
-        }
-        return buff;
-    }
+    //public Ability GetAbilityByID(int id) {
+    //    Ability ability = null;
+    //    try {
+    //        ability = allSpells[id].CopyInstance();
+    //    } catch (KeyNotFoundException e) {
+    //        Debug.Log(e);
+    //    }
+    //    return ability;
+    //}
+    //public Buff GetBuffByID(int id) {
+    //    Buff buff = null;
+    //    try {
+    //        buff = allBuffsDebuffs[id].CopyInstance();
+    //    }
+    //    catch (KeyNotFoundException e) {
+    //        Debug.Log(e);
+    //    }
+    //    return buff;
+    //}
 
 
 

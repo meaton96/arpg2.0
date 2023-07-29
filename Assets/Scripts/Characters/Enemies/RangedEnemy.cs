@@ -7,7 +7,7 @@ public class RangedEnemy : Enemy {
     [SerializeField] protected int spellID;
     public override void Init(Player player, List<Enemy> allEnemies, float health, float mana = 0, bool isActive = true) {
         base.Init(player, allEnemies,  health, mana, isActive);
-        availableAbilities.Add(GameController.Instance.GetAbilityByID(spellID));
+        availableAbilities.Add(AbilityCollectionSingleton.Instance.GetAbilityByID(spellID));
 
     }
     protected override void AttackPlayer() {

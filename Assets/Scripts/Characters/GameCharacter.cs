@@ -218,7 +218,7 @@ public abstract class GameCharacter : MonoBehaviour {
     }
     public virtual void RemoveBuffByID(int buffID) {
         if (currentBuffsDebuffs.Remove(buffID)) {
-            var buff = GameController.Instance.GetBuffByID(buffID);
+            var buff = AbilityCollectionSingleton.Instance.GetBuffByID(buffID);
             DecreaseFloatFieldByAmount(buff.effect, buff.amount);
         }
     }

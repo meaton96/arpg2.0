@@ -101,7 +101,7 @@ public abstract class Ability : ScriptableObject {
     //Work in Progress
     public virtual void Init() {
         if (onHitDebuffID != -1) {
-            onHitDebuff = GameController.Instance.GetBuffByID(onHitDebuffID);
+            onHitDebuff = AbilityCollectionSingleton.Instance.GetBuffCopyByID(onHitDebuffID);
             onHitDebuff.SetDurationAndEffect(onHitDuration, onHitEffectAmount);
         }
     }

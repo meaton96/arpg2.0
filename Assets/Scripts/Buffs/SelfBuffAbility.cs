@@ -27,7 +27,7 @@ public class SelfBuffAbility : Ability {
         //    buff = CreateInstance<ActionSpeedIncrease>();
         //    (buff as ActionSpeedIncrease).CreateBuffWrapper(duration, effectAmount);
         //}
-        buff = GameController.Instance.GetBuffByID(effectID);
+        buff = AbilityCollectionSingleton.Instance.GetBuffCopyByID(effectID);
         buff.SetDurationAndEffect(duration, effectAmount);
 
     }

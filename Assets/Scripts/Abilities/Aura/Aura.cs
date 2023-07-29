@@ -16,7 +16,7 @@ public class Aura : Ability {
 
 
     public override void Init() {
-        buff = GameController.Instance.GetBuffByID(effectID);
+        buff = AbilityCollectionSingleton.Instance.GetBuffCopyByID(effectID);
         buff.SetEffectAmount(effectAmount);
         //if (effectName == "HealthRegeneration_Flat") {
         //    buff = CreateInstance<HealthRegeneration_Flat>();
