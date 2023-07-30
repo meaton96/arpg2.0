@@ -12,23 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 289332cb90ad10440b01852555ca3924, type: 3}
   m_Name: Iceshot
   m_EditorClassIdentifier: 
-  _name: 
-  description: 
-  id: 0
-  tags: []
-  iconImage: {fileID: 0}
-  manaCost: 0
+  _name: Iceshot
+  description: A bow shot that slows on hit and fires additional arrows
+  id: 405
+  tags:
+  - Projectile
+  - Bow
+  - Attack
+  - Ice
+  iconImage: {fileID: 21300000, guid: 139b887e587c7634faaaceaecdc0a640, type: 3}
+  manaCost: 15
   healthCost: 0
   cooldown: 0
-  abilityPreFab: {fileID: 0}
-  onHitDebuffID: -1
-  onHitEffectAmount: 0
-  onHitDuration: 0
-  onHitDebuff: {fileID: 0}
+  abilityPreFab: {fileID: 6350832118067335528, guid: a5475280cfa0b8e4caa054e2fba4f009, type: 3}
+  onHitEffectAmount: 0.5
+  onHitDuration: 5
+  onHitDebuff: {fileID: 11400000, guid: b17fcfb103bc8df418e948008fcb3ed5, type: 2}
   baseDamage: 0
-  baseProjectiles: 1
+  baseProjectiles: 3
   baseProjectileSpeed: 15
   chainNumber: 0
   pierceNumber: 0
   shotgun: 0
-  damageEffectiveness: 0
+  damageEffectiveness: 1.5

@@ -7254,6 +7254,7 @@ MonoBehaviour:
   actionSpeed: 1
   movementSpeed: 1.5
   damageMulti: 1
+  attackSpeed: 1
   damageToastPrefab: {fileID: 52251255580844802, guid: 120af22e1f47e66408501b3a85dbc88d, type: 3}
   attackRange: 196
   attackCooldown: 2
@@ -7261,8 +7262,10 @@ MonoBehaviour:
   separationWeight: 1
   alignmentWeight: 1
   cohesionWeight: 1
-  spellID: 400
-  attackDelayTime: 0
+  availableAbilities: []
+  weaponType: 3
+  attackDelayTime: 0.5
+  projectileAbility: {fileID: 11400000, guid: abb84b7955b711948ad322897125f6ac, type: 2}
 --- !u!50 &7942200510207485817
 Rigidbody2D:
   serializedVersion: 4

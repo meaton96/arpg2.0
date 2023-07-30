@@ -11996,7 +11996,6 @@ GameObject:
   - component: {fileID: 4727976419547858534}
   - component: {fileID: 569616255550430233}
   - component: {fileID: 2738649252434267582}
-  - component: {fileID: -8600585231232641434}
   - component: {fileID: -7651908919452024470}
   m_Layer: 7
   m_Name: skeletonFireMage
@@ -12326,6 +12325,7 @@ MonoBehaviour:
   actionSpeed: 1
   movementSpeed: 1.2
   damageMulti: 1
+  attackSpeed: 1
   damageToastPrefab: {fileID: 52251255580844802, guid: 120af22e1f47e66408501b3a85dbc88d, type: 3}
   attackRange: 400
   attackCooldown: 3
@@ -12333,8 +12333,10 @@ MonoBehaviour:
   separationWeight: 1
   alignmentWeight: 1
   cohesionWeight: 1
-  spellID: 1
-  attackDelayTime: 0
+  availableAbilities: []
+  weaponType: 7
+  attackDelayTime: 0.5
+  projectileAbility: {fileID: 11400000, guid: 5ed8648e1de316547a8d46a1bd04a376, type: 2}
 --- !u!50 &2738649252434267582
 Rigidbody2D:
   serializedVersion: 4
@@ -12356,22 +12358,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &-8600585231232641434
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5570349944413681025}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.35
 --- !u!114 &-7651908919452024470
 MonoBehaviour:
   m_ObjectHideFlags: 0

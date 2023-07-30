@@ -19,7 +19,7 @@ public abstract class GameCharacter : MonoBehaviour {
     public ResourceManager resourceManager;
     protected AnimationManager animationManager;
     [SerializeField] protected GameObject attachedBuffPrefab;
-
+    protected Rigidbody2D rb;
 
     FieldInfo[] fields;
     private readonly List<string> fieldNameFilter = new() {
@@ -43,6 +43,9 @@ public abstract class GameCharacter : MonoBehaviour {
     [HideInInspector] public float actionSpeed = 1;
     public float movementSpeed;
     [HideInInspector] public float damageMulti = 1;
+    // [HideInInspector] public float castSpeed;
+    public float attackSpeed = 1;
+    private bool flagChangeAnimationSpeed = true;
     #endregion
     #region Vars - Damage Text
     protected readonly Vector3 toastOffset = new(5f, 10f, 0f);
@@ -61,13 +64,15 @@ public abstract class GameCharacter : MonoBehaviour {
         //character4DScript = GetComponent<Character4D>();
         character4DScript.SetDirection(Vector2.right);
         animationManager = character4DScript.AnimationManager;
+        
         // resourceManager = GetComponent<ResourceManager>();
         spellHitUniqueIDs = new();
         fields = GetType().GetFields();
-
+        rb = GetComponent<Rigidbody2D>();
         var filteredFields = fields.Where(f => fieldNameFilter.Contains(f.Name)).ToArray();
 
         fields = filteredFields;
+
         //Debug.Log(name + " " + fields.Length);
     }
     #endregion
@@ -85,6 +90,7 @@ public abstract class GameCharacter : MonoBehaviour {
         animationManager.Attack();
 
     }
+
     protected virtual void UpdateAnimation() {
 
         //change character direction
@@ -93,16 +99,21 @@ public abstract class GameCharacter : MonoBehaviour {
         }
         else
             character4DScript.SetDirection(movementDirection.y > 0 ? Vector2.up : Vector2.down);
-
+        //change all animation speeds
+        //not really what should be done 
+        //need to really seperate movement speed stuff and attack speed stuff
+        //if (flagChangeAnimationSpeed) {
+        //    flagChangeAnimationSpeed = false;
+        //    animationManager.animationSpeed = 1 / (actionSpeed * attackSpeed);
+        //}
+        if (actionSpeed != 0 && attackSpeed != 0) {
+            animationManager.animationSpeed = (actionSpeed * attackSpeed);
+            
+        }
     }
     #endregion
     protected virtual void StopMove() { }
-    protected virtual void ProcessDeath() {
-        gameObject.layer = IGNORE_COLLISION_LAYER;
-        StopMove();
-        animationManager.Die();
 
-    }
     public void CastMultipleAbilties(IEnumerator coRoutine) {
         StartCoroutine(coRoutine);
     }
@@ -190,17 +201,18 @@ public abstract class GameCharacter : MonoBehaviour {
         //Debug.Log("Applying Buff: " +  buff.ToString());
         //HUD.DisplayNewBuff(buff);
         //ApplyBuffByID(buff);
-        Debug.Log($"trying to applying {buff._name} to {name}");
+
         bool success = false;
         try {
             if (BuffAlreadyApplied(buff)) {
+                Debug.Log($"trying to applying {buff._name} to {name}");
                 //currentBuffsDebuffs.TryGetValue(buff.uniqueId, out AttachedBuff aBuff)) {
                 //  Debug.Log("Extend buff duration");
                 //if (aBuff.buff == buff) {
                 //    aBuff.SetTimer(buff.duration);
                 //}
                 currentBuffsDebuffs[buff.uniqueId].SetTimer(buff.duration);
-                
+
             }
             else {
                 success = IncreaseFloatFieldByAmount(buff.effect, buff.amount);
@@ -211,7 +223,7 @@ public abstract class GameCharacter : MonoBehaviour {
             Debug.Log(e);
         }
         if (buff.duration != -1 && success) {
-            Debug.Log("applied buff");
+            //Debug.Log("applied buff");
             var aBuff = Instantiate(attachedBuffPrefab, transform).GetComponent<AttachedBuff>();
             aBuff.Init(buff, this);
             currentBuffsDebuffs.Add(buff.uniqueId, aBuff);
@@ -228,7 +240,7 @@ public abstract class GameCharacter : MonoBehaviour {
         }
         else {
             // throw new Exception("buff not found");
-            Debug.Log($"failed to remove buff {buff} from {name}");
+            Debug.LogWarning($"failed to remove buff {buff} from {name}");
         }
         return false;
         //RemoveBuffByID(buff);
@@ -325,10 +337,17 @@ public abstract class GameCharacter : MonoBehaviour {
     //}
     //
     #endregion
-
+    #region Death
     public virtual void RemoveOnDeath() {
 
     }
+    protected virtual void ProcessDeath() {
+        gameObject.layer = IGNORE_COLLISION_LAYER;
+        StopMove();
+        animationManager.Die();
+
+    }
+    #endregion
     //replace with calculation from weapon damage
     public virtual float GetAttackDamage() {
         return UnityEngine.Random.Range(DAMAGE_MIN, DAMAGE_MAX);

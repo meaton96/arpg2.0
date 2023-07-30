@@ -19,5 +19,6 @@ MonoBehaviour:
   iconImage: {fileID: 21300000, guid: cf7523968c3d6b64ca8b0bc63c6a6adf, type: 3}
   duration: 5
   effect: movementSpeed
-  amount: 0.2
+  amount: -0.2
   etype: 1
+  uniqueId: 

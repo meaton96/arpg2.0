@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 924145463215564539}
   - component: {fileID: 514144617778779753}
   - component: {fileID: 6767171416876917092}
+  - component: {fileID: -8437429070256666339}
   m_Layer: 3
   m_Name: player_bow
   m_TagString: Player
@@ -446,6 +447,7 @@ MonoBehaviour:
   actionSpeed: 1
   movementSpeed: 3
   damageMulti: 1
+  attackSpeed: 1
   damageToastPrefab: {fileID: 52251255580844802, guid: 120af22e1f47e66408501b3a85dbc88d, type: 3}
   movementSpeedMultiplier: 1
   DISPLAY_FLOATING_COMBAT_TEXT: 0
@@ -453,8 +455,6 @@ MonoBehaviour:
   HUD: {fileID: 0}
   playerCollider: {fileID: 0}
   cooldownReduction: 0
-  castSpeed: 0
-  attackSpeed: 0
   DODGE_TIME: 0.3
   dodgeSpeed: 8
 --- !u!114 &6767171416876917092
@@ -479,6 +479,27 @@ MonoBehaviour:
   maxMana: 0
   manaRegenIncrease_flat: 0
   manaRegenIncrease_multi: 1
+--- !u!50 &-8437429070256666339
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063387080856860}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &1075059424682908
 GameObject:
   m_ObjectHideFlags: 0

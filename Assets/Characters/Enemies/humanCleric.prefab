@@ -116,7 +116,6 @@ GameObject:
   - component: {fileID: 210585855654267702}
   - component: {fileID: 924145463215564539}
   - component: {fileID: 1605271758612617386}
-  - component: {fileID: -3447627449568115215}
   - component: {fileID: -2114618815671765277}
   - component: {fileID: 7139526756982482187}
   m_Layer: 7
@@ -447,22 +446,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &-3447627449568115215
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1063387080856860}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.35
 --- !u!114 &-2114618815671765277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -506,6 +489,7 @@ MonoBehaviour:
   actionSpeed: 1
   movementSpeed: 1
   damageMulti: 1
+  attackSpeed: 1
   damageToastPrefab: {fileID: 52251255580844802, guid: 120af22e1f47e66408501b3a85dbc88d, type: 3}
   attackRange: 400
   attackCooldown: 0
@@ -513,11 +497,14 @@ MonoBehaviour:
   separationWeight: 1
   alignmentWeight: 1
   cohesionWeight: 1
-  spellID: 900
+  availableAbilities: []
+  weaponType: 7
   attackDelayTime: 0
+  projectileAbility: {fileID: 0}
   auraRangeSquared: 36
   auraVisualPrefab: {fileID: 6967502257464330412, guid: 5ba0d219d312d074cb1d99c45918888f, type: 3}
   auraAttachPrefab: {fileID: 1298926524237742945, guid: 6adb6a9b8535f4a4c891be1054646cb4, type: 3}
+  auraBuffToApply: {fileID: 11400000, guid: 414e1f35c4b18f049869369da6b80613, type: 2}
 --- !u!1 &1075059424682908
 GameObject:
   m_ObjectHideFlags: 0

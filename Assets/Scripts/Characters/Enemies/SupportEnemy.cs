@@ -10,7 +10,7 @@ public class SupportEnemy : RangedEnemy {
     private float pollTimer;
     [SerializeField] protected GameObject auraVisualPrefab;
     [SerializeField] protected GameObject auraAttachPrefab;
-    Buff auraBuffToApply;
+    [SerializeField] Buff auraBuffToApply;
     
     // HashSet<Enemy> nearbyEnemies;
 
@@ -19,7 +19,7 @@ public class SupportEnemy : RangedEnemy {
         float health, float mana = 0, bool isActive = true) {
         base.Init(player, allEnemies, health, mana, isActive);
         //availableAbilities.Add(GameController.Instance.allSpells[spellID]);
-        auraBuffToApply = (AbilityCollectionSingleton.Instance.GetAbilityByID(spellID) as Aura).buff;
+        //auraBuffToApply = (AbilityCollectionSingleton.Instance.GetAbilityByID(spellID) as Aura).buff;
         Instantiate(auraVisualPrefab, transform);
     }
 

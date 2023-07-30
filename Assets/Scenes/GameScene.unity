@@ -525,6 +525,8 @@ MonoBehaviour:
   - {fileID: 2130617808242774149, guid: 593cf9a97ef42e244aa36d3080fb5277, type: 3}
   - {fileID: 7139526756982482187, guid: db091db2d52c8b2489cf6dafaf69b610, type: 3}
   - {fileID: 569616255550430233, guid: 68cef4a040c0cb74a8dcbed16bcd3a75, type: 3}
+  - {fileID: 498897782136364065, guid: 4a4c09b671f8ee945b0754f226a9358d, type: 3}
+  - {fileID: 5853695228883410278, guid: 54222d91e8a71024c8e55dae22a4486a, type: 3}
   testList: []
 --- !u!4 &1902854693
 Transform:

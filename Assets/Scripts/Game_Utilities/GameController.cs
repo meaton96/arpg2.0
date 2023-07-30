@@ -16,22 +16,24 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
-    #region Enemy Spawning
+    #region Enemy Spawning  
     //spawning vars for testing
     public const bool SPAWN_ONLY_ONE_ENEMY_TYPE = false;
     public const bool ENABLE_ENEMY_LOGIC = true;
-    public const int ENEMY_INDEX = 2;
+    public const int ENEMY_INDEX = 4;
     private readonly List<float> _ENEMY_SPAWN_WEIGHTS = new() {
-        5, //basic goblin
-        5, //shooter golin
-        2, //human cleric
-        1 //mage
+        5, //basic goblin   - 0
+        5, //shooter golin  - 1
+        2, //human cleric   - 2
+        1, //mage           - 3
+        2, //axe wielder    - 4
+        4, //ice archer     - 5
     };
     private float _SPAWN_WEIGHT_TOTAL = 0;
     //end test vars
     public float enemySpawnTimer, enemySpawnTime = 0.5f;
     float minRad = 3, maxRad = 10;
-    private int maxEnemies = 1;
+    private int maxEnemies = 20;
     private bool spawnEnemies = true;
     #endregion
 
@@ -219,8 +221,10 @@ public class GameController : MonoBehaviour {
         var pos = new Vector3(x, y, 0) + player.transform.position;
 
 
-        var enemy = Instantiate(enemyPrefabList[index], pos, Quaternion.identity);
+        var enemy = Instantiate(enemyPrefabList[index], pos, Quaternion.identity);  
+        
         enemy.Init(
+            num: enemyList.Count,
             player: player,
             allEnemies: enemyList,
             health: 50,

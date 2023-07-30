@@ -1,5 +1,6 @@
 using Assets.HeroEditor4D.Common.Scripts.CharacterScripts;
 using Assets.HeroEditor4D.Common.Scripts.Enums;
+using Codice.CM.SEIDInfo;
 using System.Collections;
 using System.Collections.Generic;
 using System.Resources;
@@ -14,7 +15,7 @@ public abstract class Enemy : GameCharacter {
     public float attackCooldown;
     protected float attackTimer;
     protected Player player;
-    protected Rigidbody2D rb;
+
     protected Collider2D enemyCollider;
 
     public Transform target;
@@ -32,26 +33,68 @@ public abstract class Enemy : GameCharacter {
     protected const float FLOCKING_RANGE = 16f; //distance squared
     protected bool isActive;
 
-    protected List<Ability> availableAbilities;
+    [SerializeField] protected List<Ability> availableAbilities;
     protected List<Enemy> allAgents;
 
-
+    [SerializeField] WeaponType weaponType;
 
     public virtual void Init(Player player, List<Enemy> allEnemies, float health, float mana = 0, bool isActive = true) {
         _CHARACTER_HALF_HEIGHT_ *= transform.localScale.x;
         allAgents = allEnemies;
-        
-        rb = GetComponent<Rigidbody2D>();
+
+
         resourceManager.Init(health, mana, 0, mana == 0 ? 0 : 5);
         this.player = player;
         target = player.transform;
         availableAbilities = new();
         enemyCollider = GetComponent<Collider2D>();
         this.isActive = isActive;
-    }
 
-    protected override void Update() {
-        //Debug.Log(GetDistanceSquared2D(transform.position, player.transform.position));
+        
+    }
+    public virtual void Init(int num, Player player, List<Enemy> allEnemies, float health, float mana = 0, bool isActive = true) {
+        Init(player, allEnemies, health, mana, isActive);
+        name += num;
+    }
+    protected override void Start() {
+        base.Start();
+        character4DScript.WeaponType = weaponType;
+        animationManager.SetWeaponType(weaponType);
+    }
+    public virtual void DealMeleeDamage() { }
+
+    //protected override void Update() {
+    //    //Debug.Log(GetDistanceSquared2D(transform.position, player.transform.position));
+    //    if (isAlive) {
+    //        if (isActive) {
+    //            if (InAttackRange()) {
+
+    //                if (attackTimer >= attackCooldown) {
+
+    //                    AttackPlayer();
+    //                    attackTimer = 0;
+    //                }
+    //                else {
+    //                    attackTimer += Time.deltaTime;
+    //                }
+    //            }
+    //            else {
+    //                ApplySeekAndFlock();
+    //            }
+
+    //            if (rb.velocity.magnitude > 0) {
+    //                animationManager.SetState(CharacterState.Walk);
+    //            }
+    //            movementDirection = rb.velocity.normalized;
+    //            // if (rb.velocity.magnitude > MAXIMUM_SPEED)
+    //            //     rb.velocity = movementDirection * MAXIMUM_SPEED;
+    //        }
+    //        base.Update();
+
+    //    }
+
+    //}
+    private void FixedUpdate() {
         if (isAlive) {
             if (isActive) {
                 if (InAttackRange()) {
@@ -62,7 +105,7 @@ public abstract class Enemy : GameCharacter {
                         attackTimer = 0;
                     }
                     else {
-                        attackTimer += Time.deltaTime;
+                        attackTimer += Time.fixedDeltaTime;
                     }
                 }
                 else {
@@ -76,10 +119,9 @@ public abstract class Enemy : GameCharacter {
                 // if (rb.velocity.magnitude > MAXIMUM_SPEED)
                 //     rb.velocity = movementDirection * MAXIMUM_SPEED;
             }
-            base.Update();
+            
 
         }
-
     }
     public override void RemoveOnDeath() {
         Destroy(gameObject, 1);
@@ -108,8 +150,7 @@ public abstract class Enemy : GameCharacter {
         int neighborCount = 0;
 
         foreach (var enemy in allAgents) {
-            if (enemy == this)
-                continue;
+            if (enemy == this) continue;
             if (enemy == null) continue;
 
             float distance = GetDistanceSquared2D(transform.position, enemy.transform.position);

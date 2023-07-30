@@ -62,9 +62,7 @@ public class Player : GameCharacter {
     //tracked as a float from 0 - 1 as a % cooldown reduction, .2 = 20% reduced cooldown
     [HideInInspector] public float cooldownReduction = 0;
     
-    //NYI
-    [HideInInspector] public float castSpeed;
-    [HideInInspector] public float attackSpeed;
+    
     #endregion
     #region Vars - character states
     //control player logic states
@@ -128,9 +126,9 @@ public class Player : GameCharacter {
                  {
                     HandleAnimationLockedInput();
                     HandleInput();
-                    if (state != State.dodging) {
-                        HandleMovement();
-                    }
+                    //if (state != State.dodging) {
+                    //    HandleMovement();
+                    //}
                 }
             }
         }
@@ -138,6 +136,9 @@ public class Player : GameCharacter {
     }
     private void FixedUpdate() {    
         animationManager.animationSpeed = actionSpeed;
+        if (!animationManager.IsAction && state != State.dodging) {
+            HandleMovement();
+        }
     }
     #endregion
     #region Dodge
@@ -193,7 +194,7 @@ public class Player : GameCharacter {
     private void InitControls() {
         PlayerSettingsHelper.InitObjectSettings(this, "Player");
     }
-
+    
 
     //handle player walking to a location specified by mouse click
     void HandleMovement() {
@@ -203,10 +204,14 @@ public class Player : GameCharacter {
         }
         //move towards the moveToPosition vector
         if (state == State.walking) {
-            transform.position = Vector3.MoveTowards(
+            //transform.position = Vector3.MoveTowards(
+            //    transform.position,
+            //    moveToPosition,
+            //    GetMovementSpeed() * Time.deltaTime);
+            rb.MovePosition(Vector3.MoveTowards(
                 transform.position,
                 moveToPosition,
-                GetMovementSpeed() * Time.deltaTime);
+                GetMovementSpeed() * Time.fixedDeltaTime));
 
             movementDirection = (moveToPosition - transform.position).normalized;
         }
@@ -299,7 +304,8 @@ public class Player : GameCharacter {
             "HP Regen: " + resourceManager.GetTotalHealthRegen() + "\n" +
             "Mana Regen: " + resourceManager.GetTotalManaRegen() + "\n" +
             "Movespeed:" + GetMovementSpeed() + "\n" +
-            "Cooldown Reduction: " + (cooldownReduction * 100) + "%" + "\n" +
+            "AttackSpeed:" + attackSpeed * 100 + "%\n" +
+            "Cooldown Reduction: " + (cooldownReduction * 100) + "%\n" +
             "Action Speed: " + actionSpeed * 100 + "%";
     }
     protected override void StopMove() {
