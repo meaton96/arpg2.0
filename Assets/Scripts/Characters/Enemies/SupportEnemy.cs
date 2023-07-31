@@ -6,7 +6,7 @@ using System.Linq;
 
 public class SupportEnemy : RangedEnemy {
     [SerializeField] protected float auraRangeSquared = 36;
-    private const float pollNearbyEnemiesCooldown = .5f;
+    private const float pollNearbyEnemiesCooldown = 1f;
     private float pollTimer;
     [SerializeField] protected GameObject auraVisualPrefab;
     [SerializeField] protected GameObject auraAttachPrefab;
@@ -14,7 +14,7 @@ public class SupportEnemy : RangedEnemy {
     //[SerializeField] private int buffId;
     [SerializeField] protected RangedAuraDetector AuraCollider;
     // HashSet<Enemy> nearbyEnemies;
-
+    //[HideInInspector] new Vector3 target;
 
     public override void Init(Player player, List<Enemy> allEnemies, 
         float health, float mana = 0, bool isActive = true) {
@@ -38,8 +38,14 @@ public class SupportEnemy : RangedEnemy {
             if (isActive) {
                 if (pollTimer > pollNearbyEnemiesCooldown) {
                     var nearbyEnemies = GetNearbyEnemies();
-                    GetTargetFromNearbyEnemies(nearbyEnemies);
-                  //  ApplyAuraBuffToNearbyEnemies(nearbyEnemies);
+                    if (nearbyEnemies.Count >0) {
+                        target = null;
+                    }
+                    else {
+                        target = player.transform;
+                    }
+                    //   GetTargetFromNearbyEnemies(nearbyEnemies);
+                    //  ApplyAuraBuffToNearbyEnemies(nearbyEnemies);
                     pollTimer = 0;
                 }
                 else {
@@ -48,6 +54,7 @@ public class SupportEnemy : RangedEnemy {
                 if (target != null) {
                     ApplySeek();
                 }
+                ApplyFlock();
                 if (rb.velocity.magnitude > 0) {
                     animationManager.SetState(CharacterState.Walk);
                 }
@@ -74,28 +81,26 @@ public class SupportEnemy : RangedEnemy {
     //    }
     //}
     List<Enemy> GetNearbyEnemies() {
-        if (allAgents.Count == 0) { return new List<Enemy>();  }
+        if (allAgents.Count == 0) { return new List<Enemy>(); }
         List<Enemy> result = new();
         result = allAgents.FindAll(
-            enemy => 
+            enemy =>
             GetDistanceSquared2D(enemy.transform.position, transform.position) <= auraRangeSquared);
         return result;
     }
-    void GetTargetFromNearbyEnemies(List<Enemy> nearbyEnemies) {
-        
-        if (nearbyEnemies.Count == 0) {
-            target = player.transform;
-        }
-        else {
-            if (target == null) {
-                //target died or never existed
-                //  target = nearbyEnemies.g
-                target = nearbyEnemies.ElementAt(Random.Range(0, nearbyEnemies.Count)).transform;
-            }
+    ////void GetTargetFromNearbyEnemies(List<Enemy> nearbyEnemies) {
 
-
-        }
-    }
+    //    if (nearbyEnemies.Count == 0) {
+    //        target = player.transform;
+    //    }
+    //    else {
+    //        Vector3 sum = new();
+    //        foreach (Enemy e in nearbyEnemies) {
+    //            sum += e.transform.position;
+    //        }
+    //        target = sum / nearbyEnemies.Count;
+    //    }
+    //}
     //void UpdateNearbyEnemies() {
     //    HashSet<Enemy> currentEnemySet = nearbyEnemies;
     //    nearbyEnemies.Clear();

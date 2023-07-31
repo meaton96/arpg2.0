@@ -9,7 +9,7 @@ public class EnemySpawnManager : MonoBehaviour
     //spawning vars for testing
     public const bool SPAWN_ONLY_ONE_ENEMY_TYPE = true;
     public const bool ENABLE_ENEMY_LOGIC = true;
-    public const int ENEMY_INDEX = 2;
+    public const int ENEMY_INDEX = 0;
     private readonly List<float> _ENEMY_SPAWN_WEIGHTS = new() {
         5, //basic goblin   - 0
         5, //shooter golin  - 1

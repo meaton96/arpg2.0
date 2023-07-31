@@ -12359,7 +12359,7 @@ MonoBehaviour:
   _CHARACTER_HALF_HEIGHT_: {x: 0, y: 0.7, z: 0}
   DAMAGE_MIN: 15
   DAMAGE_MAX: 30
-  movementSpeed: 4
+  baseMovementSpeed: 4
   resourceManager: {fileID: 3050226310403574025}
   character4DScript: {fileID: 5538259871943808147}
   StatManager: {fileID: 8009847565091807263}

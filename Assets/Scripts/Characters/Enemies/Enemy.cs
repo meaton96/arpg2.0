@@ -25,7 +25,7 @@ public abstract class Enemy : GameCharacter {
     [HideInInspector] public float alignmentWeight = 1f;
     [HideInInspector] public float cohesionWeight = 1f;
 
-    protected const float FORCE_MULTIPLIER = 3f;
+    protected const float FORCE_MULTIPLIER = 5f;
     protected const float SEPERATE_MULTIPLIER = 1;
     protected const float SEEK_MULTIPLIER = 1;
     protected const float MIN_SEP_RANGE = 0.1f, MAX_SEP_RANGE = 5;
@@ -116,12 +116,13 @@ public abstract class Enemy : GameCharacter {
                     animationManager.SetState(CharacterState.Walk);
                 }
                 movementDirection = rb.velocity.normalized;
+                 Debug.Log(rb.velocity.magnitude);
                 if (rb.velocity.magnitude > GetMovementSpeed()) {
                     rb.velocity = movementDirection * GetMovementSpeed();
 
                 }
             }
-            
+
 
         }
     }
@@ -135,10 +136,8 @@ public abstract class Enemy : GameCharacter {
         rb.velocity = Vector2.zero;
     }
     protected void ApplySeekAndFlock() {
-        Vector2 forces = new();
-        forces += Seek(target.position) * SEEK_MULTIPLIER;
-        forces += Flocking();
-        rb.AddForce(forces * FORCE_MULTIPLIER);
+        ApplySeek();
+        ApplyFlock();
     }
     protected void ApplySeek() {
         rb.AddForce(FORCE_MULTIPLIER * SEEK_MULTIPLIER * Seek(target.position));
@@ -181,6 +180,9 @@ public abstract class Enemy : GameCharacter {
     private Vector2 Seek(Vector2 targetPosition) {
         Vector2 desiredVelocity = (targetPosition - (Vector2)transform.position).normalized * baseMovementSpeed;
         return desiredVelocity - rb.velocity;
+    }
+    protected void ApplyFlock() {
+        rb.AddForce(FORCE_MULTIPLIER * Flocking());
     }
     protected Vector2 Seperate() {
         var enemies = GameController.Instance.GetAllEnemies().FindAll(enemy => {
