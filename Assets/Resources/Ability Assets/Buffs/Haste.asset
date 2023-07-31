@@ -17,8 +17,8 @@ MonoBehaviour:
   description: Increases Action Speed by 30%
   iconImage: {fileID: 21300000, guid: 99a7ecc6a55ed3244ad26c4b057dc7fc, type: 3}
   effectedStats:
-    keys: 00000000
+    keys: 01000000
     values:
     - 3
-  duration: -0.0006494379
+  duration: 10
   etype: 0

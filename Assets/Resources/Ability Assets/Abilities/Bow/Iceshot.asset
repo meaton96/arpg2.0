@@ -25,9 +25,10 @@ MonoBehaviour:
   healthCost: 0
   cooldown: 0
   abilityPreFab: {fileID: 6350832118067335528, guid: a5475280cfa0b8e4caa054e2fba4f009, type: 3}
+  onHitDebuffID: 1503
   onHitEffectAmount: 0.5
   onHitDuration: 5
-  onHitDebuff: {fileID: 11400000, guid: b17fcfb103bc8df418e948008fcb3ed5, type: 2}
+  onHitDebuff: {fileID: 0}
   baseDamage: 0
   baseProjectiles: 3
   baseProjectileSpeed: 15

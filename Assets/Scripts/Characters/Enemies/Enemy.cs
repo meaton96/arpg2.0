@@ -25,7 +25,7 @@ public abstract class Enemy : GameCharacter {
     [HideInInspector] public float alignmentWeight = 1f;
     [HideInInspector] public float cohesionWeight = 1f;
 
-    protected const float FORCE_MULTIPLIER = 5f;
+    protected const float FORCE_MULTIPLIER = 500f;
     protected const float SEPERATE_MULTIPLIER = 1;
     protected const float SEEK_MULTIPLIER = 1;
     protected const float MIN_SEP_RANGE = 0.1f, MAX_SEP_RANGE = 5;
@@ -116,11 +116,9 @@ public abstract class Enemy : GameCharacter {
                     animationManager.SetState(CharacterState.Walk);
                 }
                 movementDirection = rb.velocity.normalized;
-                 Debug.Log(rb.velocity.magnitude);
-                if (rb.velocity.magnitude > GetMovementSpeed()) {
+                // Debug.Log(rb.velocity.magnitude);
+                if (GetDistanceSquared2D(rb.velocity) > Mathf.Pow(GetMovementSpeed(), 2))
                     rb.velocity = movementDirection * GetMovementSpeed();
-
-                }
             }
 
 

@@ -411,7 +411,7 @@ SortingGroup:
   m_Enabled: 1
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 200
+  m_SortingOrder: 400
 --- !u!70 &924145463215564539
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -443,7 +443,7 @@ MonoBehaviour:
   _CHARACTER_HALF_HEIGHT_: {x: 0, y: 0.7, z: 0}
   DAMAGE_MIN: 8
   DAMAGE_MAX: 18
-  movementSpeed: 3
+  baseMovementSpeed: 0
   resourceManager: {fileID: 6767171416876917092}
   character4DScript: {fileID: 114216053546988558}
   StatManager: {fileID: 6994132268343717106}
@@ -487,7 +487,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 10000
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}

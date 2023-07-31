@@ -51,7 +51,7 @@ public class BuffManager : MonoBehaviour {
     }
     public void HandleOnHitSpellEffect(DamagingAbility ability) {
         if (ability.onHitDebuff != null) {
-            Debug.Log($"applying on hit effect {ability.onHitDebuff._name} from {ability} to {name}");
+          //  Debug.Log($"applying on hit effect {ability.onHitDebuff._name} from {ability} to {name}");
             ApplyBuff(ability.onHitDebuff);
             //ApplyBuff(ability.onHitDebuff);
         }   

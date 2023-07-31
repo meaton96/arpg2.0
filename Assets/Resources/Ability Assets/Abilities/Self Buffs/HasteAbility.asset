@@ -26,7 +26,7 @@ MonoBehaviour:
   onHitEffectAmount: 0
   onHitDuration: 0
   onHitDebuff: {fileID: 0}
-  buff: {fileID: 11400000, guid: 09d8d884a8457444fb28762184c245e5, type: 2}
-  duration: 0
+  buff: {fileID: 0}
+  duration: 10
   effectID: 1500
   effectAmount: 0.3

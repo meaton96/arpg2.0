@@ -359,8 +359,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c37a50d7bf8f3c1448caaaedfca3f915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySpawnTimer: 0
-  enemySpawnTime: 0.5
+  SPAWN_ONLY_ONE_ENEMY_TYPE: 1
+  ENABLE_ENEMY_LOGIC: 1
+  ENEMY_INDEX: 0
+  maxEnemies: 20
   spawnEnemies: 1
   enemyList: []
   enemyPrefabList:
