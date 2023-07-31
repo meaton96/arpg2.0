@@ -43,10 +43,10 @@ public class ExpandingIconBar : MonoBehaviour {
             //get the buff from the list and remove it
             var buffWrapper = ActiveBuffs.SingleOrDefault(b => b.Buff.id == buff.id);
             if (buffWrapper != null)
-                buffWrapper.RemoveBuff();
+                buffWrapper.RemoveBuffIcon();
         }
         catch (System.Exception) {
-            Debug.Log("no buff found to remove - shouldnt ever happen");
+            Debug.LogError("no buff found to remove - shouldnt ever happen");
         }
 
     }

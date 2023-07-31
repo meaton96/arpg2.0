@@ -13,17 +13,17 @@ public class ResourceManager : MonoBehaviour
     protected float manaTimer = 0;
     [HideInInspector]public float currentHealth;
     [HideInInspector] public float maxHealth;
+    [SerializeField] private StatManager statManager;
+  //  [HideInInspector] public float BASE_HEALTH_REGEN = 5;
+  //  [HideInInspector] public float healthRegenIncrease_flat;
+  //  [HideInInspector] public float healthRegenIncrease_multi = 1;
 
-    [HideInInspector] public float BASE_HEALTH_REGEN = 5;
-    [HideInInspector] public float healthRegenIncrease_flat;
-    [HideInInspector] public float healthRegenIncrease_multi = 1;
-
-    [HideInInspector] public float BASE_MANA_REGEN;
+   // [HideInInspector] public float BASE_MANA_REGEN;
     [HideInInspector] public float currentMana;
     
     [HideInInspector] public float maxMana;
-    [HideInInspector] public float manaRegenIncrease_flat;
-    [HideInInspector] public float manaRegenIncrease_multi = 1;
+  //  [HideInInspector] public float manaRegenIncrease_flat;
+  //  [HideInInspector] public float manaRegenIncrease_multi = 1;
 
     FieldInfo[] fields;
     private readonly List<string> fieldNameFilter = new() {
@@ -39,8 +39,8 @@ public class ResourceManager : MonoBehaviour
 
     public void Init(float maxHealth, float maxMana, float baseHealthRegen = 5, float baseManaRegen = 5) {
         this.maxMana = currentMana = maxMana;
-        BASE_HEALTH_REGEN = baseHealthRegen;
-        BASE_HEALTH_REGEN = baseManaRegen;
+        statManager.IncreaseHealthRegeneration( baseHealthRegen);
+        statManager.IncreaseManaRegeneration(baseManaRegen);
         currentHealth = this.maxHealth = maxHealth;
         fields = GetType().GetFields();
         FieldInfo[] filteredFields = fields.Where(f => fieldNameFilter.Contains(f.Name)).ToArray();
@@ -107,7 +107,7 @@ public class ResourceManager : MonoBehaviour
         currentHealth -= amount;
     }
     public float GetTotalHealthRegen() {
-        return (BASE_HEALTH_REGEN + healthRegenIncrease_flat) * healthRegenIncrease_multi;
+        return statManager.GetTotalHealthRegen();
     }
     //gives a float between 0 and 1
     public float GetPercentHealth() {
@@ -118,17 +118,17 @@ public class ResourceManager : MonoBehaviour
     }
 
     public float GetTotalManaRegen() {
-        return (BASE_MANA_REGEN + manaRegenIncrease_flat) * manaRegenIncrease_multi;
+        return statManager.GetTotalManaRegen();
     }
-    public void IncreaseHealthRegenFlat(float amt) { healthRegenIncrease_flat += amt; }
-    public void DecreaseHealthRegenFlat(float amt) { healthRegenIncrease_flat -= amt; }
-    public void IncreaseManaRegenFlat(float amt) { manaRegenIncrease_flat += amt; }
-    public void DecreaseManaRegenFlat(float amt) { manaRegenIncrease_flat -= amt; }
+    //public void IncreaseHealthRegenFlat(float amt) { healthRegenIncrease_flat += amt; }
+    //public void DecreaseHealthRegenFlat(float amt) { healthRegenIncrease_flat -= amt; }
+    //public void IncreaseManaRegenFlat(float amt) { manaRegenIncrease_flat += amt; }
+    //public void DecreaseManaRegenFlat(float amt) { manaRegenIncrease_flat -= amt; }
 
-    public void IncreaseHealthRegenPercent(float amt) { healthRegenIncrease_multi += amt; }
-    public void DecreaseHealthRegenPercent(float amt) { healthRegenIncrease_multi -= amt; }
-    public void IncreaseManaRegenPercent(float amt) { manaRegenIncrease_multi += amt; }
-    public void DecreaseManaRegenPercent(float amt) { manaRegenIncrease_multi -= amt; }
+    //public void IncreaseHealthRegenPercent(float amt) { healthRegenIncrease_multi += amt; }
+    //public void DecreaseHealthRegenPercent(float amt) { healthRegenIncrease_multi -= amt; }
+    //public void IncreaseManaRegenPercent(float amt) { manaRegenIncrease_multi += amt; }
+    //public void DecreaseManaRegenPercent(float amt) { manaRegenIncrease_multi -= amt; }
 
     public bool IsAlive() {
         return currentHealth > 0;

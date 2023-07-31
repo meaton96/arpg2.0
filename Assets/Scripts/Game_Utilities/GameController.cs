@@ -16,26 +16,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
-    #region Enemy Spawning  
-    //spawning vars for testing
-    public const bool SPAWN_ONLY_ONE_ENEMY_TYPE = false;
-    public const bool ENABLE_ENEMY_LOGIC = true;
-    public const int ENEMY_INDEX = 4;
-    private readonly List<float> _ENEMY_SPAWN_WEIGHTS = new() {
-        5, //basic goblin   - 0
-        5, //shooter golin  - 1
-        2, //human cleric   - 2
-        1, //mage           - 3
-        2, //axe wielder    - 4
-        4, //ice archer     - 5
-    };
-    private float _SPAWN_WEIGHT_TOTAL = 0;
-    //end test vars
-    public float enemySpawnTimer, enemySpawnTime = 0.5f;
-    float minRad = 3, maxRad = 10;
-    private int maxEnemies = 20;
-    private bool spawnEnemies = true;
-    #endregion
+    
 
     #region Layer and JSON constants
     public const int ENEMY_LAYER = 7;
@@ -72,8 +53,8 @@ public class GameController : MonoBehaviour {
     public SpriteCollection itemSpriteCollection;
     public IconCollection iconCollection;
 
-    public List<Enemy> enemyList;
-    public List<Enemy> enemyPrefabList;
+    [SerializeField] EnemySpawnManager enemySpawnManager;
+    
 
     public List<Enemy> testList;
 
@@ -88,11 +69,7 @@ public class GameController : MonoBehaviour {
             Instance = this;
         }
         InitSettings();
-        enemyList = new();
         
-        for (int x = 0; x < _ENEMY_SPAWN_WEIGHTS.Count; x++) {
-            _SPAWN_WEIGHT_TOTAL += _ENEMY_SPAWN_WEIGHTS[x];
-        }
 
         SetPhysicsIgnores();        
 
@@ -161,16 +138,10 @@ public class GameController : MonoBehaviour {
             player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity).GetComponent<Player>();
         }
         if (Input.GetKeyDown(KeyCode.F2)) {
-           // player.spellBar.EquipAura(0, allSpells[900] as Aura);
-          //  player.spellBar.EquipAura(1, allSpells[901] as Aura);
+            if (player == null) { Debug.LogError("Wrong Button Idiot"); return; }
+            enemySpawnManager.StartSpawning(player);
         }
-        if (Input.GetKeyDown(KeyCode.F3)) {
-            spawnEnemies = !spawnEnemies;
-        }
-
-        if (player != null && enemyList.Count < maxEnemies && spawnEnemies) {
-            SpawnEnemies();
-        }
+        
     }
 
     public static Vector3 CameraToWorldPointMousePos() {
@@ -181,61 +152,8 @@ public class GameController : MonoBehaviour {
     //    allBuffsDebuffs = JsonHelper.ParseAllBuffsAndDebuffs(JSON_PATH_BUFFS);
     //    allSpells = JsonHelper.ParseAllAbilities(JSON_PATH_ABILITIES);
     //}
-
-    private void SpawnEnemies() {
-        if (enemySpawnTimer <= 0) {
-            SpawnEnemy();
-            enemySpawnTimer = enemySpawnTime;
-        }
-        else {
-            enemySpawnTimer -= Time.deltaTime;
-        }
-    }
-    //spawns a single enemy within minRad and maxRad radius of player randomly 
-    private void SpawnEnemy() {
-        int index = 0;
-        var rand = UnityEngine.Random.Range(0f, _SPAWN_WEIGHT_TOTAL);
-
-        float total = 0;
-        for (int i = 0; i < _ENEMY_SPAWN_WEIGHTS.Count; i++) {
-            total += _ENEMY_SPAWN_WEIGHTS[i];
-            if (rand < total) {
-                index = i;
-                break;
-            }
-        }
-        
-        if (SPAWN_ONLY_ONE_ENEMY_TYPE) {
-            index = ENEMY_INDEX;
-        }
-
-        var distanceAwayFromPlayer = UnityEngine.Random.Range(minRad, maxRad);
-        var angle = UnityEngine.Random.Range(0f, 2 * Mathf.PI);
-
-
-        var x = distanceAwayFromPlayer * Mathf.Cos(angle);
-        var y = distanceAwayFromPlayer * Mathf.Sin(angle);
-
-        
-
-        var pos = new Vector3(x, y, 0) + player.transform.position;
-
-
-        var enemy = Instantiate(enemyPrefabList[index], pos, Quaternion.identity);  
-        
-        enemy.Init(
-            num: enemyList.Count,
-            player: player,
-            allEnemies: enemyList,
-            health: 50,
-            isActive: ENABLE_ENEMY_LOGIC
-            );
-
-        enemyList.Add(enemy);
-    }
-
-    public void RemoveEnemyFromList(Enemy enemy) {
-        enemyList.Remove(enemy);
+    public List<Enemy> GetAllEnemies() {
+        return enemySpawnManager.enemyList;
     }
 
     void SetPhysicsIgnores() {

@@ -43,10 +43,10 @@ public class Aura : Ability {
     //}
     public void ActivateAura(Player player) {
 
-        player.ApplyBuff(buff);
+        player.BuffManager.ApplyBuff(buff);
     }
     public void DeactivateAura(Player player) {
-        player.RemoveBuff(buff);
+        player.BuffManager.RemoveBuff(buff);
     }
 
     public override string ToString() {

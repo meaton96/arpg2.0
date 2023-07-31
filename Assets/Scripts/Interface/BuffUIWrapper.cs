@@ -11,7 +11,7 @@ public class BuffUIWrapper : MonoBehaviour {
     private Image displayImage;
     [SerializeField] private TextMeshProUGUI durationText;
     private ExpandingIconBar bar;
-    
+
     //displays the buff icon on the buff bar
     public void DisplayBuffIcon(Buff buff, ExpandingIconBar bar) {
         //get the icon and set the bar class variable
@@ -19,9 +19,9 @@ public class BuffUIWrapper : MonoBehaviour {
         this.bar = bar;
         Buff = buff;
         timer = Buff.duration;
-       
+
         //check if the buff doesnt expire
-        flagInfDuration = timer < 0;
+        flagInfDuration = timer == -1;
         //set image
         displayImage.sprite = Buff.iconImage;
         //set text if it has a timer
@@ -43,16 +43,16 @@ public class BuffUIWrapper : MonoBehaviour {
             }
             else {
                 //remove the buff at the end of the duration
-                bar.RemoveBuffFromList(this);
+                RemoveBuffIcon();
 
                 Destroy(gameObject);
             }
         }
 
     }
-    public void RemoveBuff() {
+    public void RemoveBuffIcon() {
         //remove effect from player, remove it from the buff bar, then destroy
-        GameController.Instance.player.RemoveBuff(Buff);
+        //GameController.Instance.player.BuffManager.RemoveBuff(Buff);
         bar.RemoveBuffFromList(this);
 
         Destroy(gameObject);

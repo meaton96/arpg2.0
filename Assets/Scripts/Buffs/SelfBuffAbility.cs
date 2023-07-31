@@ -18,7 +18,7 @@ public class SelfBuffAbility : Ability {
     //casts the ability by applying the buff to the player
     public override List<GameObject> Cast(Vector3 instantiatePosition, Vector3 mousePos, Vector3 offset, Collider2D casterCollider) {
         var player = casterCollider.GetComponent<GameCharacter>();
-        player.ApplyBuff(buff);
+        player.BuffManager.ApplyBuff(buff);
         return null;
     }
     //public override void Init() {

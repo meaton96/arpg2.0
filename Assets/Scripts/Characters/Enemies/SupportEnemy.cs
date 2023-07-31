@@ -35,7 +35,7 @@ public class SupportEnemy : RangedEnemy {
                 if (pollTimer > pollNearbyEnemiesCooldown) {
                     var nearbyEnemies = GetNearbyEnemies();
                     GetTargetFromNearbyEnemies(nearbyEnemies);
-                    ApplyAuraBuffToNearbyEnemies(nearbyEnemies);
+                  //  ApplyAuraBuffToNearbyEnemies(nearbyEnemies);
                     pollTimer = 0;
                 }
                 else {
@@ -54,21 +54,21 @@ public class SupportEnemy : RangedEnemy {
 
 
     }
-    void ApplyAuraBuffToNearbyEnemies(List<Enemy> nearbyEnemies) {
-        foreach (Enemy enemy in nearbyEnemies) { 
-            if (enemy.BuffAlreadyApplied(auraBuffToApply)) continue;
-            var tempBuffWrap = Instantiate(auraAttachPrefab, enemy.transform).
-                GetComponent<TempBuffWrapper_Distance>();
-            tempBuffWrap.Attach(
-                buff: auraBuffToApply,
-                caster: this,
-                attachedCharacter: enemy,
-                range: auraRangeSquared,
-                pollTimer: pollTimer
-                );
+    //void ApplyAuraBuffToNearbyEnemies(List<Enemy> nearbyEnemies) {
+    //    foreach (Enemy enemy in nearbyEnemies) { 
+    //        if (enemy.BuffManager.BuffAlreadyApplied(auraBuffToApply)) continue;
+    //        var tempBuffWrap = Instantiate(auraAttachPrefab, enemy.transform).
+    //            GetComponent<TempBuffWrapper_Distance>();
+    //        tempBuffWrap.Attach(
+    //            buff: auraBuffToApply,
+    //            caster: this,
+    //            attachedCharacter: enemy,
+    //            range: auraRangeSquared,
+    //            pollTimer: pollTimer
+    //            );
 
-        }
-    }
+    //    }
+    //}
     List<Enemy> GetNearbyEnemies() {
         if (allAgents.Count == 0) { return new List<Enemy>();  }
         List<Enemy> result = new();

@@ -181,7 +181,7 @@ public abstract class Enemy : GameCharacter {
         return desiredVelocity - rb.velocity;
     }
     protected Vector2 Seperate() {
-        var enemies = GameController.Instance.enemyList.FindAll(enemy => {
+        var enemies = GameController.Instance.GetAllEnemies().FindAll(enemy => {
             return GetDistanceSquared2D(enemy.transform.position, transform.position) < MAX_SEP_RANGE;
         });
 

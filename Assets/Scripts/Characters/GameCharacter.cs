@@ -15,38 +15,33 @@ public abstract class GameCharacter : MonoBehaviour {
     #endregion
     public const int IGNORE_COLLISION_LAYER = 13;
     public int DAMAGE_MIN = 8, DAMAGE_MAX = 18;
-
+    [SerializeField] protected float movementSpeed;
     public ResourceManager resourceManager;
     protected AnimationManager animationManager;
-    [SerializeField] protected GameObject attachedBuffPrefab;
+    //[SerializeField] protected GameObject attachedBuffPrefab;
     protected Rigidbody2D rb;
 
-    FieldInfo[] fields;
-    private readonly List<string> fieldNameFilter = new() {
-        "actionSpeed",
-        "movementSpeed",
-        "damageMulti",
 
-    };
+    //FieldInfo[] fields;
+    //private readonly List<string> fieldNameFilter = new() {
+    //    "actionSpeed",
+    //    "movementSpeed",
+    //    "damageMulti",
+
+    //};
 
     #region Vars - Buff/Debuff tracking
     //track current debuffs and buffs and timers
-    protected Dictionary<string, AttachedBuff> currentBuffsDebuffs;
+   // protected Dictionary<string, AttachedBuff> currentBuffsDebuffs;
     #endregion
     protected bool isAlive = true;
     //direction the character is currently moving
     protected Vector3 movementDirection;
     //reference to the character script to change character direction
     public Character4D character4DScript;
-
-    #region Vars - Combat Stats
-    [HideInInspector] public float actionSpeed = 1;
-    public float movementSpeed;
-    [HideInInspector] public float damageMulti = 1;
-    // [HideInInspector] public float castSpeed;
-    public float attackSpeed = 1;
-    private bool flagChangeAnimationSpeed = true;
-    #endregion
+    public StatManager StatManager;
+    public BuffManager BuffManager;
+    
     #region Vars - Damage Text
     protected readonly Vector3 toastOffset = new(5f, 10f, 0f);
     //prefab for displaying damage numbers
@@ -60,18 +55,18 @@ public abstract class GameCharacter : MonoBehaviour {
     #region Start
     protected virtual void Start() {
 
-        currentBuffsDebuffs = new();
+       // currentBuffsDebuffs = new();
         //character4DScript = GetComponent<Character4D>();
         character4DScript.SetDirection(Vector2.right);
         animationManager = character4DScript.AnimationManager;
         
         // resourceManager = GetComponent<ResourceManager>();
         spellHitUniqueIDs = new();
-        fields = GetType().GetFields();
-        rb = GetComponent<Rigidbody2D>();
-        var filteredFields = fields.Where(f => fieldNameFilter.Contains(f.Name)).ToArray();
+        //fields = GetType().GetFields();
+        //rb = GetComponent<Rigidbody2D>();
+        //var filteredFields = fields.Where(f => fieldNameFilter.Contains(f.Name)).ToArray();
 
-        fields = filteredFields;
+        //fields = filteredFields;
 
         //Debug.Log(name + " " + fields.Length);
     }
@@ -106,10 +101,10 @@ public abstract class GameCharacter : MonoBehaviour {
         //    flagChangeAnimationSpeed = false;
         //    animationManager.animationSpeed = 1 / (actionSpeed * attackSpeed);
         //}
-        if (actionSpeed != 0 && attackSpeed != 0) {
-            animationManager.animationSpeed = (actionSpeed * attackSpeed);
+        //if (actionSpeed != 0 && attackSpeed != 0) {
+        //    animationManager.animationSpeed = (actionSpeed * attackSpeed);
             
-        }
+        //}
     }
     #endregion
     protected virtual void StopMove() { }
@@ -172,10 +167,8 @@ public abstract class GameCharacter : MonoBehaviour {
         //temp - combat log?
         //Debug.Log(caster.name + "'s " + ability._name +
         //    " hit " + name + " for " + damage);
-
-        if (ability.onHitDebuff != null) {
-            ApplyBuff(ability.onHitDebuff);
-        }
+        BuffManager.HandleOnHitSpellEffect(ability);
+        
         DamageHealth(damage);
         if (GameController.Instance.DisplayFloatingCombatText)
             DisplayFloatingDamageNumber(damage);
@@ -197,64 +190,67 @@ public abstract class GameCharacter : MonoBehaviour {
     }
     #endregion
     #region Buffs and Debuffs
-    public virtual void ApplyBuff(Buff buff) {
-        //Debug.Log("Applying Buff: " +  buff.ToString());
-        //HUD.DisplayNewBuff(buff);
-        //ApplyBuffByID(buff);
+    //public virtual void ApplyBuff(Buff buff) {
 
-        bool success = false;
-        try {
-            if (BuffAlreadyApplied(buff)) {
-                Debug.Log($"trying to applying {buff._name} to {name}");
-                //currentBuffsDebuffs.TryGetValue(buff.uniqueId, out AttachedBuff aBuff)) {
-                //  Debug.Log("Extend buff duration");
-                //if (aBuff.buff == buff) {
-                //    aBuff.SetTimer(buff.duration);
-                //}
-                currentBuffsDebuffs[buff.uniqueId].SetTimer(buff.duration);
+        
 
-            }
-            else {
-                success = IncreaseFloatFieldByAmount(buff.effect, buff.amount);
+    //    //Debug.Log("Applying Buff: " +  buff.ToString());
+    //    //HUD.DisplayNewBuff(buff);
+    //    //ApplyBuffByID(buff);
 
-            }
-        }
-        catch (Exception e) {
-            Debug.Log(e);
-        }
-        if (buff.duration != -1 && success) {
-            //Debug.Log("applied buff");
-            var aBuff = Instantiate(attachedBuffPrefab, transform).GetComponent<AttachedBuff>();
-            aBuff.Init(buff, this);
-            currentBuffsDebuffs.Add(buff.uniqueId, aBuff);
-            //StartCoroutine(RemoveBuffAfterSeconds(buff, buff.duration));
-        }
+    //    //bool success = false;
+    //    //try {
+    //    //    if (BuffAlreadyApplied(buff)) {
+                
+    //    //        //currentBuffsDebuffs.TryGetValue(buff.uniqueId, out AttachedBuff aBuff)) {
+    //    //        //  Debug.Log("Extend buff duration");
+    //    //        //if (aBuff.buff == buff) {
+    //    //        //    aBuff.SetTimer(buff.duration);
+    //    //        //}
+    //    //      //  currentBuffsDebuffs[buff.uniqueId].SetTimer(buff.duration);
+
+    //    //    }
+    //    //    else {
+    //    //      //  success = IncreaseFloatFieldByAmount(buff.effect, buff.amount);
+
+    //    //    }
+    //    //}
+    //    //catch (Exception e) {
+    //    //    Debug.Log(e);
+    //    //}
+    //    //if (buff.duration != -1 && success) {
+    //    //    //Debug.Log("applied buff");
+    //    //  //  var aBuff = Instantiate(attachedBuffPrefab, transform).GetComponent<AttachedBuff>();
+    //    //   // aBuff.Init(buff, this);
+    //    ////    currentBuffsDebuffs.Add(buff.uniqueId, aBuff);
+    //    //    //StartCoroutine(RemoveBuffAfterSeconds(buff, buff.duration));
+    //    //}
 
 
-    }
-    public virtual bool RemoveBuff(Buff buff) {
-        //Debug.Log($"removing {buff}");
-        if (currentBuffsDebuffs.Remove(buff.uniqueId)) {
+    //}
+    //public virtual bool RemoveBuff(Buff buff) {
+    //    //Debug.Log($"removing {buff}");
+    //    //if (currentBuffsDebuffs.Remove(buff._name)) {
 
-            return DecreaseFloatFieldByAmount(buff.effect, buff.amount);
-        }
-        else {
-            // throw new Exception("buff not found");
-            Debug.LogWarning($"failed to remove buff {buff} from {name}");
-        }
-        return false;
-        //RemoveBuffByID(buff);
-        //GetComponent<SpriteRenderer>().color = Color.white;
-        // HUD.ForceRemoveBuff(buff);
-    }
-    public virtual bool RemoveBuffByID(string buffID) {
-        if (currentBuffsDebuffs.TryGetValue(buffID, out AttachedBuff aBuff)) {
-            DecreaseFloatFieldByAmount(aBuff.buff.effect, aBuff.buff.amount);
-            currentBuffsDebuffs.Remove(buffID);
-            return true;
-        }
-        return false;
-    }
+    //    //    return false;    //DecreaseFloatFieldByAmount(buff.effect, buff.amount);
+    //    //}
+    //    //else {
+    //    //    // throw new Exception("buff not found");
+    //    //    Debug.LogWarning($"failed to remove buff {buff} from {name}");
+    //    //}
+    //    return false;
+    //    //RemoveBuffByID(buff);
+    //    //GetComponent<SpriteRenderer>().color = Color.white;
+    //    // HUD.ForceRemoveBuff(buff);
+    //}
+    //public virtual bool RemoveBuffByID(string buffID) {
+    //    if (currentBuffsDebuffs.TryGetValue(buffID, out AttachedBuff aBuff)) {
+    //       // DecreaseFloatFieldByAmount(aBuff.buff.effect, aBuff.buff.amount);
+    //        currentBuffsDebuffs.Remove(buffID);
+    //        return true;
+    //    }
+    //    return false;
+    //}
     protected void UpdateFunctionWrapper() {
         UpdateSpellHitList();
         UpdateAnimation();
@@ -265,9 +261,9 @@ public abstract class GameCharacter : MonoBehaviour {
     //    RemoveBuff(buff);
     //    yield break;
     //}
-    public bool BuffAlreadyApplied(Buff buff) {
-        return currentBuffsDebuffs.ContainsKey(buff.uniqueId);
-    }
+    //public bool BuffAlreadyApplied(Buff buff) {
+    //    return false;// currentBuffsDebuffs.ContainsKey(buff.uniqueId);
+    //}
     //public void IncreaseActionSpeed(float amount) {
     //    actionSpeed += amount;
     //}
@@ -275,27 +271,27 @@ public abstract class GameCharacter : MonoBehaviour {
     //    actionSpeed -= amount;
     //}
 
-    public bool IncreaseFloatFieldByAmount(string fieldName, float amount) {
-        //Debug.Log(fieldName);
-        if (!fieldNameFilter.Contains(fieldName)) {
-            if (resourceManager.IncreaseFloatFieldByAmount(fieldName, amount))
-                return true;
-        }
-        // Debug.Log(fieldNameFilter);
-        foreach (var field in fields) {
-            //  Debug.Log(field.Name);
-            if (field.Name == fieldName) {
-                if (field.FieldType != typeof(float)) throw new ArgumentException("field is not a modifiable float value");
-                field.SetValue(this, (float)field.GetValue(this) + amount);
-                return true;
-            }
-        }
-        // Debug.Log("how did we get here?");
-        return false;
-    }
-    public bool DecreaseFloatFieldByAmount(string fieldName, float amount) {
-        return IncreaseFloatFieldByAmount(fieldName, -amount);
-    }
+    //public bool IncreaseFloatFieldByAmount(string fieldName, float amount) {
+    //    //Debug.Log(fieldName);
+    //    if (!fieldNameFilter.Contains(fieldName)) {
+    //        if (resourceManager.IncreaseFloatFieldByAmount(fieldName, amount))
+    //            return true;
+    //    }
+    //    // Debug.Log(fieldNameFilter);
+    //    foreach (var field in fields) {
+    //        //  Debug.Log(field.Name);
+    //        if (field.Name == fieldName) {
+    //            if (field.FieldType != typeof(float)) throw new ArgumentException("field is not a modifiable float value");
+    //            field.SetValue(this, (float)field.GetValue(this) + amount);
+    //            return true;
+    //        }
+    //    }
+    //    // Debug.Log("how did we get here?");
+    //    return false;
+    //}
+    //public bool DecreaseFloatFieldByAmount(string fieldName, float amount) {
+    //    return IncreaseFloatFieldByAmount(fieldName, -amount);
+    //}
 
     //protected void ApplyBuffByID(Buff buff) {
     //    switch (buff.id) {
@@ -355,6 +351,6 @@ public abstract class GameCharacter : MonoBehaviour {
     public virtual float CalculateDamage(DamagingAbility ability) {
         //replace damage constants with weapon damage
         var baseDamage = ability.CalculateDamage(DAMAGE_MIN, DAMAGE_MAX);
-        return baseDamage * damageMulti;
+        return baseDamage;// * damageMulti;
     }
 }

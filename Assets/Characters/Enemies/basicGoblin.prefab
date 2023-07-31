@@ -6923,6 +6923,8 @@ GameObject:
   - component: {fileID: 5820402308954821554}
   - component: {fileID: 9104495425243833598}
   - component: {fileID: 5757264661440035119}
+  - component: {fileID: 2286210590083377696}
+  - component: {fileID: 6008190567015759158}
   m_Layer: 7
   m_Name: basicGoblin
   m_TagString: Enemy
@@ -7244,14 +7246,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 0
-  BASE_HEALTH_REGEN: 5
-  healthRegenIncrease_flat: 0
-  healthRegenIncrease_multi: 1
-  BASE_MANA_REGEN: 0
+  statManager: {fileID: 6008190567015759158}
   currentMana: 0
   maxMana: 0
-  manaRegenIncrease_flat: 0
-  manaRegenIncrease_multi: 1
 --- !u!114 &9104495425243833598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7267,13 +7264,11 @@ MonoBehaviour:
   _CHARACTER_HALF_HEIGHT_: {x: 0, y: 0.7, z: 0}
   DAMAGE_MIN: 8
   DAMAGE_MAX: 18
-  resourceManager: {fileID: 5820402308954821554}
-  attachedBuffPrefab: {fileID: 7986172374756387701, guid: 15802d014d874f24a8c457cf1ffcd43c, type: 3}
-  character4DScript: {fileID: 2919585124672248670}
-  actionSpeed: 1
   movementSpeed: 1.5
-  damageMulti: 1
-  attackSpeed: 1
+  resourceManager: {fileID: 5820402308954821554}
+  character4DScript: {fileID: 2919585124672248670}
+  StatManager: {fileID: 6008190567015759158}
+  BuffManager: {fileID: 2286210590083377696}
   damageToastPrefab: {fileID: 52251255580844802, guid: 120af22e1f47e66408501b3a85dbc88d, type: 3}
   attackRange: 4
   attackCooldown: 1
@@ -7282,8 +7277,10 @@ MonoBehaviour:
   alignmentWeight: 1
   cohesionWeight: 1
   availableAbilities: []
+  weaponType: 0
   basicAttackDamage: 15
   attackTime: 0
+  twoHanded: 0
 --- !u!50 &5757264661440035119
 Rigidbody2D:
   serializedVersion: 4
@@ -7305,6 +7302,32 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &2286210590083377696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2959554295789042252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e1e19ca8d77f5845af1aa78a11e4831, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attachedBuffPrefab: {fileID: 7986172374756387701, guid: 15802d014d874f24a8c457cf1ffcd43c, type: 3}
+  statManager: {fileID: 6008190567015759158}
+--- !u!114 &6008190567015759158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2959554295789042252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f79e88452d520144b8fae33bf2333cfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2960262307237861550
 GameObject:
   m_ObjectHideFlags: 0

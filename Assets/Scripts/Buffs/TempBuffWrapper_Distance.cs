@@ -14,7 +14,7 @@ public class TempBuffWrapper_Distance : MonoBehaviour {
     private void Update() {
         if (caster == null || !caster.resourceManager.IsAlive()) {
             Debug.Log("removing buff because caster died");
-            attachedCharacter.RemoveBuff(buff);
+            attachedCharacter.BuffManager.RemoveBuff(buff);
             Destroy(gameObject);
 
         }
@@ -26,7 +26,7 @@ public class TempBuffWrapper_Distance : MonoBehaviour {
                 var dist = Mathf.Pow(casterPos.x - myPos.x, 2) + Mathf.Pow(casterPos.y - myPos.y, 2);
                 if (dist > range) {
                     Debug.Log($"Removing buff from {name} due to range");
-                    attachedCharacter.RemoveBuff(buff);
+                    attachedCharacter.BuffManager.RemoveBuff(buff);
                     Destroy(gameObject);
                 }
                 timer = 0;
@@ -45,6 +45,6 @@ public class TempBuffWrapper_Distance : MonoBehaviour {
         this.range = range;
         transform.parent = attachedCharacter.transform;
         this.pollTime = pollTimer;
-        attachedCharacter.ApplyBuff(buff);
+        attachedCharacter.BuffManager.ApplyBuff(buff);
     }
 }

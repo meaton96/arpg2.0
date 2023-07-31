@@ -42,16 +42,16 @@ public class SerializableDictionary<TKey, TValue> {
                 return default(TValue);
             }
         }
-        //set {
-        //    int index = keys.IndexOf(key);
-        //    if (index != -1) {
-        //        values[index] = value;
-        //    }
-        //    else {
-        //        Debug.LogWarning("SerializableDictionary: Key not found in the dictionary. Adding a new entry.");
-        //        keys.Add(key);
-        //        values.Add(value);
-        //    }
-        //}
+        set {
+            int index = keys.IndexOf(key);
+            if (index != -1) {
+                values[index] = value;
+            }
+            else {
+                Debug.LogWarning("SerializableDictionary: Key not found in the dictionary. Adding a new entry.");
+                keys.Add(key);
+                values.Add(value);
+            }
+        }
     }
 }

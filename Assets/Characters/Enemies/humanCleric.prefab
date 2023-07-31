@@ -118,6 +118,8 @@ GameObject:
   - component: {fileID: 1605271758612617386}
   - component: {fileID: -2114618815671765277}
   - component: {fileID: 7139526756982482187}
+  - component: {fileID: -7895077377504037430}
+  - component: {fileID: -3568111988601068183}
   m_Layer: 7
   m_Name: humanCleric
   m_TagString: Untagged
@@ -460,14 +462,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 0
-  BASE_HEALTH_REGEN: 5
-  healthRegenIncrease_flat: 0
-  healthRegenIncrease_multi: 1
-  BASE_MANA_REGEN: 0
+  statManager: {fileID: -7895077377504037430}
   currentMana: 0
   maxMana: 0
-  manaRegenIncrease_flat: 0
-  manaRegenIncrease_multi: 1
 --- !u!114 &7139526756982482187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,13 +480,11 @@ MonoBehaviour:
   _CHARACTER_HALF_HEIGHT_: {x: 0, y: 0.7, z: 0}
   DAMAGE_MIN: 8
   DAMAGE_MAX: 18
-  resourceManager: {fileID: -2114618815671765277}
-  attachedBuffPrefab: {fileID: 7986172374756387701, guid: 15802d014d874f24a8c457cf1ffcd43c, type: 3}
-  character4DScript: {fileID: 114216053546988558}
-  actionSpeed: 1
   movementSpeed: 1
-  damageMulti: 1
-  attackSpeed: 1
+  resourceManager: {fileID: -2114618815671765277}
+  character4DScript: {fileID: 114216053546988558}
+  StatManager: {fileID: -7895077377504037430}
+  BuffManager: {fileID: -3568111988601068183}
   damageToastPrefab: {fileID: 52251255580844802, guid: 120af22e1f47e66408501b3a85dbc88d, type: 3}
   attackRange: 400
   attackCooldown: 0
@@ -505,6 +500,32 @@ MonoBehaviour:
   auraVisualPrefab: {fileID: 6967502257464330412, guid: 5ba0d219d312d074cb1d99c45918888f, type: 3}
   auraAttachPrefab: {fileID: 1298926524237742945, guid: 6adb6a9b8535f4a4c891be1054646cb4, type: 3}
   auraBuffToApply: {fileID: 11400000, guid: 414e1f35c4b18f049869369da6b80613, type: 2}
+--- !u!114 &-7895077377504037430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063387080856860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f79e88452d520144b8fae33bf2333cfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-3568111988601068183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063387080856860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e1e19ca8d77f5845af1aa78a11e4831, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attachedBuffPrefab: {fileID: 7986172374756387701, guid: 15802d014d874f24a8c457cf1ffcd43c, type: 3}
+  statManager: {fileID: -7895077377504037430}
 --- !u!1 &1075059424682908
 GameObject:
   m_ObjectHideFlags: 0

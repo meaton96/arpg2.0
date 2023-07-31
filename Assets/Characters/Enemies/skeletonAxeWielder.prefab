@@ -11997,6 +11997,8 @@ GameObject:
   - component: {fileID: 3050226310403574025}
   - component: {fileID: 2300139438057381950}
   - component: {fileID: 498897782136364065}
+  - component: {fileID: 8009847565091807263}
+  - component: {fileID: 4901695374914546083}
   m_Layer: 7
   m_Name: skeletonAxeWielder
   m_TagString: Untagged
@@ -12318,14 +12320,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 0
-  BASE_HEALTH_REGEN: 5
-  healthRegenIncrease_flat: 0
-  healthRegenIncrease_multi: 1
-  BASE_MANA_REGEN: 0
+  statManager: {fileID: 8009847565091807263}
   currentMana: 0
   maxMana: 0
-  manaRegenIncrease_flat: 0
-  manaRegenIncrease_multi: 1
 --- !u!50 &2300139438057381950
 Rigidbody2D:
   serializedVersion: 4
@@ -12362,13 +12359,11 @@ MonoBehaviour:
   _CHARACTER_HALF_HEIGHT_: {x: 0, y: 0.7, z: 0}
   DAMAGE_MIN: 15
   DAMAGE_MAX: 30
-  resourceManager: {fileID: 3050226310403574025}
-  attachedBuffPrefab: {fileID: 7986172374756387701, guid: 15802d014d874f24a8c457cf1ffcd43c, type: 3}
-  character4DScript: {fileID: 5538259871943808147}
-  actionSpeed: 1
   movementSpeed: 4
-  damageMulti: 1
-  attackSpeed: 3
+  resourceManager: {fileID: 3050226310403574025}
+  character4DScript: {fileID: 5538259871943808147}
+  StatManager: {fileID: 8009847565091807263}
+  BuffManager: {fileID: 4901695374914546083}
   damageToastPrefab: {fileID: 52251255580844802, guid: 120af22e1f47e66408501b3a85dbc88d, type: 3}
   attackRange: 9
   attackCooldown: 1
@@ -12381,6 +12376,32 @@ MonoBehaviour:
   basicAttackDamage: 25
   attackTime: 0
   twoHanded: 1
+--- !u!114 &8009847565091807263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5570349944413681025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f79e88452d520144b8fae33bf2333cfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4901695374914546083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5570349944413681025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e1e19ca8d77f5845af1aa78a11e4831, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attachedBuffPrefab: {fileID: 7986172374756387701, guid: 15802d014d874f24a8c457cf1ffcd43c, type: 3}
+  statManager: {fileID: 8009847565091807263}
 --- !u!1 &5570360330016832339
 GameObject:
   m_ObjectHideFlags: 0

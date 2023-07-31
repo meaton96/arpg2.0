@@ -92,8 +92,9 @@ public class Player : GameCharacter {
         
         
         Camera.main.transform.SetParent(transform, false);
-        HUD = GameObject.FindWithTag("HUD").GetComponent<UIBehaviour>();
+        
         playerCollider = GetComponent<Collider2D>();
+        rb = GetComponent<Rigidbody2D>();
         resourceManager.Init(_MAX_HEALTH_, _MAX_MANA_);
         //placeholder
         //animationManager.SetWeaponType(WeaponType.Melee2H);
@@ -134,8 +135,8 @@ public class Player : GameCharacter {
         }
 
     }
-    private void FixedUpdate() {    
-        animationManager.animationSpeed = actionSpeed;
+    private void FixedUpdate() {
+        animationManager.animationSpeed = StatManager.GetActionSpeed();
         if (!animationManager.IsAction && state != State.dodging) {
             HandleMovement();
         }
@@ -208,6 +209,7 @@ public class Player : GameCharacter {
             //    transform.position,
             //    moveToPosition,
             //    GetMovementSpeed() * Time.deltaTime);
+            
             rb.MovePosition(Vector3.MoveTowards(
                 transform.position,
                 moveToPosition,
@@ -285,16 +287,16 @@ public class Player : GameCharacter {
     #endregion
     #region Add/Removing Buffs/Auras
     
-    public override void ApplyBuff(Buff buff) {
-        //Debug.Log("Applying Buff: " +  buff.ToString());
-        HUD.DisplayNewBuff(buff);
-        base.ApplyBuff(buff);   
-    }
-    public override bool RemoveBuff(Buff buff) {
+    //public override void ApplyBuff(Buff buff) {
+    //    //Debug.Log("Applying Buff: " +  buff.ToString());
+    //    HUD.DisplayNewBuff(buff);
+    //    base.ApplyBuff(buff);   
+    //}
+    //public override bool RemoveBuff(Buff buff) {
         
-        HUD.ForceRemoveBuff(buff);
-        return base.RemoveBuff(buff);
-    }
+    //    HUD.ForceRemoveBuff(buff);
+    //    return base.RemoveBuff(buff);
+    //}
     #endregion
     #region Getters/Setters/ToString
 
@@ -304,16 +306,16 @@ public class Player : GameCharacter {
             "HP Regen: " + resourceManager.GetTotalHealthRegen() + "\n" +
             "Mana Regen: " + resourceManager.GetTotalManaRegen() + "\n" +
             "Movespeed:" + GetMovementSpeed() + "\n" +
-            "AttackSpeed:" + attackSpeed * 100 + "%\n" +
+            "AttackSpeed:" + StatManager.GetAttackSpeed() * 100 + "%\n" +
             "Cooldown Reduction: " + (cooldownReduction * 100) + "%\n" +
-            "Action Speed: " + actionSpeed * 100 + "%";
+            "Action Speed: " + StatManager.GetActionSpeed() * 100 + "%";
     }
     protected override void StopMove() {
         moveToPosition = transform.position;
     }
 
     public float GetMovementSpeed() {
-        return movementSpeed * movementSpeedMultiplier * actionSpeed;
+        return movementSpeed * movementSpeedMultiplier * StatManager.GetActionSpeed();
     }
     public float GetCooldownReduction() {
         return cooldownReduction;

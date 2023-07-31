@@ -21,7 +21,7 @@ public class MulticastProjectileAbility : ProjectileAbility
         Vector3 offset, Collider2D casterCollider) {
         createdProjectiles.Clear();
         var baseCastDelay = 0.25f / numCasts;
-        var castDelay = baseCastDelay / casterCollider.GetComponent<GameCharacter>().actionSpeed;
+        var castDelay = baseCastDelay / casterCollider.GetComponent<GameCharacter>().StatManager.GetActionSpeed();
         
         for (int i = 0; i < numCasts; i++) {
             createdProjectiles.
