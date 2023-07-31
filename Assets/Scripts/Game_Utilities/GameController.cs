@@ -16,7 +16,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
-    
+
 
     #region Layer and JSON constants
     public const int ENEMY_LAYER = 7;
@@ -27,8 +27,8 @@ public class GameController : MonoBehaviour {
     public const int BACKGROUND_LAYER = 11;
     public const int ENEMY_PROJECTILE_LAYER = 12;
     public const int IGNORE_COLLISION_LAYER = 13;
-   // public const int EFFECT_SPELL_ID_START_NUMBER = 1000;
-    
+    // public const int EFFECT_SPELL_ID_START_NUMBER = 1000;
+
     public const int CAMERA_Z = -15;
     public const string JSON_PATH_BUFFS = "/JSON/abilities/buffs.json";
     public const string JSON_PATH_ABILITIES = "/JSON/Abilities/player.json";
@@ -44,7 +44,7 @@ public class GameController : MonoBehaviour {
 
     public static GameController Instance;
     [SerializeField] private GameObject playerPrefab;
-    
+
     //[SerializeField] private GameObject playerPrefabBow;
     public Player player;
     //private Dictionary<int, Ability> allSpells = new();
@@ -54,11 +54,11 @@ public class GameController : MonoBehaviour {
     public IconCollection iconCollection;
 
     [SerializeField] EnemySpawnManager enemySpawnManager;
-    
+
 
     public List<Enemy> testList;
-
     
+
 
     // Start is called before the first frame update
     void Start() {
@@ -69,11 +69,10 @@ public class GameController : MonoBehaviour {
             Instance = this;
         }
         InitSettings();
-        
 
-        SetPhysicsIgnores();        
+        SetPhysicsIgnores();
 
-       // InitializeDictionaries();
+        // InitializeDictionaries();
 
         ItemCollection.Active = ScriptableObject.CreateInstance<ItemCollection>();
         ItemCollection.Active.SpriteCollections = new() { itemSpriteCollection };
@@ -141,7 +140,11 @@ public class GameController : MonoBehaviour {
             if (player == null) { Debug.LogError("Wrong Button Idiot"); return; }
             enemySpawnManager.StartSpawning(player);
         }
-        
+        if (Input.GetKeyDown(KeyCode.F3)) {
+            player.spellBar.EquipAura(0, AbilityCollectionSingleton.Instance.GetAbilityByID(900) as Aura);
+            player.spellBar.EquipAura(1, AbilityCollectionSingleton.Instance.GetAbilityByID(901) as Aura);
+        }
+
     }
 
     public static Vector3 CameraToWorldPointMousePos() {
@@ -157,22 +160,23 @@ public class GameController : MonoBehaviour {
     }
 
     void SetPhysicsIgnores() {
-        Physics2D.IgnoreLayerCollision(PROJECTILE_LAYER, PROJECTILE_LAYER);
-        Physics2D.IgnoreLayerCollision(ENEMY_PROJECTILE_LAYER, ENEMY_PROJECTILE_LAYER);
-        Physics2D.IgnoreLayerCollision(PROJECTILE_LAYER, ENEMY_PROJECTILE_LAYER);
-        Physics2D.IgnoreLayerCollision(ENEMY_LAYER, ENEMY_LAYER);
-        Physics2D.IgnoreLayerCollision(ENEMY_LAYER, ENEMY_PROJECTILE_LAYER);
-        Physics2D.IgnoreLayerCollision(ENEMY_LAYER, PLAYER_LAYER);
-        Physics2D.IgnoreLayerCollision(PROJECTILE_LAYER, ENEMY_COLLISION_LAYER);
-        Physics2D.IgnoreLayerCollision(ENEMY_LAYER, ENEMY_COLLISION_LAYER);
-        Physics2D.IgnoreLayerCollision(PLAYER_LAYER, ENEMY_COLLISION_LAYER);
-        Physics2D.IgnoreLayerCollision(ENEMY_PROJECTILE_LAYER, ENEMY_COLLISION_LAYER);
+       // Physics2D.IgnoreLayerCollision(PROJECTILE_LAYER, PROJECTILE_LAYER);
+       // Physics2D.IgnoreLayerCollision(ENEMY_PROJECTILE_LAYER, ENEMY_PROJECTILE_LAYER);
+       // Physics2D.IgnoreLayerCollision(PROJECTILE_LAYER, ENEMY_PROJECTILE_LAYER);
+     //   Physics2D.IgnoreLayerCollision(ENEMY_LAYER, ENEMY_LAYER);
+     //   Physics2D.IgnoreLayerCollision(ENEMY_LAYER, ENEMY_PROJECTILE_LAYER);
+      //  Physics2D.IgnoreLayerCollision(ENEMY_LAYER, PLAYER_LAYER);
+      //  Physics2D.IgnoreLayerCollision(PROJECTILE_LAYER, ENEMY_COLLISION_LAYER);
+     //   Physics2D.IgnoreLayerCollision(ENEMY_LAYER, ENEMY_COLLISION_LAYER);
+      //  Physics2D.IgnoreLayerCollision(PLAYER_LAYER, ENEMY_COLLISION_LAYER);
+      //  Physics2D.IgnoreLayerCollision(ENEMY_PROJECTILE_LAYER, ENEMY_COLLISION_LAYER);
 
-        Physics2D.IgnoreLayerCollision(IGNORE_COLLISION_LAYER, PROJECTILE_LAYER);
-        Physics2D.IgnoreLayerCollision(IGNORE_COLLISION_LAYER, ENEMY_PROJECTILE_LAYER);
-        Physics2D.IgnoreLayerCollision(IGNORE_COLLISION_LAYER, ENEMY_LAYER);
-        Physics2D.IgnoreLayerCollision(IGNORE_COLLISION_LAYER, PLAYER_LAYER);
-        Physics2D.IgnoreLayerCollision(IGNORE_COLLISION_LAYER, ENEMY_COLLISION_LAYER);
+        //Physics2D.IgnoreLayerCollision(IGNORE_COLLISION_LAYER, PROJECTILE_LAYER);
+        //Physics2D.IgnoreLayerCollision(IGNORE_COLLISION_LAYER, ENEMY_PROJECTILE_LAYER);
+        //Physics2D.IgnoreLayerCollision(IGNORE_COLLISION_LAYER, ENEMY_LAYER);
+        //Physics2D.IgnoreLayerCollision(IGNORE_COLLISION_LAYER, PLAYER_LAYER);
+        //Physics2D.IgnoreLayerCollision(IGNORE_COLLISION_LAYER, ENEMY_COLLISION_LAYER);
+
 
     }
     void InitSettings() {

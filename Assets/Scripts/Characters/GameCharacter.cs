@@ -15,7 +15,7 @@ public abstract class GameCharacter : MonoBehaviour {
     #endregion
     public const int IGNORE_COLLISION_LAYER = 13;
     public int DAMAGE_MIN = 8, DAMAGE_MAX = 18;
-    [SerializeField] protected float movementSpeed;
+    [SerializeField] protected float baseMovementSpeed;
     public ResourceManager resourceManager;
     protected AnimationManager animationManager;
     //[SerializeField] protected GameObject attachedBuffPrefab;
@@ -59,11 +59,11 @@ public abstract class GameCharacter : MonoBehaviour {
         //character4DScript = GetComponent<Character4D>();
         character4DScript.SetDirection(Vector2.right);
         animationManager = character4DScript.AnimationManager;
-        
+        rb = GetComponent<Rigidbody2D>();
         // resourceManager = GetComponent<ResourceManager>();
         spellHitUniqueIDs = new();
         //fields = GetType().GetFields();
-        //rb = GetComponent<Rigidbody2D>();
+        
         //var filteredFields = fields.Where(f => fieldNameFilter.Contains(f.Name)).ToArray();
 
         //fields = filteredFields;
@@ -352,5 +352,8 @@ public abstract class GameCharacter : MonoBehaviour {
         //replace damage constants with weapon damage
         var baseDamage = ability.CalculateDamage(DAMAGE_MIN, DAMAGE_MAX);
         return baseDamage;// * damageMulti;
+    }
+    public float GetMovementSpeed() {
+        return baseMovementSpeed * StatManager.GetMovementSpeed() * StatManager.GetActionSpeed();
     }
 }

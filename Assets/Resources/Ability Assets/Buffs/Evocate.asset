@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 722b727b31e3bc640b74c0701c1ecb59, type: 3}
   m_Name: Evocate
   m_EditorClassIdentifier: 
-  iconPath: 
   _name: Evocate
   id: 1000
-  description: A Percentage Increase to Mana Regeneration
+  description: A 50% Increase to Mana Regeneration
   iconImage: {fileID: 21300000, guid: 3dc08e8d3847859409eb088a81c752f0, type: 3}
+  effectedStats:
+    keys: 06000000
+    values:
+    - 0.5
   duration: -1
-  effect: manaRegenIncrease_multi
-  amount: 2
   etype: 0

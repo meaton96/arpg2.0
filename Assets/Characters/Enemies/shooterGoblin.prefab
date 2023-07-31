@@ -7326,7 +7326,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1e19ca8d77f5845af1aa78a11e4831, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attachedBuffPrefab: {fileID: 7986172374756387701, guid: 15802d014d874f24a8c457cf1ffcd43c, type: 3}
   statManager: {fileID: 2651936939180960591}
 --- !u!114 &2651936939180960591
 MonoBehaviour:

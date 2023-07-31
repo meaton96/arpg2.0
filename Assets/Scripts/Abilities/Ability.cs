@@ -33,10 +33,10 @@ public abstract class Ability : ScriptableObject {
     public int healthCost;
     public float cooldown;
     public GameObject abilityPreFab;
-   // public int onHitDebuffID = -1;
+    public int onHitDebuffID = -1;
     public float onHitEffectAmount = 0;
     public float onHitDuration = 0;
-    public Buff onHitDebuff;
+    [HideInInspector] public Buff onHitDebuff;
 
     /// <summary>
     /// attempts to cast the ability
@@ -56,7 +56,13 @@ public abstract class Ability : ScriptableObject {
     public virtual void Cast(Vector3 instantiatePosition, Collider2D casterCollider) {
         Instantiate(abilityPreFab, instantiatePosition, Quaternion.identity);
     }
-    // public abstract void Init();
+    public virtual void Init() { 
+        if (onHitDebuffID != -1) {
+            onHitDebuff = AbilityCollectionSingleton.Instance.GetBuffCopyByID(onHitDebuffID);
+            onHitDebuff.SetDuration(onHitDuration);
+            //onhitDebuff.SetEffectAMount(amount);
+        }
+    }
     public override string ToString() {
 
         string s = "[ ";

@@ -86,7 +86,7 @@ public class Player : GameCharacter {
     protected override void Start() {
         base.Start();
 
-        movementSpeed = 3f;
+        baseMovementSpeed = 3f;
 
         InitControls();
         
@@ -94,7 +94,6 @@ public class Player : GameCharacter {
         Camera.main.transform.SetParent(transform, false);
         
         playerCollider = GetComponent<Collider2D>();
-        rb = GetComponent<Rigidbody2D>();
         resourceManager.Init(_MAX_HEALTH_, _MAX_MANA_);
         //placeholder
         //animationManager.SetWeaponType(WeaponType.Melee2H);
@@ -107,7 +106,8 @@ public class Player : GameCharacter {
         spellBar.EquipAbility(2, 100); //flamestrike
         spellBar.EquipAbility(3, 200); //haste
 
-            
+        
+
 
 
     }
@@ -123,9 +123,10 @@ public class Player : GameCharacter {
             }
             else {
                 base.Update();
+                HandleAnimationLockedInput();
                 if (!animationManager.IsAction) //animation lock
                  {
-                    HandleAnimationLockedInput();
+                    
                     HandleInput();
                     //if (state != State.dodging) {
                     //    HandleMovement();
@@ -220,6 +221,7 @@ public class Player : GameCharacter {
     }
     //handle all input from the player
     void HandleInput() {
+        if (state == State.dodging) return;
         //force player movement not curently working
         if (Input.GetMouseButton(FORCE_MOVEMENT_BUTTON)) {
             moveToPosition = GameController.CameraToWorldPointMousePos();
@@ -314,9 +316,9 @@ public class Player : GameCharacter {
         moveToPosition = transform.position;
     }
 
-    public float GetMovementSpeed() {
-        return movementSpeed * movementSpeedMultiplier * StatManager.GetActionSpeed();
-    }
+    //public float GetMovementSpeed() {
+    //    return baseMovementSpeed * movementSpeedMultiplier * StatManager.GetActionSpeed();
+    //}
     public float GetCooldownReduction() {
         return cooldownReduction;
     }

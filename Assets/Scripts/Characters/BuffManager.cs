@@ -8,10 +8,17 @@ using UnityEngine;
 //make another game object on the support that uses a trigger to apply and remove buff
 //start by just moving the code around and making the basic haste on use buff work
 public class BuffManager : MonoBehaviour {
+    public const int AURA_COLLISION_LAYER = 14;
     //public Dictionary<GameCharacter.CharacterStat, float> CharacterStats = new Dictionary<GameCharacter.CharacterStat, float>();
   //  [SerializeField] protected GameObject attachedBuffPrefab;
     private List<Buff> currentBuffs = new();
     [SerializeField] private StatManager statManager;
+
+    //#region UI
+    //Vector3 buffBarStart = new(-900, 480, 0);
+    //Vector3 debuffBarStart = new(-900, 372, 0);
+
+    //#endregion
 
     private void Start() {
         // Initialize the character's stats
@@ -43,6 +50,7 @@ public class BuffManager : MonoBehaviour {
         }
     }
     public void HandleOnHitSpellEffect(DamagingAbility ability) {
+        Debug.Log($"applying on hit effect {ability.onHitDebuff._name} from {ability} to {name}");
         if (ability.onHitDebuff != null) {
             ApplyBuff(ability.onHitDebuff);
             //ApplyBuff(ability.onHitDebuff);
@@ -53,6 +61,19 @@ public class BuffManager : MonoBehaviour {
         currentBuffs.Remove(buff);
         buff.RemoveBuff(statManager);
      //   RemoveBuffEffects(buff);
+    }
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (TryGetComponent(out RangedAuraDetector friendlyAura)) {
+            if (friendlyAura.Buff != null)
+                ApplyBuff(friendlyAura.Buff);
+        }
+        
+    }
+    private void OnTriggerExit2D(Collider2D collision) {
+        if (TryGetComponent(out RangedAuraDetector friendlyAura)) {
+            if (friendlyAura.Buff != null)
+                RemoveBuff(friendlyAura.Buff);
+        }
     }
 
     //private void ApplyBuffEffects(Buff buff) {

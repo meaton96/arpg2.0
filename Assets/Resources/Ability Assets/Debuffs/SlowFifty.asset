@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 722b727b31e3bc640b74c0701c1ecb59, type: 3}
   m_Name: SlowFifty
   m_EditorClassIdentifier: 
-  iconPath: 
   _name: 50% Slow
   id: 1503
   description: 50% reduced movement speed
   iconImage: {fileID: 21300000, guid: 6be46ef1329c5624d9f5f7bf2ab90b5e, type: 3}
+  effectedStats:
+    keys: 01000000
+    values:
+    - -0.5
   duration: 5
-  effect: movementSpeed
-  amount: -0.5
   etype: 1
-  uniqueId: 

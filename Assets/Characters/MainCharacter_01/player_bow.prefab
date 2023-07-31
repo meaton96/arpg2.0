@@ -519,7 +519,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb88f61b7cdc1054495981165e51b4c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attachedBuffPrefab: {fileID: 0}
   statManager: {fileID: 6994132268343717106}
   HUD: {fileID: 0}
 --- !u!1 &1075059424682908

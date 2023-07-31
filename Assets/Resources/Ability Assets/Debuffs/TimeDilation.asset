@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 722b727b31e3bc640b74c0701c1ecb59, type: 3}
   m_Name: TimeDilation
   m_EditorClassIdentifier: 
-  iconPath: 
   _name: Time Dilation
   id: 1501
   description: Reduces Action Speed by 10%
   iconImage: {fileID: 21300000, guid: def1674d60c6b0a4189ba04ce6438e78, type: 3}
+  effectedStats:
+    keys: 00000000
+    values:
+    - -0.1
   duration: 8
-  effect: actionSpeed
-  amount: -0.1
   etype: 1

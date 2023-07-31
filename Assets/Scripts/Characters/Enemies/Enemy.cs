@@ -116,8 +116,10 @@ public abstract class Enemy : GameCharacter {
                     animationManager.SetState(CharacterState.Walk);
                 }
                 movementDirection = rb.velocity.normalized;
-                // if (rb.velocity.magnitude > MAXIMUM_SPEED)
-                //     rb.velocity = movementDirection * MAXIMUM_SPEED;
+                if (rb.velocity.magnitude > GetMovementSpeed()) {
+                    rb.velocity = movementDirection * GetMovementSpeed();
+
+                }
             }
             
 
@@ -177,7 +179,7 @@ public abstract class Enemy : GameCharacter {
     }
 
     private Vector2 Seek(Vector2 targetPosition) {
-        Vector2 desiredVelocity = (targetPosition - (Vector2)transform.position).normalized * movementSpeed;
+        Vector2 desiredVelocity = (targetPosition - (Vector2)transform.position).normalized * baseMovementSpeed;
         return desiredVelocity - rb.velocity;
     }
     protected Vector2 Seperate() {

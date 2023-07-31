@@ -11,7 +11,8 @@ public class SupportEnemy : RangedEnemy {
     [SerializeField] protected GameObject auraVisualPrefab;
     [SerializeField] protected GameObject auraAttachPrefab;
     [SerializeField] Buff auraBuffToApply;
-    
+    //[SerializeField] private int buffId;
+    [SerializeField] protected RangedAuraDetector AuraCollider;
     // HashSet<Enemy> nearbyEnemies;
 
 
@@ -21,12 +22,15 @@ public class SupportEnemy : RangedEnemy {
         //availableAbilities.Add(GameController.Instance.allSpells[spellID]);
         //auraBuffToApply = (AbilityCollectionSingleton.Instance.GetAbilityByID(spellID) as Aura).buff;
         Instantiate(auraVisualPrefab, transform);
+        AuraCollider.Buff = AbilityCollectionSingleton.Instance.GetBuffCopy(auraBuffToApply);
+        AuraCollider.GetComponent<CircleCollider2D>().radius = Mathf.Sqrt(auraRangeSquared);
     }
 
     protected override void AttackPlayer() {
 
     }
     protected override void Update() {
+        
         if (!resourceManager.IsAlive()) {
             animationManager.Die();
         }

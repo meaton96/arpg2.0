@@ -15,6 +15,7 @@ public class PlayerBuffManager : BuffManager
         HUD.DisplayNewBuff(buff);
         
     }
+
     public override void RemoveBuff(Buff buff) {
         //HUD.ForceRemoveBuff(buff);
         base.RemoveBuff(buff);

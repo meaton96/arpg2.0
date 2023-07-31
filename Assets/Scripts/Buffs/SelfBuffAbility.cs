@@ -4,11 +4,11 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewSelfBuff", menuName = "Custom Assets/Self Buff")]
 public class SelfBuffAbility : Ability {
-    public Buff buff;           //buff to apply
+    [HideInInspector] public Buff buff;           //buff to apply
     public float duration;      //how long to apply the buff for
     public int effectID;   //effect name that corresponds to the line in player JSON
     public float effectAmount;  //how much of the effect to apply
-
+  //  [SerializeField] private int buffId;
 
     public override string ToString() {
         return base.ToString() +
@@ -18,6 +18,7 @@ public class SelfBuffAbility : Ability {
     //casts the ability by applying the buff to the player
     public override List<GameObject> Cast(Vector3 instantiatePosition, Vector3 mousePos, Vector3 offset, Collider2D casterCollider) {
         var player = casterCollider.GetComponent<GameCharacter>();
+        buff.SetDuration(duration);
         player.BuffManager.ApplyBuff(buff);
         return null;
     }
@@ -31,6 +32,11 @@ public class SelfBuffAbility : Ability {
     //    buff.SetDurationAndEffect(duration, effectAmount);
 
     //}
+
+    public override void Init() {
+        buff = AbilityCollectionSingleton.Instance.GetBuffCopyByID(effectID);
+        
+    }
 
     public override Ability CopyInstance() {
         Ability ability = CreateInstance<SelfBuffAbility>();

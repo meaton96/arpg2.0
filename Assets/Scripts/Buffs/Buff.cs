@@ -55,17 +55,16 @@ public class Buff : ScriptableObject
     //}
     
     public Buff CopyInstance() {
-        //Buff buff = CreateInstance<Buff>();
-        
-        //// Get all fields of the Ability class using reflection
-        //FieldInfo[] fields = typeof(Buff).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+        Buff buff = CreateInstance<Buff>();
 
-        //foreach (var field in fields)
-        //{
-        //    // Copy the value from the current instance to the target instance
-        //    var value = field.GetValue(this);
-        //    field.SetValue(buff, value);
-        //}
+        // Get all fields of the Ability class using reflection
+        FieldInfo[] fields = typeof(Buff).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+
+        foreach (var field in fields) {
+            // Copy the value from the current instance to the target instance
+            var value = field.GetValue(this);
+            field.SetValue(buff, value);
+        }
 
         //buff.id = id;
         //buff.description = description;
@@ -75,18 +74,19 @@ public class Buff : ScriptableObject
         //buff.effect = effect;
         //buff.iconPath = iconPath;
         //buff.amount = amount;
-        return null;
+        return buff;
     }
+    public void Init() { }
     public void SetDuration(float duration) {
         this.duration = duration;
     }
-    public void SetEffectAmount(StatManager.CharacterStat stat, float effectAmount) {
-        effectedStats[stat] = effectAmount;
-    }
-    public void SetDurationAndEffect(StatManager.CharacterStat stat, float duration, float effectAmount) {
-        SetDuration(duration);
-        SetEffectAmount(stat, effectAmount);
-    }
+    //public void SetEffectAmount(StatManager.CharacterStat stat, float effectAmount) {
+    //    effectedStats[stat] = effectAmount;
+    //}
+    //public void SetDurationAndEffect(StatManager.CharacterStat stat, float duration, float effectAmount) {
+    //    SetDuration(duration);
+    //    SetEffectAmount(stat, effectAmount);
+    //}
     public void ApplyBuff(StatManager statManager) {
         int x = 0;
         effectedStats.keys.ForEach(key => {

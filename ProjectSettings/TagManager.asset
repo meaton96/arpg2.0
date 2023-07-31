@@ -22,7 +22,7 @@ TagManager:
   - BackgroundObjects
   - EnemyProjectiles
   - IgnoreProjectileCollision
-  - 
+  - AuraColliders
   - 
   - 
   - 

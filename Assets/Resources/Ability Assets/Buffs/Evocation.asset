@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 722b727b31e3bc640b74c0701c1ecb59, type: 3}
   m_Name: Evocation
   m_EditorClassIdentifier: 
-  iconPath: 
   _name: Evocation
   id: 1002
   description: A Flat Mana Regeneration Increase
   iconImage: {fileID: 21300000, guid: 3dc08e8d3847859409eb088a81c752f0, type: 3}
+  effectedStats:
+    keys: 05000000
+    values:
+    - 5
   duration: -1
-  effect: manaRegenIncrease_flat
-  amount: 5
   etype: 0

@@ -7,9 +7,9 @@ public class EnemySpawnManager : MonoBehaviour
 {
     #region Enemy Spawning  
     //spawning vars for testing
-    public const bool SPAWN_ONLY_ONE_ENEMY_TYPE = false;
+    public const bool SPAWN_ONLY_ONE_ENEMY_TYPE = true;
     public const bool ENABLE_ENEMY_LOGIC = true;
-    public const int ENEMY_INDEX = 4;
+    public const int ENEMY_INDEX = 2;
     private readonly List<float> _ENEMY_SPAWN_WEIGHTS = new() {
         5, //basic goblin   - 0
         5, //shooter golin  - 1
@@ -22,7 +22,7 @@ public class EnemySpawnManager : MonoBehaviour
     //end test vars
     public float enemySpawnTimer, enemySpawnTime = 0.5f;
     float minRad = 3, maxRad = 10;
-    private int maxEnemies = 20;
+    private int maxEnemies = 1;
     public bool spawnEnemies = false;
     #endregion
 

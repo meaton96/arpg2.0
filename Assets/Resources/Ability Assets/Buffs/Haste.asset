@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 722b727b31e3bc640b74c0701c1ecb59, type: 3}
   m_Name: Haste
   m_EditorClassIdentifier: 
-  iconPath: 
   _name: Haste
   id: 1500
   description: Increases Action Speed by 30%
   iconImage: {fileID: 21300000, guid: 99a7ecc6a55ed3244ad26c4b057dc7fc, type: 3}
-  duration: 10
-  effect: actionSpeed
-  amount: 0.3
+  effectedStats:
+    keys: 00000000
+    values:
+    - 3
+  duration: -0.0006494379
   etype: 0
