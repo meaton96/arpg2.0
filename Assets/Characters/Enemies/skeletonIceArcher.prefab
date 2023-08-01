@@ -12381,6 +12381,7 @@ MonoBehaviour:
   DAMAGE_MAX: 18
   baseMovementSpeed: 1.5
   resourceManager: {fileID: 6257835568159428490}
+  footCollision: {fileID: 4480371663251208920}
   character4DScript: {fileID: 5538259871943808147}
   StatManager: {fileID: 7764506098204455523}
   BuffManager: {fileID: 4031545840942056989}
@@ -18945,6 +18946,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a55faed566824b438abd73afcd722be, type: 3}
+--- !u!1 &4480371663251208920 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3299756593128199792, guid: 4a55faed566824b438abd73afcd722be, type: 3}
+  m_PrefabInstance: {fileID: 1433953830503492776}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5417961340560506186 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6401332831482597858, guid: 4a55faed566824b438abd73afcd722be, type: 3}

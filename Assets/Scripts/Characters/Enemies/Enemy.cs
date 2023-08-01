@@ -143,7 +143,7 @@ public abstract class Enemy : GameCharacter {
         return separationForce + alignmentForce + cohesionForce;
     }
 
-    private Vector2 Seek(Vector2 targetPosition) {
+    protected Vector2 Seek(Vector2 targetPosition) {
         Vector2 desiredVelocity = (targetPosition - (Vector2)transform.position).normalized * baseMovementSpeed;
         return desiredVelocity - rb.velocity;
     }

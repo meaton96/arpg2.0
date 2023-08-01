@@ -19,7 +19,7 @@ public abstract class GameCharacter : MonoBehaviour {
     public ResourceManager resourceManager;
     protected AnimationManager animationManager;
     protected Rigidbody2D rb;
-
+    [SerializeField] GameObject footCollision;
     #region Vars - Buff/Debuff tracking
     //track current debuffs and buffs and timers
     #endregion
@@ -180,6 +180,7 @@ public abstract class GameCharacter : MonoBehaviour {
     }
     protected virtual void ProcessDeath() {
         gameObject.layer = IGNORE_COLLISION_LAYER;
+        footCollision.layer = IGNORE_COLLISION_LAYER;
         StopMove();
         animationManager.Die();
 

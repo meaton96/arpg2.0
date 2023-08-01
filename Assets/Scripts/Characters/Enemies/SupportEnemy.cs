@@ -11,7 +11,8 @@ public class SupportEnemy : RangedEnemy {
     [SerializeField] protected GameObject auraVisualPrefab;     //The visual for the aura while it is on
     [SerializeField] Buff auraBuffToApply;                      //the buff that the aura applies
     [SerializeField] protected RangedAuraDetector AuraCollider; //aura collider
-
+    GameObject auraVisual;
+    Vector2 seekTarget;
     /// <summary>
     /// Initalize fields and visuals
     /// </summary>
@@ -23,9 +24,11 @@ public class SupportEnemy : RangedEnemy {
     public override void Init(Player player, List<Enemy> allEnemies,
         float health, float mana = 0, bool isActive = true) {
         base.Init(player, allEnemies, health, mana, isActive);
-        Instantiate(auraVisualPrefab, transform);   //create the aura visual and attach it
+        auraVisual = Instantiate(auraVisualPrefab, transform);   //create the aura visual and attach it
         //set the aura buff
-        AuraCollider.Buff = AbilityCollectionSingleton.Instance.GetBuffCopy(auraBuffToApply);
+        var buffCopy = AbilityCollectionSingleton.Instance.GetBuffCopy(auraBuffToApply);
+        AuraCollider.Buff = buffCopy;
+        auraBuffToApply = buffCopy;
         //set the aura collider radius
         AuraCollider.GetComponent<CircleCollider2D>().radius = Mathf.Sqrt(auraRangeSquared) / transform.localScale.x;
     }
@@ -33,45 +36,63 @@ public class SupportEnemy : RangedEnemy {
     //do nothing instead of attacking
     protected override void AttackPlayer() { }
 
-    protected void FixedUpdate() {
-        //die if not alive!!
+    protected override void Update() {
         if (!resourceManager.IsAlive()) {
             animationManager.Die();
         }
-        else {
-            if (isActive) {
-                //poll nearby enemies by getting all units within the aura range
-                if (pollTimer > pollNearbyEnemiesCooldown) {
-                    var nearbyEnemies = GetNearbyEnemies();
-                    //set target to null if there are nearby enemies
-                    //this is used to stop the Seek behaviour
-                    if (nearbyEnemies.Count > 0) {
-                        target = null;
+        if (isActive) {
+            base.Update();
+            //poll nearby enemies by getting all units within the aura range
+            if (pollTimer > pollNearbyEnemiesCooldown) {
+                var nearbyEnemies = GetNearbyEnemies();
+                //set target to null if there are nearby enemies
+                //this is used to stop the Seek behaviour
+                if (nearbyEnemies.Count > 0) {
+                    Vector2 pos = new();
+                    foreach (var nearby in nearbyEnemies) {
+                        pos += (Vector2)nearby.transform.position;
                     }
-                    //if there are no nearby enemies then set target transform so the support will move toward the player
-                    else {
-                        target = player.transform;
-                    }
-                    pollTimer = 0;
+                    pos /= nearbyEnemies.Count;
+                    seekTarget = pos;
                 }
+                //if there are no nearby enemies then set target transform so the support will move toward the player
                 else {
-                    pollTimer += Time.fixedDeltaTime;
+                    seekTarget = player.transform.position;
                 }
-                //apply seek if there is a target (player)
-                if (target != null) {
-                    ApplySeek();
-                }
-                //always apply flock
-                ApplyFlock();
-
-                if (rb.velocity.sqrMagnitude > 0) {
-                    animationManager.SetState(CharacterState.Walk);
-                }
-                movementDirection = rb.velocity.normalized;
-                UpdateFunctionWrapper();
+                pollTimer = 0;
+            }
+            else {
+                pollTimer += Time.deltaTime;
             }
         }
     }
+
+    protected void FixedUpdate() {
+        //die if not alive!!
+        if (isActive && isAlive) {
+            if (seekTarget == null) {
+                seekTarget = player.transform.position;
+            }
+            Seek(seekTarget);
+            if (rb.velocity.sqrMagnitude > 0) {
+                animationManager.SetState(CharacterState.Walk);
+            }
+            movementDirection = rb.velocity.normalized;
+            //UpdateFunctionWrapper();
+        }
+
+    }
+    protected override void ProcessDeath() {
+        auraVisual.SetActive(false);
+        var nearbyEnemies = GetNearbyEnemies();
+        nearbyEnemies.ForEach(enemy => {
+            enemy.BuffManager.RemoveBuff(auraBuffToApply);
+        });
+        base.ProcessDeath();
+
+    }
+
+
     List<Enemy> GetNearbyEnemies() {
         if (allAgents.Count == 0) { return new List<Enemy>(); }
         List<Enemy> result = new();
