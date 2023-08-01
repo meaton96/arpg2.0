@@ -60,10 +60,21 @@ public abstract class GameCharacter : MonoBehaviour {
         StopMove();
         PlayAttackAnimation();
     }
+    public void PlayCastAnimation(float speedScalar) {
+        StopMove();
+        PlayAttackAnimation(speedScalar);
+    }
     protected virtual void PlayAttackAnimation() {
         animationManager.Animator.SetFloat("Speed", StatManager.GetActionSpeed());
         animationManager.Attack();
 
+    }
+    protected virtual void PlayAttackAnimation(float speedScalar) {
+        var curSpeed = StatManager.GetActionSpeed();    
+        animationManager.Animator.SetFloat("Speed", curSpeed * speedScalar);
+        animationManager.Attack();
+       // Debug.Log(animationManager.Animator.GetFloat("Speed"));
+        animationManager.Animator.SetFloat("Speed", curSpeed);
     }
 
     protected virtual void UpdateAnimation() {

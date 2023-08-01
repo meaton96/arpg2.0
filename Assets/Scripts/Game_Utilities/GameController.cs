@@ -45,10 +45,7 @@ public class GameController : MonoBehaviour {
     public static GameController Instance;
     [SerializeField] private GameObject playerPrefab;
 
-    //[SerializeField] private GameObject playerPrefabBow;
     public Player player;
-    //private Dictionary<int, Ability> allSpells = new();
-    //private Dictionary<int, Buff> allBuffsDebuffs = new();
 
     public SpriteCollection itemSpriteCollection;
     public IconCollection iconCollection;
@@ -151,11 +148,6 @@ public class GameController : MonoBehaviour {
     public static Vector3 CameraToWorldPointMousePos() {
         return Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, -CAMERA_Z));
     }
-
-    //private void InitializeDictionaries() {
-    //    allBuffsDebuffs = JsonHelper.ParseAllBuffsAndDebuffs(JSON_PATH_BUFFS);
-    //    allSpells = JsonHelper.ParseAllAbilities(JSON_PATH_ABILITIES);
-    //}
     public List<Enemy> GetAllEnemies() {
         return enemySpawnManager.enemyList;
     }
@@ -183,26 +175,6 @@ public class GameController : MonoBehaviour {
     void InitSettings() {
         PlayerSettingsHelper.InitObjectSettings(this, "Game");
     }
-
-    //public Ability GetAbilityByID(int id) {
-    //    Ability ability = null;
-    //    try {
-    //        ability = allSpells[id].CopyInstance();
-    //    } catch (KeyNotFoundException e) {
-    //        Debug.Log(e);
-    //    }
-    //    return ability;
-    //}
-    //public Buff GetBuffByID(int id) {
-    //    Buff buff = null;
-    //    try {
-    //        buff = allBuffsDebuffs[id].CopyInstance();
-    //    }
-    //    catch (KeyNotFoundException e) {
-    //        Debug.Log(e);
-    //    }
-    //    return buff;
-    //}
 
 
 

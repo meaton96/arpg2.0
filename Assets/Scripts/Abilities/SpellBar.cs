@@ -50,9 +50,12 @@ public class SpellBar : MonoBehaviour {
     //cast the ability in the current slot
     public void Cast(int slot) {
         //if the cast was successful play the cast animation
+        //dont play cast animation for movement skills
         if (spellWrappers[slot].Cast(player)) {
-
-            player.PlayCastAnimation();
+            if (!spellWrappers[slot].ability.tags.Contains("Movement")) {
+                Debug.Log("casting animation");
+                player.PlayCastAnimation();
+            }
         }
     }
     //update the icons on the ability and aura bars

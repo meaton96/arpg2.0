@@ -17,13 +17,13 @@ public class Player : GameCharacter {
 
     #region Vars - movement
     private const float MOVEMENT_TOLERANCE = 0.01f;
-    
+
     //movement speed multiplier for buffing
     [HideInInspector] public float movementSpeedMultiplier = 1;
     //position for the player to move to when user clicks
     private Vector3 moveToPosition;
     private const float CLICK_RADIUS = .25f;
-    
+
     #endregion
     #region Vars - controls
     //control settings - placeholder before moving to a more robust settings far in the future
@@ -61,8 +61,8 @@ public class Player : GameCharacter {
     #region Vars - combat stats
     //tracked as a float from 0 - 1 as a % cooldown reduction, .2 = 20% reduced cooldown
     [HideInInspector] public float cooldownReduction = 0;
-    
-    
+
+
     #endregion
     #region Vars - character states
     //control player logic states
@@ -80,7 +80,7 @@ public class Player : GameCharacter {
     [SerializeField] private float dodgeSpeed;
     #endregion
 
-    
+
     #region Start + Update
     // Start is called before the first frame update
     protected override void Start() {
@@ -89,10 +89,10 @@ public class Player : GameCharacter {
         baseMovementSpeed = 3f;
 
         InitControls();
-        
-        
+
+
         Camera.main.transform.SetParent(transform, false);
-        
+
         playerCollider = GetComponent<Collider2D>();
         resourceManager.Init(_MAX_HEALTH_, _MAX_MANA_);
         //placeholder
@@ -106,7 +106,7 @@ public class Player : GameCharacter {
         spellBar.EquipAbility(2, 100); //flamestrike
         spellBar.EquipAbility(3, 200); //haste
 
-        
+
 
 
 
@@ -126,7 +126,7 @@ public class Player : GameCharacter {
                 HandleAnimationLockedInput();
                 if (!animationManager.IsAction) //animation lock
                  {
-                    
+
                     HandleInput();
                     //if (state != State.dodging) {
                     //    HandleMovement();
@@ -184,8 +184,8 @@ public class Player : GameCharacter {
         }
         base.UpdateAnimation();
     }
-    
-    
+
+
 
     public void FaceDirection(Vector3 direction) {
         movementDirection = (direction - transform.position).normalized;
@@ -196,7 +196,7 @@ public class Player : GameCharacter {
     private void InitControls() {
         PlayerSettingsHelper.InitObjectSettings(this, "Player");
     }
-    
+
 
     //handle player walking to a location specified by mouse click
     void HandleMovement() {
@@ -210,7 +210,7 @@ public class Player : GameCharacter {
             //    transform.position,
             //    moveToPosition,
             //    GetMovementSpeed() * Time.deltaTime);
-            
+
             rb.MovePosition(Vector3.MoveTowards(
                 transform.position,
                 moveToPosition,
@@ -275,12 +275,13 @@ public class Player : GameCharacter {
                 spellBar.Cast(5);
             }
         }
-        
+
 
     }
     private bool ClickedOnEnemy() {
         var hit = Physics2D.CircleCast(GameController.CameraToWorldPointMousePos(), CLICK_RADIUS, Vector3.zero);
-        return hit;
+        return hit && hit.collider.gameObject.layer == GameController.ENEMY_LAYER;
+
     }
     //handle any input that is available to the player during animation lock
     //menu stuff/pause/play/dodge
@@ -292,14 +293,14 @@ public class Player : GameCharacter {
 
     #endregion
     #region Add/Removing Buffs/Auras
-    
+
     //public override void ApplyBuff(Buff buff) {
     //    //Debug.Log("Applying Buff: " +  buff.ToString());
     //    HUD.DisplayNewBuff(buff);
     //    base.ApplyBuff(buff);   
     //}
     //public override bool RemoveBuff(Buff buff) {
-        
+
     //    HUD.ForceRemoveBuff(buff);
     //    return base.RemoveBuff(buff);
     //}
@@ -326,13 +327,13 @@ public class Player : GameCharacter {
     public float GetCooldownReduction() {
         return cooldownReduction;
     }
-    
+
     //returns true if the distance squared to the given position is less than the movement tolerance constant
     //used to end player movement and avoid floating point errors
     bool ReachedDestination() {
         return GetDistanceSquared2D(transform.position, moveToPosition) < MOVEMENT_TOLERANCE;
     }
-    
+
     public void EquipItem(Item item) {
         character4DScript.Equip(item);
     }

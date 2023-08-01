@@ -19,7 +19,8 @@ public class SpawnedSpellAnimation : MonoBehaviour {
             //attempts to add the character hit to the hit set
             //if this fails then it means the character was already hit
             if (charHitSet.Add(characterHit)) {
-                characterHit.HandleSpellHit(ability, caster);
+                if (caster.gameObject.layer != collision.gameObject.layer) //make sure to not hit the caster
+                    characterHit.HandleSpellHit(ability, caster);
             }
         }
     }
