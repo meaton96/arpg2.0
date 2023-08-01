@@ -116,7 +116,6 @@ GameObject:
   - component: {fileID: 210585855654267702}
   - component: {fileID: 924145463215564539}
   - component: {fileID: 1605271758612617386}
-  - component: {fileID: -2114618815671765277}
   - component: {fileID: 7139526756982482187}
   - component: {fileID: -7895077377504037430}
   - component: {fileID: -3568111988601068183}
@@ -449,23 +448,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &-2114618815671765277
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1063387080856860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16d0fe2873e33194dafce9b5387c8638, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentHealth: 0
-  maxHealth: 0
-  statManager: {fileID: -7895077377504037430}
-  currentMana: 0
-  maxMana: 0
 --- !u!114 &7139526756982482187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -482,7 +464,6 @@ MonoBehaviour:
   DAMAGE_MIN: 8
   DAMAGE_MAX: 18
   baseMovementSpeed: 1.5
-  resourceManager: {fileID: -2114618815671765277}
   footCollision: {fileID: 2253317015757487397}
   character4DScript: {fileID: 114216053546988558}
   StatManager: {fileID: -7895077377504037430}
@@ -18911,9 +18892,13 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3531716823367114234, guid: c40ebc4df0add2b49b70d066de8ab1af, type: 3}
+      propertyPath: StatManager
+      value: 
+      objectReference: {fileID: -7895077377504037430}
+    - target: {fileID: 3531716823367114234, guid: c40ebc4df0add2b49b70d066de8ab1af, type: 3}
       propertyPath: resourceManager
       value: 
-      objectReference: {fileID: -2114618815671765277}
+      objectReference: {fileID: 0}
     - target: {fileID: 5705631905275016786, guid: c40ebc4df0add2b49b70d066de8ab1af, type: 3}
       propertyPath: m_Layer
       value: 7

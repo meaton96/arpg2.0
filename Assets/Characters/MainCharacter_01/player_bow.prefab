@@ -116,7 +116,6 @@ GameObject:
   - component: {fileID: 210585855654267702}
   - component: {fileID: 924145463215564539}
   - component: {fileID: 514144617778779753}
-  - component: {fileID: 6767171416876917092}
   - component: {fileID: -8437429070256666339}
   - component: {fileID: 6994132268343717106}
   - component: {fileID: 6559992403187391915}
@@ -443,8 +442,7 @@ MonoBehaviour:
   _CHARACTER_HALF_HEIGHT_: {x: 0, y: 0.7, z: 0}
   DAMAGE_MIN: 8
   DAMAGE_MAX: 18
-  baseMovementSpeed: 0
-  resourceManager: {fileID: 6767171416876917092}
+  baseMovementSpeed: 3
   footCollision: {fileID: 2902003776917533869}
   character4DScript: {fileID: 114216053546988558}
   StatManager: {fileID: 6994132268343717106}
@@ -458,23 +456,6 @@ MonoBehaviour:
   cooldownReduction: 0
   DODGE_TIME: 0.3
   dodgeSpeed: 8
---- !u!114 &6767171416876917092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1063387080856860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16d0fe2873e33194dafce9b5387c8638, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentHealth: 0
-  maxHealth: 0
-  statManager: {fileID: 6994132268343717106}
-  currentMana: 0
-  maxMana: 0
 --- !u!50 &-8437429070256666339
 Rigidbody2D:
   serializedVersion: 4
@@ -10647,6 +10628,7 @@ MonoBehaviour:
   charPanel: {fileID: 902199829126193428}
   BuffBar: {fileID: 4688885695510044622}
   DebuffBar: {fileID: 1391470919364440263}
+  StatManager: {fileID: 0}
   uiScale: 1
   showHealthAndManaNumbers: 1
 --- !u!1 &3598590580290809911
@@ -23451,9 +23433,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 514144617778779753}
     - target: {fileID: 3531716823367114234, guid: c40ebc4df0add2b49b70d066de8ab1af, type: 3}
+      propertyPath: StatManager
+      value: 
+      objectReference: {fileID: 6994132268343717106}
+    - target: {fileID: 3531716823367114234, guid: c40ebc4df0add2b49b70d066de8ab1af, type: 3}
       propertyPath: resourceManager
       value: 
-      objectReference: {fileID: 6767171416876917092}
+      objectReference: {fileID: 0}
     - target: {fileID: 5705631905275016786, guid: c40ebc4df0add2b49b70d066de8ab1af, type: 3}
       propertyPath: m_Layer
       value: 5

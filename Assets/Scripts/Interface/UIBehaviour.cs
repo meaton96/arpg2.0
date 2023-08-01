@@ -20,8 +20,8 @@ public class UIBehaviour : MonoBehaviour {
     [SerializeField] private ExpandingIconBar BuffBar;
     [SerializeField] private ExpandingIconBar DebuffBar;
     private bool charPanelDisplayed = false;
-    ResourceManager playerResourceManager;
-
+    // ResourceManager playerResourceManager;
+    public StatManager StatManager;
     [Range(1f, 3f)]
     public float uiScale = 1;
 
@@ -31,22 +31,22 @@ public class UIBehaviour : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
 
-        playerResourceManager = player.resourceManager;
+        StatManager = player.StatManager;
         transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
     }
 
     // Update is called once per frame
     void FixedUpdate() {
         //scale health and mana bars
-        float healthPercent = playerResourceManager.currentHealth / playerResourceManager.maxHealth;
-        float manaPercent = playerResourceManager.currentMana / playerResourceManager.maxMana;
+     //   float healthPercent = ;
+     //   float manaPercent = playerResourceManager.currentMana / playerResourceManager.maxMana;
 
-        healthBar.transform.localScale = new Vector3(1, healthPercent, 1);
-        manaBar.transform.localScale = new Vector3(1, manaPercent, 1);
+        healthBar.transform.localScale = new Vector3(1, StatManager.GetPercentHealth(), 1);
+        manaBar.transform.localScale = new Vector3(1, StatManager.GetPercentMana(), 1);
 
         //update health and mana text
-        healthText.text = playerResourceManager.currentHealth.ToString("0.#") + "/" + playerResourceManager.maxHealth;
-        manaText.text = playerResourceManager.currentMana.ToString("0.#") + "/" + playerResourceManager.maxMana;
+        healthText.text = StatManager.GetCurrentHealth().ToString("0.#") + "/" + StatManager.GetMaxHealth();
+        manaText.text = StatManager.GetCurrentMana().ToString("0.#") + "/" + StatManager.GetMaxMana();
 
     }
     private void Update() {

@@ -6915,7 +6915,6 @@ GameObject:
   - component: {fileID: 2920535972504548184}
   - component: {fileID: 2901246426814356932}
   - component: {fileID: 3169851816954602598}
-  - component: {fileID: 525492266439372803}
   - component: {fileID: 2130617808242774149}
   - component: {fileID: 7942200510207485817}
   - component: {fileID: 7366908352412716892}
@@ -7213,23 +7212,6 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 200
---- !u!114 &525492266439372803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2959554295789042252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16d0fe2873e33194dafce9b5387c8638, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentHealth: 0
-  maxHealth: 0
-  statManager: {fileID: 2651936939180960591}
-  currentMana: 0
-  maxMana: 0
 --- !u!114 &2130617808242774149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7246,7 +7228,6 @@ MonoBehaviour:
   DAMAGE_MIN: 8
   DAMAGE_MAX: 18
   baseMovementSpeed: 1.5
-  resourceManager: {fileID: 525492266439372803}
   footCollision: {fileID: 5276037058669610170}
   character4DScript: {fileID: 2919585124672248670}
   StatManager: {fileID: 2651936939180960591}
@@ -18890,9 +18871,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3531716823367114234, guid: c40ebc4df0add2b49b70d066de8ab1af, type: 3}
+      propertyPath: StatManager
+      value: 
+      objectReference: {fileID: 2651936939180960591}
+    - target: {fileID: 3531716823367114234, guid: c40ebc4df0add2b49b70d066de8ab1af, type: 3}
       propertyPath: resourceManager
       value: 
-      objectReference: {fileID: 525492266439372803}
+      objectReference: {fileID: 0}
     - target: {fileID: 7853228187701177040, guid: c40ebc4df0add2b49b70d066de8ab1af, type: 3}
       propertyPath: m_RootOrder
       value: 5

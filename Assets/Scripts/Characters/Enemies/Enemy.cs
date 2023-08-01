@@ -43,7 +43,7 @@ public abstract class Enemy : GameCharacter {
         allAgents = allEnemies;
 
 
-        resourceManager.Init(health, mana, 0, mana == 0 ? 0 : 5);
+        StatManager.Init(health, mana, 0, mana == 0 ? 0 : 5);
         this.player = player;
         target = player.transform;
         availableAbilities = new();

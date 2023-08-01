@@ -12,7 +12,7 @@ public class TempBuffWrapper_Distance : MonoBehaviour {
 
 
     private void Update() {
-        if (caster == null || !caster.resourceManager.IsAlive()) {
+        if (caster == null || !caster.StatManager.IsAlive()) {
             Debug.Log("removing buff because caster died");
             attachedCharacter.BuffManager.RemoveBuff(buff);
             Destroy(gameObject);

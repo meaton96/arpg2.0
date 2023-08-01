@@ -16,7 +16,7 @@ public abstract class GameCharacter : MonoBehaviour {
     public const int IGNORE_COLLISION_LAYER = 13;
     public int DAMAGE_MIN = 8, DAMAGE_MAX = 18;
     [SerializeField] protected float baseMovementSpeed;
-    public ResourceManager resourceManager;
+   // public ResourceManager resourceManager;
     protected AnimationManager animationManager;
     protected Rigidbody2D rb;
     [SerializeField] GameObject footCollision;
@@ -87,7 +87,7 @@ public abstract class GameCharacter : MonoBehaviour {
             character4DScript.SetDirection(movementDirection.y > 0 ? Vector2.up : Vector2.down);
 
         animationManager.Animator.SetFloat("MovementSpeed", GetMovementSpeed()*WALK_ANIMATION_MUTLIPLIER);
-        Debug.Log(animationManager.Animator.GetFloat("MovementSpeed"));
+      //  Debug.Log(animationManager.Animator.GetFloat("MovementSpeed"));
         //change all animation speeds
         //not really what should be done 
         //need to really seperate movement speed stuff and attack speed stuff
@@ -132,8 +132,8 @@ public abstract class GameCharacter : MonoBehaviour {
         }
     }
     public void DamageHealth(float amount) {
-        resourceManager.DamageHealth(amount);
-        isAlive = resourceManager.IsAlive();
+        StatManager.DamageHealth(amount);
+        isAlive = StatManager.IsAlive();
         if (!isAlive) {
             ProcessDeath();
         }

@@ -54,7 +54,7 @@ public class Buff : ScriptableObject
     //    return this;
     //}
     
-    public Buff CopyInstance() {
+    public virtual Buff CopyInstance() {
         Buff buff = CreateInstance<Buff>();
 
         // Get all fields of the Ability class using reflection
@@ -87,14 +87,14 @@ public class Buff : ScriptableObject
     //    SetDuration(duration);
     //    SetEffectAmount(stat, effectAmount);
     //}
-    public void ApplyBuff(StatManager statManager) {
+    public virtual void ApplyBuff(StatManager statManager) {
         int x = 0;
         effectedStats.keys.ForEach(key => {
             statManager.AdjustStat(key, effectedStats.values[x++]);
         });
         //statManager.AdjustStat(effectedStat, amount);
     }
-    public void RemoveBuff(StatManager statManager) {
+    public virtual void RemoveBuff(StatManager statManager) {
         //statManager.AdjustStat(effectedStat, -amount);
         int x = 0;
         effectedStats.keys.ForEach(key => {

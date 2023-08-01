@@ -34,7 +34,7 @@ public class AbilityWrapper : MonoBehaviour {
     }
     public bool Cast(Player player) {
         if (abilityState == AbilityState.ready) {
-            if (player.resourceManager.TrySpendResource(ability.healthCost, ability.manaCost)) {
+            if (player.StatManager.TrySpendResource(ability.healthCost, ability.manaCost)) {
                 var mousePos = GameController.CameraToWorldPointMousePos();
                 var pos = player.transform.position;
                 var vMouseToPlayer = (mousePos - pos).normalized * GameCharacter._PROJECTILE_SPAWN_RADIUS_;

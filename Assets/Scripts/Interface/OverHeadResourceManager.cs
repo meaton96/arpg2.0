@@ -6,23 +6,15 @@ public class OverHeadResourceManager : MonoBehaviour
 {
    
     [SerializeField] GameObject healthBar;
-    //[SerializeField] GameCharacter character;
-    [SerializeField] private ResourceManager resourceManager;
+    [SerializeField] private StatManager StatManager;
     // Start is called before the first frame update
-    void Start()
-    {
-        //resourceManager = character.resourceManager;
-    }
-    public void SetResourceManager(ResourceManager resourceManager) {
-        this.resourceManager = resourceManager;
-    }
 
     // Update is called once per frame
     void Update()
     {
 
         var scale = healthBar.transform.localScale; 
-        scale.x = Mathf.Clamp01(resourceManager.GetPercentHealth());
+        scale.x = Mathf.Clamp01(StatManager.GetPercentHealth());
         healthBar.transform.localScale = scale;
     }
 }

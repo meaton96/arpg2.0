@@ -38,7 +38,7 @@ public class SupportEnemy : RangedEnemy {
     protected override void AttackPlayer() { }
 
     protected override void Update() {
-        if (!resourceManager.IsAlive()) {
+        if (!StatManager.IsAlive()) {
             animationManager.Die();
         }
         if (isActive) {

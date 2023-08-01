@@ -94,7 +94,7 @@ public class Player : GameCharacter {
         Camera.main.transform.SetParent(transform, false);
 
         playerCollider = GetComponent<Collider2D>();
-        resourceManager.Init(_MAX_HEALTH_, _MAX_MANA_);
+        StatManager.Init(_MAX_HEALTH_, _MAX_MANA_, 5, 5);
         //placeholder
         //animationManager.SetWeaponType(WeaponType.Melee2H);
 
@@ -118,10 +118,9 @@ public class Player : GameCharacter {
 
         if (isActive && isAlive) {
 
-            if (state == State.dodging) {
-                HandleDodge();
-            }
-            else {
+            if (state != State.dodging) {
+
+
                 base.Update();
                 HandleAnimationLockedInput();
                 if (!animationManager.IsAction) //animation lock
@@ -133,6 +132,7 @@ public class Player : GameCharacter {
                     //}
                 }
             }
+
         }
 
     }
@@ -140,6 +140,9 @@ public class Player : GameCharacter {
         animationManager.animationSpeed = StatManager.GetActionSpeed();
         if (!animationManager.IsAction && state != State.dodging) {
             HandleMovement();
+        }
+        else if (state == State.dodging) {
+            HandleDodge();
         }
     }
     #endregion
@@ -159,13 +162,18 @@ public class Player : GameCharacter {
     //proces the dodge animation 
     void HandleDodge() {
         //dodge ended
-        if (dodgeTimer >= DODGE_TIME) {
+        if (dodgeTimer >= (DODGE_TIME/* / StatManager.GetMovementSpeed()*/)) {
             dodgeTimer = 0f;
             state = State.idle;
             return;
         }
+        //dodge not correct direction
         dodgeTimer += Time.deltaTime;
-        transform.position += Time.deltaTime * dodgeSpeed * movementDirection;
+        rb.MovePosition(
+            Vector3.MoveTowards(
+                transform.position, 
+                movementDirection * DODGE_TIME, 
+                dodgeSpeed * Time.fixedDeltaTime));
 
 
     }
@@ -308,10 +316,10 @@ public class Player : GameCharacter {
     #region Getters/Setters/ToString
 
     public override string ToString() {
-        return "Health: " + resourceManager.currentHealth + "/" + resourceManager.maxHealth + "\n" +
-            "Mana:" + resourceManager.currentMana + "/" + resourceManager.maxMana + "\n" +
-            "HP Regen: " + resourceManager.GetTotalHealthRegen() + "\n" +
-            "Mana Regen: " + resourceManager.GetTotalManaRegen() + "\n" +
+        return "Health: " + StatManager.GetCurrentHealth() + "/" + StatManager.GetMaxHealth() + "\n" +
+            "Mana:" + StatManager.GetCurrentMana() + "/" + StatManager.GetMaxMana() + "\n" +
+            "HP Regen: " + StatManager.GetTotalHealthRegen() + "\n" +
+            "Mana Regen: " + StatManager.GetTotalManaRegen() + "\n" +
             "Movespeed:" + GetMovementSpeed() + "\n" +
             "AttackSpeed:" + StatManager.GetAttackSpeed() * 100 + "%\n" +
             "Cooldown Reduction: " + (cooldownReduction * 100) + "%\n" +

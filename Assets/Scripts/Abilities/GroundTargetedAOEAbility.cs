@@ -21,6 +21,15 @@ public class GroundTargetedAOEAbility : GroundTargetedAbility {
             radius: radius);
         return new List<GameObject>(){ go };
     }
+    public List<GameObject> Cast(Vector3 instantiatePosition, Collider2D casterCollider, float damage) {
+
+        var go = Instantiate(abilityPreFab, instantiatePosition, Quaternion.identity);
+        go.GetComponent<SpawnedSpellAnimation>().Init(
+            caster: casterCollider.GetComponent<GameCharacter>(),
+            ability: this,
+            radius: radius);
+        return new List<GameObject>() { go };
+    }
 
     public override Ability CopyInstance() {
 
