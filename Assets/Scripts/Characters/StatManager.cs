@@ -13,7 +13,8 @@ public class StatManager : MonoBehaviour {
         HealthRegeneration,
         HealthRegenMulti,
         ManaRegeneration,
-        ManaRegenMulti
+        ManaRegenMulti,
+        DamageMultiplier
     }
 
     private readonly Dictionary<CharacterStat, float> characterStats = new() {
@@ -23,7 +24,8 @@ public class StatManager : MonoBehaviour {
         {CharacterStat.HealthRegeneration, 0f},
         {CharacterStat.HealthRegenMulti, 1f},
         {CharacterStat.ManaRegeneration, 0f},
-        {CharacterStat.ManaRegenMulti, 1f}
+        {CharacterStat.ManaRegenMulti, 1f},
+        {CharacterStat.DamageMultiplier, 1f}
     };
 
     #region Vars - Combat Stats
@@ -32,7 +34,7 @@ public class StatManager : MonoBehaviour {
   //  [HideInInspector] public float damageMulti = 1;
     // [HideInInspector] public float castSpeed;
   //  public float attackSpeed = 1;
-    private bool flagChangeAnimationSpeed = false;
+  //  private bool flagChangeAnimationSpeed = false;
     #endregion
 
     public void AdjustStat(CharacterStat stat, float amount) {
@@ -45,6 +47,9 @@ public class StatManager : MonoBehaviour {
     }
     public float GetActionSpeed() {
         return characterStats[CharacterStat.ActionSpeed];
+    }
+    public float GetDamageMutlti() {
+        return characterStats[CharacterStat.DamageMultiplier];
     }
 
     public float GetMovementSpeed() {

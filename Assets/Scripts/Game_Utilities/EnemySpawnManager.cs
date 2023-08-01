@@ -7,9 +7,9 @@ public class EnemySpawnManager : MonoBehaviour
 {
     #region Enemy Spawning  
     //spawning vars for testing
-    public bool SPAWN_ONLY_ONE_ENEMY_TYPE = true;
-    public bool ENABLE_ENEMY_LOGIC = true;
-    public int ENEMY_INDEX = 0;
+    public bool SpawnOneType = true;
+    public bool EnemiesEnabled = true;
+    public int EnemyIndex = 0;
     private readonly List<float> _ENEMY_SPAWN_WEIGHTS = new() {
         5, //basic goblin   - 0
         5, //shooter golin  - 1
@@ -84,8 +84,8 @@ public class EnemySpawnManager : MonoBehaviour
             }
         }
 
-        if (SPAWN_ONLY_ONE_ENEMY_TYPE) {
-            index = ENEMY_INDEX;
+        if (SpawnOneType) {
+            index = EnemyIndex;
         }
 
         var distanceAwayFromPlayer = Random.Range(minRad, maxRad);
@@ -107,7 +107,7 @@ public class EnemySpawnManager : MonoBehaviour
             player: player,
             allEnemies: enemyList,
             health: 50,
-            isActive: ENABLE_ENEMY_LOGIC
+            isActive: EnemiesEnabled
             );
 
         enemyList.Add(enemy);

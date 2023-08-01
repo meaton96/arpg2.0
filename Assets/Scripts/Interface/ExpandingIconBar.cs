@@ -18,7 +18,6 @@ public class ExpandingIconBar : MonoBehaviour {
     }
     //adds the buff the to buff bar
     public void AddBuff(Buff buff) {
-        Debug.Log(buff);    
         //create the buff wrapper
         var buffWrapper = Instantiate(BuffUIWrapperPrefab, transform).GetComponent<BuffUIWrapper>();
         //get how far to display it based on the number of buffs + size and spacing

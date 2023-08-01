@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AbilityCollectionSingleton : MonoBehaviour {
     public static AbilityCollectionSingleton Instance;
+    public bool UpdateCollection = false;
     [SerializeField] private AbilityCollection abilityCollection;
     // Start is called before the first frame update
     void Start() {
@@ -12,6 +13,10 @@ public class AbilityCollectionSingleton : MonoBehaviour {
         }
         else {
             Instance = this;
+        }
+
+        if (UpdateCollection) {
+            abilityCollection.LoadAllAssets();
         }
     }
     public Ability GetAbilityByID(int id) {

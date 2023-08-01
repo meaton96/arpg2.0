@@ -38,8 +38,8 @@ public class SerializableDictionary<TKey, TValue> {
                 return values[index];
             }
             else {
-                Debug.LogWarning("SerializableDictionary: Key not found in the dictionary.");
-                return default(TValue);
+                Debug.LogError("SerializableDictionary: Key not found in the dictionary.");
+                return default;
             }
         }
         set {
@@ -48,7 +48,7 @@ public class SerializableDictionary<TKey, TValue> {
                 values[index] = value;
             }
             else {
-                Debug.LogWarning("SerializableDictionary: Key not found in the dictionary. Adding a new entry.");
+                Debug.LogError("SerializableDictionary: Key not found in the dictionary. Adding a new entry.");
                 keys.Add(key);
                 values.Add(value);
             }

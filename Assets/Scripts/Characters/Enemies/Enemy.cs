@@ -62,38 +62,6 @@ public abstract class Enemy : GameCharacter {
         animationManager.SetWeaponType(weaponType);
     }
     public virtual void DealMeleeDamage() { }
-
-    //protected override void Update() {
-    //    //Debug.Log(GetDistanceSquared2D(transform.position, player.transform.position));
-    //    if (isAlive) {
-    //        if (isActive) {
-    //            if (InAttackRange()) {
-
-    //                if (attackTimer >= attackCooldown) {
-
-    //                    AttackPlayer();
-    //                    attackTimer = 0;
-    //                }
-    //                else {
-    //                    attackTimer += Time.deltaTime;
-    //                }
-    //            }
-    //            else {
-    //                ApplySeekAndFlock();
-    //            }
-
-    //            if (rb.velocity.magnitude > 0) {
-    //                animationManager.SetState(CharacterState.Walk);
-    //            }
-    //            movementDirection = rb.velocity.normalized;
-    //            // if (rb.velocity.magnitude > MAXIMUM_SPEED)
-    //            //     rb.velocity = movementDirection * MAXIMUM_SPEED;
-    //        }
-    //        base.Update();
-
-    //    }
-
-    //}
     private void FixedUpdate() {
         if (isAlive) {
             if (isActive) {
@@ -112,12 +80,12 @@ public abstract class Enemy : GameCharacter {
                     ApplySeekAndFlock();
                 }
 
-                if (rb.velocity.magnitude > 0) {
+                if (rb.velocity.sqrMagnitude > 0) {
                     animationManager.SetState(CharacterState.Walk);
                 }
                 movementDirection = rb.velocity.normalized;
                 // Debug.Log(rb.velocity.magnitude);
-                if (GetDistanceSquared2D(rb.velocity) > Mathf.Pow(GetMovementSpeed(), 2))
+                if (rb.velocity.sqrMagnitude > Mathf.Pow(GetMovementSpeed(), 2))
                     rb.velocity = movementDirection * GetMovementSpeed();
             }
 

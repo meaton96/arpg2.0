@@ -499,7 +499,6 @@ MonoBehaviour:
   projectileAbility: {fileID: 0}
   auraRangeSquared: 36
   auraVisualPrefab: {fileID: 6967502257464330412, guid: 5ba0d219d312d074cb1d99c45918888f, type: 3}
-  auraAttachPrefab: {fileID: 1298926524237742945, guid: 6adb6a9b8535f4a4c891be1054646cb4, type: 3}
   auraBuffToApply: {fileID: 11400000, guid: 414e1f35c4b18f049869369da6b80613, type: 2}
   AuraCollider: {fileID: 7040894578346330433}
 --- !u!114 &-7895077377504037430

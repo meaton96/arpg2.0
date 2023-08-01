@@ -143,6 +143,7 @@ public class GameController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.F3)) {
             player.spellBar.EquipAura(0, AbilityCollectionSingleton.Instance.GetAbilityByID(900) as Aura);
             player.spellBar.EquipAura(1, AbilityCollectionSingleton.Instance.GetAbilityByID(901) as Aura);
+            player.spellBar.EquipAura(2, AbilityCollectionSingleton.Instance.GetAbilityByID(902) as Aura);
         }
 
     }

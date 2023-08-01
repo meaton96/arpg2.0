@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 722b727b31e3bc640b74c0701c1ecb59, type: 3}
-  m_Name: Haste
+  m_Name: Rampage
   m_EditorClassIdentifier: 
-  _name: Haste
-  id: 1500
-  description: Increases Action Speed by 30%
-  iconImage: {fileID: 21300000, guid: 99a7ecc6a55ed3244ad26c4b057dc7fc, type: 3}
+  _name: Rampage
+  id: 1400
+  description: 100% Damage Increase
+  iconImage: {fileID: 21300000, guid: 673da70531bbca045aa18ddd4b018575, type: 3}
   effectedStats:
-    keys: 01000000
+    keys: 07000000
     values:
-    - 0.5
-  duration: 10
+    - 1
+  duration: -1
   etype: 0

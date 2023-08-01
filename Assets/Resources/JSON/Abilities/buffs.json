@@ -1,4 +1,16 @@
 {
+	1000: { "Evocate", "50% mana regen buff" },
+	1001: { "Vitality Surge", "50% health regen buff" },
+	1002: { "Evocation", "5 flat mana per second" },
+	1003: { "Vitality", "5 flat health per second" },
+	1400: { "Rampage", "100% Damage buff" },
+	1000: { "Evocate", "50% mana regen buff" },
+	1500: { "Haste", "50% action speed increase" },
+	1000: { "Evocate", "50% mana regen buff" },
+	1000: { "Evocate", "50% mana regen buff" },
+	
+	
+	
   "!1000": {
 	  "type": 0,
 	  "_name": "Percent Mana Regneration",
