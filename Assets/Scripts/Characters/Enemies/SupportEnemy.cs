@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Linq;
 
 public class SupportEnemy : RangedEnemy {
+    private const float IDLE_RANGE = .2f;
     [SerializeField] protected float auraRangeSquared = 36;     //the radius squared of the range of the aura
     private const float pollNearbyEnemiesCooldown = 1f;         //how often to poll nearby enemies in seconds
     private float pollTimer;
@@ -72,8 +73,12 @@ public class SupportEnemy : RangedEnemy {
         if (isActive && isAlive) {
             if (seekTarget == null) {
                 seekTarget = player.transform.position;
+
             }
-            Seek(seekTarget);
+            if (GetDistanceSquared2D(seekTarget, transform.position) > IDLE_RANGE) {
+                ApplySeek(seekTarget);
+            }
+            
             if (rb.velocity.sqrMagnitude > 0) {
                 animationManager.SetState(CharacterState.Walk);
             }

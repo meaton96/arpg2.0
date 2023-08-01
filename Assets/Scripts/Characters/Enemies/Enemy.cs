@@ -108,6 +108,9 @@ public abstract class Enemy : GameCharacter {
     protected void ApplySeek() {
         rb.AddForce(FORCE_MULTIPLIER * SEEK_MULTIPLIER * Seek(target.position));
     }
+    protected void ApplySeek(Vector2 target) {
+        rb.AddForce(FORCE_MULTIPLIER * SEEK_MULTIPLIER * Seek(target));
+    }
     private Vector2 Flocking() {
 
         Vector2 separationForce = Vector2.zero;
