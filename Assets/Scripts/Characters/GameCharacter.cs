@@ -30,7 +30,7 @@ public abstract class GameCharacter : MonoBehaviour {
     public Character4D character4DScript;
     public StatManager StatManager;
     public BuffManager BuffManager;
-    
+    private const float WALK_ANIMATION_MUTLIPLIER = 0.5f;
     #region Vars - Damage Text
     protected readonly Vector3 toastOffset = new(5f, 10f, 0f);
     //prefab for displaying damage numbers
@@ -61,6 +61,7 @@ public abstract class GameCharacter : MonoBehaviour {
         PlayAttackAnimation();
     }
     protected virtual void PlayAttackAnimation() {
+        animationManager.Animator.SetFloat("Speed", StatManager.GetActionSpeed());
         animationManager.Attack();
 
     }
@@ -73,6 +74,9 @@ public abstract class GameCharacter : MonoBehaviour {
         }
         else
             character4DScript.SetDirection(movementDirection.y > 0 ? Vector2.up : Vector2.down);
+
+        animationManager.Animator.SetFloat("MovementSpeed", GetMovementSpeed()*WALK_ANIMATION_MUTLIPLIER);
+        Debug.Log(animationManager.Animator.GetFloat("MovementSpeed"));
         //change all animation speeds
         //not really what should be done 
         //need to really seperate movement speed stuff and attack speed stuff

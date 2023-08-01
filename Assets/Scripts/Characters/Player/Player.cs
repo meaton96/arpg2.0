@@ -22,7 +22,7 @@ public class Player : GameCharacter {
     [HideInInspector] public float movementSpeedMultiplier = 1;
     //position for the player to move to when user clicks
     private Vector3 moveToPosition;
-    
+    private const float CLICK_RADIUS = .25f;
     
     #endregion
     #region Vars - controls
@@ -229,23 +229,23 @@ public class Player : GameCharacter {
             moveToPosition.z = transform.position.z;
         }
 
-        if (Input.GetKeyDown(KEY_CODE_ABILITY_0)) {
+        if (Input.GetKey(KEY_CODE_ABILITY_0)) {
             if (spellBar.spellWrappers[0] != null) {
                 spellBar.Cast(0);
 
             }
         }
-        if (Input.GetKeyDown(KEY_CODE_ABILITY_1)) {
+        if (Input.GetKey(KEY_CODE_ABILITY_1)) {
             if (spellBar.spellWrappers[1] != null) {
                 spellBar.Cast(1);
             }
         }
-        if (Input.GetKeyDown(KEY_CODE_ABILITY_2)) {
+        if (Input.GetKey(KEY_CODE_ABILITY_2)) {
             if (spellBar.spellWrappers[2] != null) {
                 spellBar.Cast(2);
             }
         }
-        if (Input.GetKeyDown(KEY_CODE_ABILITY_3)) {
+        if (Input.GetKey(KEY_CODE_ABILITY_3)) {
             if (spellBar.spellWrappers[3]) {
                 spellBar.Cast(3);
             }
@@ -255,7 +255,7 @@ public class Player : GameCharacter {
 
         if (Input.GetMouseButton(0)) {
             //false to be replaced with check for clicking on enemy
-            if (false || Input.GetKey(KeyCode.LeftShift)) { //clicked on enemy or player is holding shift so cast spell
+            if (ClickedOnEnemy() || Input.GetKey(KeyCode.LeftShift)) { //clicked on enemy or player is holding shift so cast spell
                 if (spellBar.spellWrappers[4] != null) {
 
                     spellBar.Cast(4);
@@ -269,7 +269,7 @@ public class Player : GameCharacter {
 
         }
         //mouse right 
-        if (Input.GetMouseButtonDown(KEY_CODE_ABILITY_5)) {
+        if (Input.GetMouseButton(KEY_CODE_ABILITY_5)) {
             if (spellBar.spellWrappers[5] != null) {
                 // Debug.Log("spell 5 casting");
                 spellBar.Cast(5);
@@ -277,6 +277,10 @@ public class Player : GameCharacter {
         }
         
 
+    }
+    private bool ClickedOnEnemy() {
+        var hit = Physics2D.CircleCast(GameController.CameraToWorldPointMousePos(), CLICK_RADIUS, Vector3.zero);
+        return hit;
     }
     //handle any input that is available to the player during animation lock
     //menu stuff/pause/play/dodge

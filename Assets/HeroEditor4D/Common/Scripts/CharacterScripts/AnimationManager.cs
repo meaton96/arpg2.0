@@ -19,9 +19,9 @@ namespace Assets.HeroEditor4D.Common.Scripts.CharacterScripts
             get => Animator.GetBool("Action");
             set => Animator.SetBool("Action", value);
         }
-        private void FixedUpdate() {
-			Animator.SetFloat("Speed", animationSpeed);
-        }
+   //     private void FixedUpdate() {
+			//Animator.SetFloat("Speed", animationSpeed);
+   //     }
 
         /// <summary>
         /// Set animation parameter State that controls transition.
