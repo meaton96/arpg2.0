@@ -46,7 +46,7 @@ public class UIBehaviour : MonoBehaviour {
 
         //update health and mana text
         healthText.text = StatManager.GetCurrentHealth().ToString("0.#") + "/" + StatManager.GetMaxHealth();
-        manaText.text = StatManager.GetCurrentMana().ToString("0.#") + "/" + StatManager.GetMaxMana();
+        manaText.text = StatManager.GetCurrentMana().ToString("0.#") + "/" + StatManager.GetMaxMana();  
 
     }
     private void Update() {

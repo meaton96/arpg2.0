@@ -78,6 +78,8 @@ public class Player : GameCharacter {
     [SerializeField] private float DODGE_TIME;
     private float dodgeTimer = 0f;
     [SerializeField] private float dodgeSpeed;
+    private const float DODGE_DISTANCE = 2f;
+    float dodgeSpeedMulti;
     #endregion
 
 
@@ -106,10 +108,6 @@ public class Player : GameCharacter {
         spellBar.EquipAbility(2, 100); //flamestrike
         spellBar.EquipAbility(3, 200); //haste
 
-
-
-
-
     }
 
 
@@ -117,24 +115,14 @@ public class Player : GameCharacter {
     protected override void Update() {
 
         if (isActive && isAlive) {
-
             if (state != State.dodging) {
-
 
                 base.Update();
                 HandleAnimationLockedInput();
-                if (!animationManager.IsAction) //animation lock
-                 {
-
+                if (!animationManager.IsAction) //animation lock 
                     HandleInput();
-                    //if (state != State.dodging) {
-                    //    HandleMovement();
-                    //}
-                }
             }
-
         }
-
     }
     private void FixedUpdate() {
         animationManager.animationSpeed = StatManager.GetActionSpeed();
@@ -151,18 +139,18 @@ public class Player : GameCharacter {
     void StartDodge() {
         //grab movement direction in the direction of the mouse
         movementDirection = GameController.CameraToWorldPointMousePos() - transform.position;
-
         movementDirection.z = 0;
         movementDirection.Normalize();
-
+        dodgeSpeedMulti = StatManager.GetMovementSpeed() * StatManager.GetActionSpeed();
         //set state
         state = State.dodging;
 
     }
     //proces the dodge animation 
     void HandleDodge() {
+
         //dodge ended
-        if (dodgeTimer >= (DODGE_TIME/* / StatManager.GetMovementSpeed()*/)) {
+        if (dodgeTimer >= (DODGE_TIME / dodgeSpeedMulti)) {
             dodgeTimer = 0f;
             state = State.idle;
             return;
@@ -170,12 +158,10 @@ public class Player : GameCharacter {
         //dodge not correct direction
         dodgeTimer += Time.deltaTime;
         rb.MovePosition(
-            Vector3.MoveTowards(
-                transform.position, 
-                movementDirection * DODGE_TIME, 
+            Vector3.Lerp(
+                transform.position,
+                transform.position + (dodgeSpeedMulti * DODGE_DISTANCE * movementDirection),
                 dodgeSpeed * Time.fixedDeltaTime));
-
-
     }
     #endregion
     #region Animation
@@ -192,20 +178,14 @@ public class Player : GameCharacter {
         }
         base.UpdateAnimation();
     }
-
-
-
     public void FaceDirection(Vector3 direction) {
         movementDirection = (direction - transform.position).normalized;
     }
-
     #endregion
     #region Player Input
     private void InitControls() {
         PlayerSettingsHelper.InitObjectSettings(this, "Player");
     }
-
-
     //handle player walking to a location specified by mouse click
     void HandleMovement() {
         if (ReachedDestination()) {
@@ -214,11 +194,6 @@ public class Player : GameCharacter {
         }
         //move towards the moveToPosition vector
         if (state == State.walking) {
-            //transform.position = Vector3.MoveTowards(
-            //    transform.position,
-            //    moveToPosition,
-            //    GetMovementSpeed() * Time.deltaTime);
-
             rb.MovePosition(Vector3.MoveTowards(
                 transform.position,
                 moveToPosition,
@@ -300,19 +275,6 @@ public class Player : GameCharacter {
     }
 
     #endregion
-    #region Add/Removing Buffs/Auras
-
-    //public override void ApplyBuff(Buff buff) {
-    //    //Debug.Log("Applying Buff: " +  buff.ToString());
-    //    HUD.DisplayNewBuff(buff);
-    //    base.ApplyBuff(buff);   
-    //}
-    //public override bool RemoveBuff(Buff buff) {
-
-    //    HUD.ForceRemoveBuff(buff);
-    //    return base.RemoveBuff(buff);
-    //}
-    #endregion
     #region Getters/Setters/ToString
 
     public override string ToString() {
@@ -328,25 +290,17 @@ public class Player : GameCharacter {
     protected override void StopMove() {
         moveToPosition = transform.position;
     }
-
-    //public float GetMovementSpeed() {
-    //    return baseMovementSpeed * movementSpeedMultiplier * StatManager.GetActionSpeed();
-    //}
     public float GetCooldownReduction() {
         return cooldownReduction;
     }
-
     //returns true if the distance squared to the given position is less than the movement tolerance constant
     //used to end player movement and avoid floating point errors
     bool ReachedDestination() {
         return GetDistanceSquared2D(transform.position, moveToPosition) < MOVEMENT_TOLERANCE;
     }
-
     public void EquipItem(Item item) {
         character4DScript.Equip(item);
     }
-
-
     #endregion
 
     public override void RemoveOnDeath() {
