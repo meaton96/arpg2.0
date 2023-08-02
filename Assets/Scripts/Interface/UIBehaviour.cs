@@ -70,11 +70,22 @@ public class UIBehaviour : MonoBehaviour {
     }
     //pass a new buff to the buff bar to display
     public void DisplayNewBuff(Buff buff) {
-        BuffBar.AddBuff(buff);
+        if (buff.etype == Buff.EffectType.Buff) {
+            BuffBar.AddBuff(buff);
+        }
+        else {
+            DebuffBar.AddBuff(buff);
+        }
     }
     //remove the buff from the buff bar
     public void ForceRemoveBuff(Buff buff) {
-        BuffBar.RemoveBuff(buff);
+        if (buff.etype == Buff.EffectType.Buff) {
+            BuffBar.RemoveBuff(buff);
+        }
+        else {
+            DebuffBar.RemoveBuff(buff);
+
+        }
     }
     private void ScaleInterface() {
         transform.localScale = new Vector3(uiScale, uiScale, 1f);

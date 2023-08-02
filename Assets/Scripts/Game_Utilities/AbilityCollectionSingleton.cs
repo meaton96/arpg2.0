@@ -27,7 +27,7 @@ public class AbilityCollectionSingleton : MonoBehaviour {
         catch (KeyNotFoundException e) {
             Debug.Log(e);
         }
-        ability.Init();
+        
         return ability;
     }
     public Buff GetBuffByID(int id) {
@@ -43,7 +43,7 @@ public class AbilityCollectionSingleton : MonoBehaviour {
     }
     public Ability GetAbilityCopyByID(int id) {
         Ability b = GetAbilityByID(id).CopyInstance();
-        b.Init();
+        
         return b;
     }
     public Buff GetBuffCopyByID(int id) {
@@ -60,7 +60,7 @@ public class AbilityCollectionSingleton : MonoBehaviour {
     public Ability GetAbilityCopy(Ability ability) {
         if (ability == null) throw new System.ArgumentNullException("ability is null");
         Ability a = ability.CopyInstance();
-        a.Init();
+        
         return a;
     }
 }

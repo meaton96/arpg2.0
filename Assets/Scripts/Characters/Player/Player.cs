@@ -47,21 +47,11 @@ public class Player : GameCharacter {
     //reference to interface script
     [HideInInspector] public UIBehaviour HUD;
     [HideInInspector] public Collider2D playerCollider;
-
-    //[SerializeField] private Ability[] abilities;
-
-    //public PlayerResourceManager resourceManager;
-
-
-    //reference to animation manager script to control animations
-    // public AnimationManager animationManager;
-
-
     #endregion
     #region Vars - combat stats
     //tracked as a float from 0 - 1 as a % cooldown reduction, .2 = 20% reduced cooldown
     [HideInInspector] public float cooldownReduction = 0;
-
+    public List<Buff> globalOnHitEffects;
 
     #endregion
     #region Vars - character states
@@ -91,8 +81,7 @@ public class Player : GameCharacter {
         baseMovementSpeed = 3f;
 
         InitControls();
-
-
+        globalOnHitEffects = new();
         Camera.main.transform.SetParent(transform, false);
 
         playerCollider = GetComponent<Collider2D>();
@@ -101,15 +90,22 @@ public class Player : GameCharacter {
         //animationManager.SetWeaponType(WeaponType.Melee2H);
 
 
-        spellBar.EquipAbility(4, 405);   //iceshot
+        spellBar.EquipAbility(4, 0);   //fireball
         spellBar.EquipAbility(5, 403);   //barage
         spellBar.EquipAbility(0, 800); //teleport
         spellBar.EquipAbility(1, 401); //piercing shot
         spellBar.EquipAbility(2, 100); //flamestrike
-        spellBar.EquipAbility(3, 200); //haste
+        spellBar.EquipAbility(3, 200); //haste  
 
     }
-
+    public bool AddGLobalOnHit(Buff buff) {
+        if (globalOnHitEffects.Contains(buff)) return false;
+        globalOnHitEffects.Add(buff);
+        return true;
+    }
+    public bool RemoveGlobalOnHit(Buff buff) {
+        return globalOnHitEffects.Remove(buff);
+    }
 
     // Update is called once per frame
     protected override void Update() {

@@ -27,7 +27,8 @@ public class GroundTargetedAOEAbility : GroundTargetedAbility {
         go.GetComponent<SpawnedSpellAnimation>().Init(
             caster: casterCollider.GetComponent<GameCharacter>(),
             ability: this,
-            radius: radius);
+            radius: radius,
+            damage: damage);
         return new List<GameObject>() { go };
     }
 

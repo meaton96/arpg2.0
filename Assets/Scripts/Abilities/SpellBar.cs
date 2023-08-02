@@ -24,18 +24,34 @@ public class SpellBar : MonoBehaviour {
     private void Start() {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
+    //public void AddOnHitToAllSpells(Buff buff) {
+    //    foreach (AbilityWrapper wrapper in spellWrappers) {
+    //        var ability = wrapper.ability;
+    //        ability.onHitDebuffID = buff.id;
+    //        ability.Init();
+    //    }
+    //}
+    //public void AddOnHitToSpellBySlot(int slot, Buff buff) {
+    //    var ability = spellWrappers[slot].ability;
+    //    ability.onHitDebuffID = buff.id;
+    //    ability.Init();
+
+    //}
 
     #region Abilties Bar
     //equip the ability in the slot slot
     //ability is equipped via ID number and pulled from the game controller singleton
     public void EquipAbility(int slot, int id) {
+        
         var ability = AbilityCollectionSingleton.Instance.GetAbilityByID(id);
+        ability.Init(player);
         UpdateIcons();
         spellWrappers[slot] = Instantiate(abilityWrapperPrefab, transform);
         spellWrappers[slot].Init(ability, spellTimers[slot]);
         spellBarImages[slot].GetComponent<Image>().sprite = ability.iconImage;
     }
     public void EquipAbility(int slot, Ability ability) {
+        ability.Init(player);
         UpdateIcons();
         spellWrappers[slot] = Instantiate(abilityWrapperPrefab, transform);
         spellWrappers[slot].Init(ability, spellTimers[slot]);
@@ -53,7 +69,6 @@ public class SpellBar : MonoBehaviour {
         //dont play cast animation for movement skills
         if (spellWrappers[slot].Cast(player)) {
             if (!spellWrappers[slot].ability.tags.Contains("Movement")) {
-                Debug.Log("casting animation");
                 player.PlayCastAnimation();
             }
         }
@@ -75,6 +90,7 @@ public class SpellBar : MonoBehaviour {
 
     #region Aura Bar
     public void EquipAura(int slot, Aura aura) {
+        aura.Init(player);
         UpdateIcons();
         if (slot < 0 || slot >= auraWrappers.Length) { return; }
         if (auraWrappers[slot] != null) {

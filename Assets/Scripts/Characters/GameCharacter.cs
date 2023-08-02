@@ -158,11 +158,14 @@ public abstract class GameCharacter : MonoBehaviour {
     public void HandleSpellHit(DamagingAbility ability, GameCharacter caster) {
 
         float damage = caster.CalculateDamage(ability);
+        HandleSpellHit(ability, damage);
+    }
+    public void HandleSpellHit(DamagingAbility ability, float damage) {
         //temp - combat log?
         //Debug.Log(caster.name + "'s " + ability._name +
         //    " hit " + name + " for " + damage);
         BuffManager.HandleOnHitSpellEffect(ability);
-        
+
         DamageHealth(damage);
         if (GameController.Instance.DisplayFloatingCombatText)
             DisplayFloatingDamageNumber(damage);
@@ -196,6 +199,7 @@ public abstract class GameCharacter : MonoBehaviour {
     protected virtual void ProcessDeath() {
         gameObject.layer = IGNORE_COLLISION_LAYER;
         footCollision.layer = IGNORE_COLLISION_LAYER;
+        BuffManager.ProcessOnDeathEffects();
         StopMove();
         animationManager.Die();
 

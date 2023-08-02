@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f827deca5aa2a54aa16b4ced1749182, type: 3}
+  m_Name: ExplodeyAura
+  m_EditorClassIdentifier: 
+  _name: ExplodeyAura
+  description: Character's abilities debuff targets with Explodey - target burns
+    for 3 damage per second until dead at which point they explode for 20% of their
+    maximum health in a small radius
+  id: 904
+  tags:
+  - Aura
+  - Fire
+  iconImage: {fileID: 21300000, guid: 44a70ecc22c54244bb200e19706f99ee, type: 3}
+  manaCost: 0
+  healthCost: 0
+  cooldown: 0
+  abilityPreFab: {fileID: 0}
+  onHitDebuffID: 2000
+  onHitEffectAmount: 0.2
+  onHitDuration: -1
+  onHitDebuff: {fileID: 0}
+  effectID: 0
+  effectAmount: 0
+  buff: {fileID: 11400000, guid: 7f05bf66aacbdb340926fdcb2f81b7bd, type: 2}
+  OnHitApplicator: 1

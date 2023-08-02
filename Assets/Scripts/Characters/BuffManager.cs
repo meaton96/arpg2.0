@@ -10,26 +10,24 @@ public class BuffManager : MonoBehaviour {
 
     private Dictionary<int, OnDeathEffect> onDeathEffects = new();
 
-
     private void Update() {
         //check each buff and reduce the timer if it has a duration
         //remove it if it has a negative duration
-        currentBuffs.Values.ToList().ForEach(buff => {
-            if (buff.duration != -1) {
-                buff.duration -= Time.deltaTime;
-                if (buff.duration < 0) {
-                    RemoveBuff(buff);
+        foreach (var buff in currentBuffs) {
+            if (buff.Value.duration != -1) {
+                buff.Value.duration -= Time.deltaTime;
+                if (buff.Value.duration < 0) {
+                    RemoveBuff(buff.Value);
                     return;
                 }
             }
-
-        });
+        }  
 
     }
     //attempt to apply the buff to the character
     //if the buff already exists then refresh its duration
     public virtual void ApplyBuff(Buff buff) {
-        //Debug.Log($"trying to applying {buff._name} to {name}");
+        Debug.Log($"trying to applying {buff._name} to {name}");
         //   var existingBuff = currentBuffs.Find(b => b.id == buff.id);
         if (currentBuffs.ContainsKey(buff.id)) {
             currentBuffs[buff.id].duration = buff.duration;
@@ -43,6 +41,9 @@ public class BuffManager : MonoBehaviour {
     public void HandleOnHitSpellEffect(DamagingAbility ability) {
         if (ability.onHitDebuff != null) {
             ApplyBuff(ability.onHitDebuff);
+        }
+        if (ability.caster.gameObject.layer == GameController.PLAYER_LAYER) {
+            (ability.caster as Player).globalOnHitEffects.ForEach(buff => ApplyBuff(buff));
         }
     }
     //remove buff from list and from character stat manager

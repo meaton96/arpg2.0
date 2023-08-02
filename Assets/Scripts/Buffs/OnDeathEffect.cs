@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "NewOnDeathEffect", menuName = "Custom Assets/Effects/OnDeathEffect")]
 public class OnDeathEffect : Buff
 {
     public GroundTargetedAOEAbility onDeathAbility;
-    float percentHealthDamage;
+    public float percentHealthDamage;
 
     public override Buff CopyInstance() {
         OnDeathEffect onDeathEffect = CreateInstance<OnDeathEffect>();
@@ -26,7 +27,7 @@ public class OnDeathEffect : Buff
         return onDeathEffect;
     }
     public void ApplyOnDeathEffect(StatManager statManager, Vector3 position, Collider2D casterCollider) {
-
+        Debug.Log("should explode");
         onDeathAbility.Cast(position, casterCollider, statManager.GetMaxHealth() * percentHealthDamage);
     }
 
