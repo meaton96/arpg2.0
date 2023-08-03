@@ -10,9 +10,9 @@ using UnityEngine;
 public class Aura : Ability {
     public const string BUFF_PATH = "/Scripts/Abilities/Buffs";
     //public string effectName;
-    public int effectID;
+    public int buffId;
     public float effectAmount;
-    public Buff buff;
+    [HideInInspector] public Buff buff;
     public bool OnHitApplicator;
     public void ActivateAura(Player player) {
         if (OnHitApplicator) {
@@ -35,26 +35,13 @@ public class Aura : Ability {
             "buff: \n" + buff.name;
     }
     public override Ability CopyInstance() {
-        Ability ability = CreateInstance<Aura>();
+        var ability = CreateInstance<Aura>();
 
+        ability.buff = buff;
+        CopyTo(ability);
+        //ability.Init(caster);
+       // ability.buff.Init(caster);
 
-        ability._name = _name;
-        ability.description = description;
-        ability.id = id;
-        ability.tags = new(tags);
-        ability.iconImage = iconImage;
-        ability.manaCost = manaCost;
-        ability.healthCost = healthCost;
-        ability.cooldown = cooldown;
-        ability.abilityPreFab = abilityPreFab;
-        //  ability.onHitDebuffID = onHitDebuffID;
-
-        (ability as Aura).effectID = effectID;
-        (ability as Aura).effectAmount = effectAmount;
-        (ability as Aura).buff = buff;
-        (ability as Aura).OnHitApplicator = OnHitApplicator;
-
-        //(ability as Aura).Init();
 
         return ability;
     }

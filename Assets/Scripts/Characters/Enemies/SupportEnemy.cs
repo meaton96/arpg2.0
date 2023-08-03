@@ -27,7 +27,7 @@ public class SupportEnemy : RangedEnemy {
         base.Init(player, allEnemies, health, mana, isActive);
         auraVisual = Instantiate(auraVisualPrefab, transform);   //create the aura visual and attach it
         //set the aura buff
-        var buffCopy = AbilityCollectionSingleton.Instance.GetBuffCopy(auraBuffToApply);
+        var buffCopy = AbilityCollectionSingleton.Instance.GetBuffCopyByID(auraBuffToApply.id, this);
         AuraCollider.Buff = buffCopy;
         auraBuffToApply = buffCopy;
         //set the aura collider radius

@@ -18,10 +18,9 @@ MonoBehaviour:
     for 20% of maximum health
   iconImage: {fileID: 21300000, guid: c371571ecc5da0d4ab0011dcf584e2b0, type: 3}
   effectedStats:
-    keys: 03000000
-    values:
-    - -3
+    keys: 
+    values: []
   duration: -1
-  etype: 1
+  etype: 3
   onDeathAbility: {fileID: 11400000, guid: 7196cb16728f3204f91d44a23596d311, type: 2}
   percentHealthDamage: 0.2

@@ -51,7 +51,6 @@ public class Player : GameCharacter {
     #region Vars - combat stats
     //tracked as a float from 0 - 1 as a % cooldown reduction, .2 = 20% reduced cooldown
     [HideInInspector] public float cooldownReduction = 0;
-    public List<Buff> globalOnHitEffects;
 
     #endregion
     #region Vars - character states

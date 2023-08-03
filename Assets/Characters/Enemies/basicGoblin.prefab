@@ -7297,6 +7297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statManager: {fileID: 6008190567015759158}
+  character: {fileID: 9104495425243833598}
 --- !u!114 &6008190567015759158
 MonoBehaviour:
   m_ObjectHideFlags: 0

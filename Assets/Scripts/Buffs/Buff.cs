@@ -14,13 +14,16 @@ public class Buff : ScriptableObject
     public int id;
     public string description;
     public Sprite iconImage;
+    [HideInInspector] public GameCharacter caster;
     [SerializeField] 
     SerializableDictionary<StatManager.CharacterStat, float> effectedStats = new();
     
     public float duration = -1;
     public enum EffectType {
         Buff,
-        Debuff
+        Debuff,
+        DamageOverTime,
+        OnDeath
     }
     public EffectType etype;
    
@@ -38,10 +41,12 @@ public class Buff : ScriptableObject
         }
         return buff;
     }
-    public void Init() { }
+    public virtual void Init(GameCharacter caster) {
+        this.caster = caster;
+    }
     public void SetDuration(float duration) {
         this.duration = duration;
-    }
+    }   
     public virtual void ApplyBuff(StatManager statManager) {
         int x = 0;
         effectedStats.keys.ForEach(key => {

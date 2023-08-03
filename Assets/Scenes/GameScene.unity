@@ -360,9 +360,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c37a50d7bf8f3c1448caaaedfca3f915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnOneType: 0
+  SpawnOneType: 1
   EnemiesEnabled: 1
-  EnemyIndex: 2
+  EnemyIndex: 0
   maxEnemies: 1
   spawnEnemies: 1
   enemyList: []

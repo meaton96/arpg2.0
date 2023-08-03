@@ -66,8 +66,8 @@ public class GameController : MonoBehaviour {
             Instance = this;
         }
         InitSettings();
-
-        SetPhysicsIgnores();
+        Application.targetFrameRate = 60;   
+        //SetPhysicsIgnores();
 
         // InitializeDictionaries();
 
@@ -138,10 +138,10 @@ public class GameController : MonoBehaviour {
             enemySpawnManager.StartSpawning(player);
         }
         if (Input.GetKeyDown(KeyCode.F3)) {
-            player.spellBar.EquipAura(0, AbilityCollectionSingleton.Instance.GetAbilityByID(900) as Aura);
+            player.spellBar.EquipAura(0, AbilityCollectionSingleton.Instance.GetAbilityCopyByID(900, player) as Aura);
 
-            player.spellBar.EquipAura(1, AbilityCollectionSingleton.Instance.GetAbilityByID(901) as Aura);
-            player.spellBar.EquipAura(2, AbilityCollectionSingleton.Instance.GetAbilityByID(904) as Aura);
+            player.spellBar.EquipAura(1, AbilityCollectionSingleton.Instance.GetAbilityCopyByID(901, player) as Aura);
+            player.spellBar.EquipAura(2, AbilityCollectionSingleton.Instance.GetAbilityCopyByID(904, player) as Aura);
         }
 
     }

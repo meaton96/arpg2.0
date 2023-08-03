@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -17,54 +18,30 @@ public class AbilityCollection : ScriptableObject {
     [SerializeField]
     SerializableDictionary<int, Buff> allBuffsAndDebuffsNew;
 
-    const string BUFF_FOLDER_PREFIX = "Ability Assets/";
-    const string ABILITY_FOLDER_PREFIX = "Ability Assets/Abilities/";
-    [SerializeField] List<string> BuffFolderNames;
-    [SerializeField] List<string> AbilityFolderNames;
+    const string BUFF_FOLDER_PATH = "Ability Assets/Buffs";
+    const string ABILITY_FOLDER_PATH = "Ability Assets/Abilities/";
 
 
 
     public Ability GetAbilityByID(int id) {
-        Ability ability = null;
-        try {
-            ability = allAbilitiesNew[id];
-        }
-        catch (KeyNotFoundException e) {
-            Debug.Log(e);
-        }
-        return ability;
+        return _allAbilities[id];
     }
     public Buff GetBuffByID(int id) {
-        Buff buff = null;
-        try {
-            buff = allBuffsAndDebuffsNew[id];
-        }
-        catch (KeyNotFoundException e) {
-            Debug.Log(e);
-        }
-        return buff;
+        return _allBuffsAndDebuffs[id];
     }
+    /// <summary>
+    /// reads in all assets from the folder name lists
+    /// folder name lists are serializable member variables meant to be set in inpector
+    /// </summary>
     public void LoadAllAssets() {
+        //itialize new serializeable dictionaries
+        //these are just to allow the dictionaries to be viewable in inspector to check for errors
         _allAbilities = new();
         _allBuffsAndDebuffs = new();
-        
+        //get everything in folders
+        Resources.LoadAll<Buff>(BUFF_FOLDER_PATH).ToList().ForEach(buff => _allBuffsAndDebuffs[buff.id] = buff);
+        Resources.LoadAll<Ability>(ABILITY_FOLDER_PATH).ToList().ForEach(ab => _allAbilities[ab.id] = ab);
 
-        foreach (var folderName in BuffFolderNames) {
-            
-            Buff[] buffs = Resources.LoadAll<Buff>(BUFF_FOLDER_PREFIX + folderName);
-          //  Debug.Log(BUFF_FOLDER_PREFIX + folderName);
-           // Debug.Log(buffs.Length);
-            foreach (Buff buff in buffs) {
-               // Debug.Log(buff.name);
-                _allBuffsAndDebuffs[buff.id] = buff;
-            }
-        }
-        foreach (var folderName in AbilityFolderNames) {
-            Ability[] abilities = Resources.LoadAll<Ability>(ABILITY_FOLDER_PREFIX + folderName);
-            foreach (Ability abilitiy in abilities) {
-                _allAbilities[abilitiy.id] = abilitiy;
-            }
-        }
         allAbilitiesNew = new(_allAbilities);
         allBuffsAndDebuffsNew = new(_allBuffsAndDebuffs);
 

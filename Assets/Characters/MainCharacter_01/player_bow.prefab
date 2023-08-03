@@ -440,14 +440,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _CHARACTER_HALF_HEIGHT_: {x: 0, y: 0.7, z: 0}
-  DAMAGE_MIN: 8
-  DAMAGE_MAX: 18
+  DAMAGE_MIN: 25
+  DAMAGE_MAX: 45
   baseMovementSpeed: 3
   footCollision: {fileID: 2902003776917533869}
   character4DScript: {fileID: 114216053546988558}
   StatManager: {fileID: 6994132268343717106}
   BuffManager: {fileID: 6559992403187391915}
   damageToastPrefab: {fileID: 52251255580844802, guid: 120af22e1f47e66408501b3a85dbc88d, type: 3}
+  globalOnHitEffects: []
   movementSpeedMultiplier: 1
   DISPLAY_FLOATING_COMBAT_TEXT: 0
   spellBar: {fileID: 6432203791143967343}
@@ -502,6 +503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statManager: {fileID: 6994132268343717106}
+  character: {fileID: 514144617778779753}
   HUD: {fileID: 0}
 --- !u!1 &1075059424682908
 GameObject:

@@ -21,10 +21,11 @@ MonoBehaviour:
   healthCost: 0
   cooldown: 0
   abilityPreFab: {fileID: 6967502257464330412, guid: 8bf6c58c6a0dcee4288beaee4544e2f4, type: 3}
-  onHitDebuffID: -1
-  onHitEffectAmount: 0
-  onHitDuration: 0
+  onHitDebuffID: 2000
+  onHitEffectAmount: 0.2
+  onHitDuration: -1
   onHitDebuff: {fileID: 0}
+  caster: {fileID: 0}
   baseDamage: 0
   maxRange: 0
   radius: 3

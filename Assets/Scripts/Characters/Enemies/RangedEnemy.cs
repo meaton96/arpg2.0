@@ -19,6 +19,7 @@ public class RangedEnemy : Enemy {
     /// <param name="isActive">enable or disable movement logic</param>
     public override void Init(Player player, List<Enemy> allEnemies, float health, float mana = 0, bool isActive = true) {
         base.Init(player, allEnemies,  health, mana, isActive);
+        projectileAbility = AbilityCollectionSingleton.Instance.GetAbilityCopyByID(projectileAbility.id, this) as ProjectileAbility;
        // availableAbilities.Add(AbilityCollectionSingleton.Instance.GetAbilityByID(spellID));
 
     }

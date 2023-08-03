@@ -19,7 +19,7 @@ public class AbilityCollectionSingleton : MonoBehaviour {
             abilityCollection.LoadAllAssets();
         }
     }
-    public Ability GetAbilityByID(int id) {
+    private Ability GetAbilityByID(int id) {
         Ability ability = null;
         try {
             ability = abilityCollection.GetAbilityByID(id);
@@ -30,7 +30,7 @@ public class AbilityCollectionSingleton : MonoBehaviour {
         
         return ability;
     }
-    public Buff GetBuffByID(int id) {
+    private Buff GetBuffByID(int id) {
         Buff buff = null;
         try {
             buff = abilityCollection.GetBuffByID(id);
@@ -38,29 +38,29 @@ public class AbilityCollectionSingleton : MonoBehaviour {
         catch (KeyNotFoundException e) {
             Debug.Log(e);
         }
-        buff.Init();
+        
         return buff;
     }
-    public Ability GetAbilityCopyByID(int id) {
+    public Ability GetAbilityCopyByID(int id, GameCharacter caster) {
         Ability b = GetAbilityByID(id).CopyInstance();
-        
+        b.Init(caster);
         return b;
     }
-    public Buff GetBuffCopyByID(int id) {
+    public Buff GetBuffCopyByID(int id, GameCharacter caster) {
         Buff b = GetBuffByID(id).CopyInstance();
-        b.Init();
+        b.Init(caster);
         return b;
     }
-    public Buff GetBuffCopy(Buff buff) {
-        if (buff == null) throw new System.ArgumentNullException("buff is null");
-        Buff b = buff.CopyInstance();
-        b.Init();
-        return b;
-    }
-    public Ability GetAbilityCopy(Ability ability) {
-        if (ability == null) throw new System.ArgumentNullException("ability is null");
-        Ability a = ability.CopyInstance();
+    //public Buff GetBuffCopy(Buff buff) {
+    //    if (buff == null) throw new System.ArgumentNullException("buff is null");
+    //    Buff b = buff.CopyInstance();
         
-        return a;
-    }
+    //    return b;
+    //}
+    //public Ability GetAbilityCopy(Ability ability) {
+    //    if (ability == null) throw new System.ArgumentNullException("ability is null");
+    //    Ability a = ability.CopyInstance();
+        
+    //    return a;
+    //}
 }

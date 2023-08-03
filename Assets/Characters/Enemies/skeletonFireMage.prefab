@@ -12382,6 +12382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statManager: {fileID: 154068525439207917}
+  character: {fileID: 569616255550430233}
 --- !u!1 &5570360330016832339
 GameObject:
   m_ObjectHideFlags: 0

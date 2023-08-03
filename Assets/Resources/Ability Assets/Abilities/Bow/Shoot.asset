@@ -19,7 +19,7 @@ MonoBehaviour:
   - Attack
   - Bow
   - Projectile
-  iconImage: {fileID: 0}
+  iconImage: {fileID: 21300000, guid: ce5aefdecd722a746806fc485b3ef388, type: 3}
   manaCost: 0
   healthCost: 0
   cooldown: 0
@@ -28,6 +28,7 @@ MonoBehaviour:
   onHitEffectAmount: 0
   onHitDuration: 0
   onHitDebuff: {fileID: 0}
+  caster: {fileID: 0}
   baseDamage: 0
   baseProjectiles: 1
   baseProjectileSpeed: 10

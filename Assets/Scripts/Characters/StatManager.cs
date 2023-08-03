@@ -66,7 +66,11 @@ public class StatManager : MonoBehaviour {
     public void AdjustStat(CharacterStat stat, float amount) {
         characterStats[stat] += amount;
     }
+    public void ApplyDamageOverTimeEffect(DamageOverTimeEffect effect) {
+        if (TryGetComponent(out BuffManager buffManager)) {
 
+        }
+    }
     #region Getters
     public float GetStat(CharacterStat stat) {
         return characterStats[stat];

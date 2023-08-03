@@ -8,7 +8,8 @@ public class MulticastProjectileAbility : ProjectileAbility
 {
 
     public int numCasts;
-    public Ability baseAbility;
+    [HideInInspector] public Ability baseAbility;
+    public int baseAbilityId;
     readonly List<GameObject> createdProjectiles = new();
 
     public override List<GameObject> Cast(Vector3 pos, Vector3 targetPos, Vector3 offset, Collider2D casterCollider) {
@@ -17,6 +18,10 @@ public class MulticastProjectileAbility : ProjectileAbility
                 CastMultipleTimes(pos, targetPos, offset, casterCollider));   
         return createdProjectiles;
     }
+    //public override void Init(GameCharacter caster) {
+    //    base.Init(caster);
+    //    baseAbility = AbilityCollectionSingleton.Instance.GetAbilityCopyByID(baseAbility.id);
+    //}
     private IEnumerator CastMultipleTimes(Vector3 pos, Vector3 targetPos,
         Vector3 offset, Collider2D casterCollider) {
         createdProjectiles.Clear();
@@ -33,35 +38,9 @@ public class MulticastProjectileAbility : ProjectileAbility
         yield return null;
     }
     public override Ability CopyInstance() {
-        Ability ability = CreateInstance<MulticastProjectileAbility>();
+        var ability = CreateInstance<MulticastProjectileAbility>();
+        ability.baseAbility = baseAbility;
         CopyTo(ability);
-
-        //ability._name = _name;
-        //ability.description = description;
-        //ability.id = id;
-        //ability.tags = new(tags);
-        //ability.iconImage = iconImage;
-        //ability.manaCost = manaCost;
-        //ability.healthCost = healthCost;
-        //ability.cooldown = cooldown;
-        //ability.abilityPreFab = abilityPreFab;
-        //ability.onHitDebuffID = onHitDebuffID;
-
-
-        ////  (ability as ProjectileAbility).caster = caster;
-        //(ability as MulticastProjectileAbility).baseProjectiles = baseProjectiles;
-        //(ability as MulticastProjectileAbility).baseProjectileSpeed = baseProjectileSpeed;
-        //(ability as MulticastProjectileAbility).chainNumber = chainNumber;
-        //(ability as MulticastProjectileAbility).pierceNumber = pierceNumber;
-
-        //(ability as MulticastProjectileAbility).speedMulti = speedMulti;
-        //(ability as MulticastProjectileAbility).projIncrease = projIncrease;
-        //(ability as MulticastProjectileAbility).baseDamage = baseDamage;
-        //(ability as MulticastProjectileAbility).numCasts= numCasts;
-        //(ability as MulticastProjectileAbility).baseAbilityID = baseAbilityID;
-
-
-
 
         return ability;
     }

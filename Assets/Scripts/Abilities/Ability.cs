@@ -37,7 +37,7 @@ public abstract class Ability : ScriptableObject {
     public float onHitEffectAmount = 0;
     public float onHitDuration = 0;
     [HideInInspector] public Buff onHitDebuff;
-    public GameCharacter caster;
+    [HideInInspector] public GameCharacter caster;
 
     /// <summary>
     /// attempts to cast the ability
@@ -58,10 +58,11 @@ public abstract class Ability : ScriptableObject {
         Instantiate(abilityPreFab, instantiatePosition, Quaternion.identity);
     }
     public virtual void Init(GameCharacter caster) {
-        this.caster = caster;
+      
         if (onHitDebuffID != -1) {
-            onHitDebuff = AbilityCollectionSingleton.Instance.GetBuffCopyByID(onHitDebuffID);
+            onHitDebuff = AbilityCollectionSingleton.Instance.GetBuffCopyByID(onHitDebuffID, caster);
             onHitDebuff.SetDuration(onHitDuration);
+           // onHitDebuff.Init(caster);
             //onhitDebuff.SetEffectAMount(amount);
         }
     }
@@ -96,17 +97,15 @@ public abstract class Ability : ScriptableObject {
     protected void CopyTo(Ability other) {
         // Get all fields of the Ability class using reflection
         FieldInfo[] fields = typeof(Ability).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-        other.caster = caster;
         other.onHitDebuff = onHitDebuff;
         other.iconImage = iconImage;
         foreach (var field in fields) {
             if (field.Name == "caster" || field.Name == "onHitDebuff" || field.Name == "iconImage") continue;
-                
-            
             // Copy the value from the current instance to the target instance
             var value = field.GetValue(this);
             field.SetValue(other, value);
         }
+       
     }
     public virtual float CalculateDamage(float damageMin, float damageMax) { return 0; }
 

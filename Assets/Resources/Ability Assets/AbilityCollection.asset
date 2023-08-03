@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: AbilityCollection
   m_EditorClassIdentifier: 
   allAbilitiesNew:
-    keys: 8503000086030000840300009301000094010000950100009201000091010000900100000000000001000000640000000a00000020030000c8000000
+    keys: 85030000880300008603000084030000930100009401000095010000920100009101000090010000000000000100000064000000650000000a00000020030000c8000000
     values:
     - {fileID: 11400000, guid: fcf08a0105f0ba943b8dbdd3ec2fafff, type: 2}
+    - {fileID: 11400000, guid: 4d1e71080db39c747b85212606d57561, type: 2}
     - {fileID: 11400000, guid: 0eb66a2b290ab494183b16625b8b55a8, type: 2}
     - {fileID: 11400000, guid: ec1e70d25ba3cd947b7b5d6a3495aa85, type: 2}
     - {fileID: 11400000, guid: a4f6b3f052c968542becc6021551007f, type: 2}
@@ -27,28 +28,21 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 881c8d3e1b441cf4792514cb4cd10baf, type: 2}
     - {fileID: 11400000, guid: eba7f1c5cae6ada43b933848e2f214c9, type: 2}
     - {fileID: 11400000, guid: daefe16f098b86248a5450c6654ed4cc, type: 2}
+    - {fileID: 11400000, guid: 7196cb16728f3204f91d44a23596d311, type: 2}
     - {fileID: 11400000, guid: 5ed8648e1de316547a8d46a1bd04a376, type: 2}
     - {fileID: 11400000, guid: 468f181e5b2a57d42a2634658141359c, type: 2}
     - {fileID: 11400000, guid: 07151248737291e43905c365161f289f, type: 2}
   allBuffsAndDebuffsNew:
-    keys: e8030000ea030000dc05000078050000eb030000e9030000df050000de050000dd050000
+    keys: 40060000e8030000ea030000dc050000d007000078050000df050000de050000dd050000eb030000e9030000
     values:
+    - {fileID: 11400000, guid: 401e5868aaa15cf469e2f3c2a83b28a7, type: 2}
     - {fileID: 11400000, guid: 31828835761b408418bf82df861735f8, type: 2}
     - {fileID: 11400000, guid: 3a5df33765126cf458ce37822ac7ebdb, type: 2}
     - {fileID: 11400000, guid: 09d8d884a8457444fb28762184c245e5, type: 2}
+    - {fileID: 11400000, guid: 7f05bf66aacbdb340926fdcb2f81b7bd, type: 2}
     - {fileID: 11400000, guid: 73292b7ee5c807a48ba993cdf1320654, type: 2}
-    - {fileID: 11400000, guid: 414e1f35c4b18f049869369da6b80613, type: 2}
-    - {fileID: 11400000, guid: f2b85dc6b51141d48a49622924ee834f, type: 2}
     - {fileID: 11400000, guid: b17fcfb103bc8df418e948008fcb3ed5, type: 2}
     - {fileID: 11400000, guid: 6c5a77c984d6db547a5cfb9ff22695e6, type: 2}
     - {fileID: 11400000, guid: 3da90748c9097de4fae91971d7f7faf4, type: 2}
-  BuffFolderNames:
-  - Buffs
-  - Debuffs
-  AbilityFolderNames:
-  - Auras
-  - Bow
-  - Fire
-  - Ice
-  - Movement
-  - Self Buffs
+    - {fileID: 11400000, guid: 414e1f35c4b18f049869369da6b80613, type: 2}
+    - {fileID: 11400000, guid: f2b85dc6b51141d48a49622924ee834f, type: 2}

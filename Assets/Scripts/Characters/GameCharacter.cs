@@ -35,6 +35,8 @@ public abstract class GameCharacter : MonoBehaviour {
     protected readonly Vector3 toastOffset = new(5f, 10f, 0f);
     //prefab for displaying damage numbers
     [SerializeField] private GameObject damageToastPrefab;
+    public List<Buff> globalOnHitEffects;
+
     #endregion
     #region Vars - Spell Hits
     protected List<float> spellHitUniqueIDs;
@@ -43,7 +45,7 @@ public abstract class GameCharacter : MonoBehaviour {
     #endregion
     #region Start
     protected virtual void Start() {
-
+        globalOnHitEffects = new();
         character4DScript.SetDirection(Vector2.right);
         animationManager = character4DScript.AnimationManager;
         rb = GetComponent<Rigidbody2D>();
@@ -133,6 +135,8 @@ public abstract class GameCharacter : MonoBehaviour {
     }
     public void DamageHealth(float amount) {
         StatManager.DamageHealth(amount);
+        if (GameController.Instance.DisplayFloatingCombatText)
+            DisplayFloatingDamageNumber(amount);
         isAlive = StatManager.IsAlive();
         if (!isAlive) {
             ProcessDeath();
@@ -167,8 +171,7 @@ public abstract class GameCharacter : MonoBehaviour {
         BuffManager.HandleOnHitSpellEffect(ability);
 
         DamageHealth(damage);
-        if (GameController.Instance.DisplayFloatingCombatText)
-            DisplayFloatingDamageNumber(damage);
+        
     }
 
     private void DisplayFloatingDamageNumber(float damage) {
