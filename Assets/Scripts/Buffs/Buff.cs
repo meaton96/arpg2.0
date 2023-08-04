@@ -41,9 +41,9 @@ public class Buff : ScriptableObject
         }
         return buff;
     }
-    public virtual void Init(GameCharacter caster) {
-        this.caster = caster;
-    }
+    //public virtual void Init(GameCharacter caster) {
+    //    this.caster = caster;
+    //}
     public void SetDuration(float duration) {
         this.duration = duration;
     }   

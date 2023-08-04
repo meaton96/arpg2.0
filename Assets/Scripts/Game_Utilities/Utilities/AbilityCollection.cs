@@ -29,6 +29,23 @@ public class AbilityCollection : ScriptableObject {
     public Buff GetBuffByID(int id) {
         return _allBuffsAndDebuffs[id];
     }
+    public Ability GetAbilityByName(string name) {
+        foreach (var ability in _allAbilities) {
+            if (ability.Value._name == name) {
+                return _allAbilities[ability.Key];
+            }
+        }
+        return null;
+    }
+    public Buff GetBuffByName(string name) {
+        foreach (var buff in _allBuffsAndDebuffs) {
+            if (buff.Value._name == name) {
+                return _allBuffsAndDebuffs[buff.Key];
+            }
+        }
+        return null;
+    }
+
     /// <summary>
     /// reads in all assets from the folder name lists
     /// folder name lists are serializable member variables meant to be set in inpector
@@ -41,6 +58,8 @@ public class AbilityCollection : ScriptableObject {
         //get everything in folders
         Resources.LoadAll<Buff>(BUFF_FOLDER_PATH).ToList().ForEach(buff => _allBuffsAndDebuffs[buff.id] = buff);
         Resources.LoadAll<Ability>(ABILITY_FOLDER_PATH).ToList().ForEach(ab => _allAbilities[ab.id] = ab);
+
+        
 
         allAbilitiesNew = new(_allAbilities);
         allBuffsAndDebuffsNew = new(_allBuffsAndDebuffs);

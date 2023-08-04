@@ -10,7 +10,7 @@ public class ProjectileAttackScaledDamage : ProjectileAttack {
     public float damageScaling;
 
     public override Ability CopyInstance() {
-        Ability ability = CreateInstance<ProjectileAttack>();
+        var ability = CreateInstance<ProjectileAttack>();
         CopyTo(ability);
         return ability;
     }

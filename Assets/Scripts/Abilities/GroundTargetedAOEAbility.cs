@@ -13,19 +13,20 @@ public class GroundTargetedAOEAbility : GroundTargetedAbility {
         return null;
     }
     public override List<GameObject> Cast(Vector3 instantiatePosition, Vector3 mousePos, Vector3 offset, Collider2D casterCollider) {
-
+        caster = casterCollider.GetComponent<GameCharacter>();
         var go = Instantiate(abilityPreFab, mousePos, Quaternion.identity);
         go.GetComponent<SpawnedSpellAnimation>().Init(
-            caster: casterCollider.GetComponent<GameCharacter>(),
+            caster: caster,
             ability: this,
             radius: radius);
         return new List<GameObject>(){ go };
     }
     public List<GameObject> Cast(Vector3 instantiatePosition, Collider2D casterCollider, float damage) {
-
+        caster = casterCollider.GetComponent<GameCharacter>();
         var go = Instantiate(abilityPreFab, instantiatePosition, Quaternion.identity);
+
         go.GetComponent<SpawnedSpellAnimation>().Init(
-            caster: casterCollider.GetComponent<GameCharacter>(),
+            caster: caster,
             ability: this,
             radius: radius,
             damage: damage);

@@ -47,7 +47,7 @@ public abstract class Ability : ScriptableObject {
     /// <param name="offset">An offset vector to spawn away from the instantiate position</param>
     /// <param name="casterCollider">the collider of the caster to prevent collision</param>
     public virtual List<GameObject> Cast(Vector3 instantiatePosition, Vector3 mousePos, Vector3 offset, Collider2D casterCollider) {
-        return new List<GameObject>() { Instantiate(abilityPreFab, instantiatePosition, Quaternion.identity) };
+        return new List<GameObject>(); //{ Instantiate(abilityPreFab, instantiatePosition, Quaternion.identity) };
     }
     /// <summary>
     /// attempts to cast the ability
@@ -96,7 +96,7 @@ public abstract class Ability : ScriptableObject {
     /// <param name="other">The ability to copy the values to</param>
     protected void CopyTo(Ability other) {
         // Get all fields of the Ability class using reflection
-        FieldInfo[] fields = typeof(Ability).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+        FieldInfo[] fields = other.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
         other.onHitDebuff = onHitDebuff;
         other.iconImage = iconImage;
         foreach (var field in fields) {

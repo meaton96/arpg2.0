@@ -25,11 +25,12 @@ MonoBehaviour:
   healthCost: 0
   cooldown: 0
   abilityPreFab: {fileID: 0}
-  onHitDebuffID: 2000
+  onHitDebuffID: -1
   onHitEffectAmount: 0.2
   onHitDuration: -1
   onHitDebuff: {fileID: 0}
-  effectID: 0
+  caster: {fileID: 0}
+  buffId: 0
   effectAmount: 0
   buff: {fileID: 11400000, guid: 7f05bf66aacbdb340926fdcb2f81b7bd, type: 2}
   OnHitApplicator: 1

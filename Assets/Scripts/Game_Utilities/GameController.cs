@@ -131,6 +131,7 @@ public class GameController : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (Input.GetKeyDown(KeyCode.F1)) {
+            if (player != null) return;
             player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity).GetComponent<Player>();
         }
         if (Input.GetKeyDown(KeyCode.F2)) {

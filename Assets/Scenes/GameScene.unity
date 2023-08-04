@@ -363,7 +363,7 @@ MonoBehaviour:
   SpawnOneType: 1
   EnemiesEnabled: 1
   EnemyIndex: 0
-  maxEnemies: 1
+  maxEnemies: 20
   spawnEnemies: 1
   enemyList: []
   enemyPrefabList:

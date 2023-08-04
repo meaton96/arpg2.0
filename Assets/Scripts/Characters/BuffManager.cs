@@ -73,9 +73,9 @@ public class BuffManager : MonoBehaviour {
         if (ability.onHitDebuff != null) {
             AddEffect(ability.onHitDebuff);
         }
-       // if (ability.caster.gameObject.layer == GameController.PLAYER_LAYER) {
-      //      ability.caster.globalOnHitEffects.ForEach(buff => AddEffect(buff));
-        //}
+        if (ability.caster.gameObject.layer == GameController.PLAYER_LAYER) {
+            ability.caster.globalOnHitEffects.ForEach(buff => AddEffect(buff));
+        }
     }
     public void AddEffect(Buff effect) {
         

@@ -43,7 +43,7 @@ public class ProjectileAbility : DamagingAbility {
         var numProj = baseProjectiles + projIncrease;
         var maxSpread = MAX_ANGLE / numProj;
         var minSpread = maxSpread / 3f;
-
+        caster = casterCollider.GetComponent<GameCharacter>();
 
         float spreadAngle;
         //caster is player
@@ -123,7 +123,7 @@ public class ProjectileAbility : DamagingAbility {
                       prefab: abilityPreFab,
                       direction: newDir,
                       speed: baseProjectileSpeed * speedMulti,
-                      caster: casterCollider.GetComponent<GameCharacter>(),
+                      caster: caster,
                       pierce: pierceNumber,
                       chain: chainNumber,
                       uniqueID: uniqueID);
@@ -142,31 +142,9 @@ public class ProjectileAbility : DamagingAbility {
     }
 
     public override Ability CopyInstance() {
-        Ability ability = CreateInstance<ProjectileAbility>();
+        var ability = CreateInstance<ProjectileAbility>();
 
         CopyTo(ability);
-
-        //ability._name = _name;
-        //ability.description = description;
-        //ability.id = id;
-        //ability.tags = new(tags);
-        //ability.iconImage = iconImage;
-        //ability.manaCost = manaCost;
-        //ability.healthCost = healthCost;
-        //ability.cooldown = cooldown;
-        //ability.abilityPreFab = abilityPreFab;
-        //ability.onHitDebuffID = onHitDebuffID;
-
-
-        ////  (ability as ProjectileAbility).caster = caster;
-        //(ability as ProjectileAbility).baseProjectiles = baseProjectiles;
-        //(ability as ProjectileAbility).baseProjectileSpeed = baseProjectileSpeed;
-        //(ability as ProjectileAbility).chainNumber = chainNumber;
-        //(ability as ProjectileAbility).pierceNumber = pierceNumber;
-
-        //(ability as ProjectileAbility).speedMulti = speedMulti;
-        //(ability as ProjectileAbility).projIncrease = projIncrease;
-        //(ability as ProjectileAbility).baseDamage = baseDamage;
 
 
         return ability;

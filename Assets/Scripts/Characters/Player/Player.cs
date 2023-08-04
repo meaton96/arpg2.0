@@ -89,7 +89,7 @@ public class Player : GameCharacter {
         //animationManager.SetWeaponType(WeaponType.Melee2H);
 
 
-        spellBar.EquipAbility(4, 0);   //fireball
+        spellBar.EquipAbility(4, AbilityCollectionSingleton.Instance.GetAbilityCopyByName("Iceshot", this));   //fireball
         spellBar.EquipAbility(5, 403);   //barage
         spellBar.EquipAbility(0, 800); //teleport
         spellBar.EquipAbility(1, 401); //piercing shot
@@ -97,7 +97,7 @@ public class Player : GameCharacter {
         spellBar.EquipAbility(3, 200); //haste  
 
     }
-    public bool AddGLobalOnHit(Buff buff) {
+    public bool AddGLobalOnHit(Buff buff) { 
         if (globalOnHitEffects.Contains(buff)) return false;
         globalOnHitEffects.Add(buff);
         return true;

@@ -7252,6 +7252,7 @@ MonoBehaviour:
   StatManager: {fileID: 6008190567015759158}
   BuffManager: {fileID: 2286210590083377696}
   damageToastPrefab: {fileID: 52251255580844802, guid: 120af22e1f47e66408501b3a85dbc88d, type: 3}
+  globalOnHitEffects: []
   attackRange: 4
   attackCooldown: 1
   target: {fileID: 0}
