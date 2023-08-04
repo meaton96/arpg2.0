@@ -8,7 +8,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewAura", menuName = "Custom Assets/Aura")]
 public class Aura : Ability {
-    public const string BUFF_PATH = "/Scripts/Abilities/Buffs";
+   // public const string BUFF_PATH = "/Scripts/Abilities/Buffs";
     //public string effectName;
     public int buffId;
     public float effectAmount;
@@ -21,6 +21,11 @@ public class Aura : Ability {
         else {
             player.BuffManager.ApplyBuff(buff);
         }
+    }
+    public override void Init(GameCharacter caster) {
+        buff = AbilityCollectionSingleton.Instance.GetBuffCopyByID(buffId, caster);
+        buff.caster = caster;   
+        base.Init(caster);
     }
     public void DeactivateAura(Player player) {
         if (!OnHitApplicator) {

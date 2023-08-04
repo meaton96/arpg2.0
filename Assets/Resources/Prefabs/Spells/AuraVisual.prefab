@@ -94,6 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1854129218052276073}
   - component: {fileID: 3749000127260701819}
+  - component: {fileID: 5753514988987547461}
   m_Layer: 9
   m_Name: AuraVisual
   m_TagString: Untagged
@@ -132,6 +133,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outerVisual: {fileID: 1488140084714746841}
   rotSpeed: 50
+--- !u!114 &5753514988987547461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6967502257464330412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f04f39478e1103c4587d083c3b790313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Buff: {fileID: 0}
+  middleEnabled: 1
+  MiddlePiece: {fileID: 0}
+  OutsidePiece: {fileID: 0}
 --- !u!1 &8718791843121196493
 GameObject:
   m_ObjectHideFlags: 0

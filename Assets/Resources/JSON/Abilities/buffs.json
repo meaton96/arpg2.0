@@ -6,7 +6,7 @@
 	1400: { "Rampage", "100% Damage buff" },
 	1000: { "Evocate", "50% mana regen buff" },
 	1500: { "Haste", "50% action speed increase" },
-	1000: { "Evocate", "50% mana regen buff" },
+	2000: { "Explodey", "on death explosion" },
 	1000: { "Evocate", "50% mana regen buff" },
 	
 	

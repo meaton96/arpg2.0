@@ -9,7 +9,7 @@ public class SupportEnemy : RangedEnemy {
     [SerializeField] protected float auraRangeSquared = 36;     //the radius squared of the range of the aura
     private const float pollNearbyEnemiesCooldown = 1f;         //how often to poll nearby enemies in seconds
     private float pollTimer;
-    [SerializeField] protected GameObject auraVisualPrefab;     //The visual for the aura while it is on
+  //  [SerializeField] protected GameObject auraVisualPrefab;     //The visual for the aura while it is on
     [SerializeField] Buff auraBuffToApply;                      //the buff that the aura applies
     [SerializeField] protected RangedAuraDetector AuraCollider; //aura collider
     GameObject auraVisual;
@@ -25,7 +25,7 @@ public class SupportEnemy : RangedEnemy {
     public override void Init(Player player, List<Enemy> allEnemies,
         float health, float mana = 0, bool isActive = true) {
         base.Init(player, allEnemies, health, mana, isActive);
-        auraVisual = Instantiate(auraVisualPrefab, transform);   //create the aura visual and attach it
+      //  auraVisual = Instantiate(auraVisualPrefab, transform);   //create the aura visual and attach it
         //set the aura buff
         var buffCopy = AbilityCollectionSingleton.Instance.GetBuffCopyByID(auraBuffToApply.id, this);
         AuraCollider.Buff = buffCopy;
